@@ -484,8 +484,7 @@ function HeroDashboard() {
       <style>{HERO_CSS}</style>
 
       {/* Orbit rings behind the window */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[125%] w-[125%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06]" />
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[165%] w-[165%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]" />
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0a7c83]/35 blur-[110px]" />
 
       <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}>
         <div className="rounded-[18px] bg-white/[0.06] p-1.5 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8)] ring-1 ring-white/10 backdrop-blur-sm">
@@ -506,7 +505,7 @@ function HeroDashboard() {
 
 function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-[#02151d] pb-24 pt-32 lg:pb-32 lg:pt-40">
+    <section className="relative isolate overflow-hidden bg-[#031a20] pb-24 pt-32 lg:pb-32 lg:pt-40">
       {/* Background: fading grid + soft glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
@@ -519,7 +518,13 @@ function Hero() {
             WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 65% 45%, #000 30%, transparent 75%)',
           }}
         />
-        <div className="absolute right-[-10%] top-[10%] h-[620px] w-[620px] rounded-full bg-[#0a7c83]/25 blur-[140px]" />
+        {/* Soft teal wash centred on the dashboard */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_70%_45%,rgba(10,124,131,0.28),transparent_70%)]" />
+        <div className="absolute right-[-8%] top-[5%] h-[620px] w-[620px] rounded-full bg-[#0a7c83]/30 blur-[140px]" />
+        {/* Dark vignette at the edges so the centre feels lit */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_60%_45%,transparent_55%,rgba(2,21,29,0.85)_100%)]" />
+        {/* Globe lines, shifted so the globe sits behind the dashboard */}
+        <GlobeLines className="translate-y-10 lg:-translate-x-[18%]" />
         <div className="absolute bottom-[-20%] left-[-10%] h-[400px] w-[400px] rounded-full bg-[#A0E8AF]/[0.04] blur-[120px]" />
       </div>
 
@@ -556,17 +561,25 @@ function Hero() {
             </button>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-6 text-[13px] text-white/50">
-            {[
-              { v: '100+', l: 'countries' },
-              { v: 'Any', l: 'language' },
-              { v: 'ISO 27001', l: 'aligned' },
-            ].map((s) => (
-              <div key={s.l} className="flex items-baseline gap-2">
-                <span className="text-[15px] font-semibold text-white">{s.v}</span>
-                {s.l}
-              </div>
-            ))}
+          <div className="mt-14 w-full max-w-lg border-t border-white/10 pt-6">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/35">
+              Trusted by global benefits teams
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-10 gap-y-5">
+              {[
+                { name: 'BP', src: '/images/bplogo.webp', h: 'h-8' },
+                { name: 'EA', src: '/images/fifaealogo.webp', h: 'h-5' },
+                { name: 'Gilead', src: '/images/gilead.png', h: 'h-6' },
+                { name: 'Organon', src: '/images/organon.webp', h: 'h-6' },
+              ].map((logo) => (
+                <img
+                  key={logo.name}
+                  src={logo.src}
+                  alt={logo.name}
+                  className={`${logo.h} w-auto max-w-[120px] object-contain opacity-60 brightness-0 invert transition-opacity duration-300 hover:opacity-100`}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
 
@@ -672,7 +685,7 @@ function AppCard({ children }: { children: ReactNode }) {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-      className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-200"
+      className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] border border-slate-200"
     >
       {children}
     </motion.div>
@@ -1253,10 +1266,10 @@ function StorySection() {
   };
 
   return (
-    <section id="story" className="relative bg-white py-28 md:py-36">
+    <section id="story" className="relative bg-white pt-12 pb-28 md:pt-24 md:pb-36">
       <style>{`@keyframes proya-progress { from { width: 0% } to { width: 100% } }`}</style>
 
-      <div className="mx-auto max-w-[1600px] px-6">
+      <div className="mx-auto max-w-7xl px-6">
         {/* Heading */}
         <div className="mb-14 max-w-4xl md:mb-20">
         
@@ -1648,28 +1661,24 @@ function Stat({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.8, delay: i * 0.15, ease: EASE }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50 p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-1 hover:border-[#2E8A8A]/30 hover:shadow-[0_20px_40px_-12px_rgba(46,138,138,0.12)]"
+      transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
+      className={`flex flex-col border-t border-white/15 pt-6 ${['lg:mt-0', 'lg:mt-14', 'lg:mt-28'][i]}`}
     >
-      {/* Subtle top accent line on hover */}
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2E8A8A] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      
-      <div className="flex flex-col gap-2">
-        <div className="flex items-baseline gap-2">
-          <span className="text-5xl font-bold tracking-tighter text-[#0A1128] xl:text-6xl">
-            <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.8} />
-          </span>
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 group-hover:bg-[#A0E8AF]/20 group-hover:text-[#2E8A8A] transition-colors duration-300">
-            / yr
-          </span>
-        </div>
-        <p className="mt-4 max-w-[260px] text-[15px] font-medium leading-relaxed text-slate-500 group-hover:text-slate-700 transition-colors">
-          {label}
-        </p>
+      <span className="mb-4 text-[11px] font-medium tabular-nums tracking-[0.18em] text-[#A0E8AF]">
+        {String(i + 1).padStart(2, '0')}
+      </span>
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-[40px] font-medium leading-none tracking-tight text-white xl:text-[48px]">
+          <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.6} />
+        </span>
+        <span className="text-[18px] font-normal text-white/45">/yr</span>
       </div>
+      <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed text-white/55">
+        {label}
+      </p>
     </motion.div>
   );
 }
@@ -1681,10 +1690,10 @@ function TestimonialRow() {
 
   return (
     <div className="mt-32">
-      <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-6">
+      <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-5">
         <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A] mb-3">Testimonials</div>
-          <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+          <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-slate-400 mb-3">Testimonials</div>
+          <h3 className="text-[28px] font-medium tracking-[-0.02em] text-[#fafafa] md:text-[34px]">
             What benefits leaders say
           </h3>
         </div>
@@ -1710,136 +1719,212 @@ function TestimonialRow() {
 
       <div
         ref={scroller}
-        className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {TESTIMONIALS.map((t, i) => (
-          <motion.figure
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+                className="-mx-6 flex  scroll-px-6 gap-6 overflow-x-auto overflow-y-visible px-6 pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    
+    >
+
+              {TESTIMONIALS.map((t, i) => (
+          <div
             key={t.name}
-            className="group relative flex h-[400px] w-[calc((100%-4.5rem)/4)] min-w-[320px] shrink-0 snap-start flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#2E8A8A]/30 hover:shadow-[0_24px_50px_-12px_rgba(46,138,138,0.15)]"
+            className="group relative flex h-[360px] w-[calc((100%-4.5rem)/4)] min-w-[300px] shrink-0 snap-start flex-col justify-between bg-[#0a7c83] p-7 shadow-none border-none transition-colors duration-300"
           >
             {/* Decorative Quote Mark */}
-            <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-slate-100/80 select-none group-hover:text-[#A0E8AF]/40 transition-colors duration-500">
+            <div className="absolute top-5 right-6 text-5xl font-serif leading-none text-white/10 select-none transition-colors duration-500 group-hover:text-white/20">
               &ldquo;
             </div>
 
             <blockquote className="relative z-10">
-              <p className="text-[20px] font-medium leading-snug tracking-tight text-[#0A1128]">
+              <p className="text-[15.5px] font-medium leading-snug tracking-tight text-white">
                 “{t.quote}”
               </p>
-              <p className="mt-5 text-[14px] leading-relaxed text-slate-500">{t.context}</p>
+              <p className="mt-4 text-[13px] leading-relaxed text-white/70">{t.context}</p>
             </blockquote>
             
-            <figcaption className="relative z-10 mt-8 flex items-center gap-4 border-t border-slate-100 pt-6 group-hover:border-slate-200 transition-colors">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#0A1128] to-[#1C3F60] text-[13px] font-bold text-white shadow-inner ring-2 ring-white">
+            <figcaption className="relative z-10 mt-6 flex items-center gap-3.5 border-t border-white/20 pt-5">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-[11px] font-semibold text-white">
                 {t.initials}
               </div>
               <div className="min-w-0">
-                <div className="text-[15px] font-semibold text-[#0A1128]">{t.name}</div>
-                <div className="line-clamp-2 text-[13px] leading-snug text-slate-500">{t.role}</div>
+                <div className="text-[13.5px] font-semibold text-white">{t.name}</div>
+                <div className="line-clamp-2 text-[12px] leading-snug text-white/60">{t.role}</div>
               </div>
             </figcaption>
-          </motion.figure>
+          </div>
         ))}
       </div>
     </div>
   );
 }
 
+function GlobeLines({ className = '' }: { className?: string }) {
+  const cx = 900, cy = 380, R = 340;
+  const lats = [-0.8, -0.55, -0.3, 0, 0.3, 0.55, 0.8];
+  const meridians = [0.2, 0.42, 0.66, 0.88];
+  const nodes = [
+    { x: 760, y: 270 }, { x: 900, y: 230 }, { x: 1010, y: 330 },
+    { x: 830, y: 420 }, { x: 960, y: 480 }, { x: 700, y: 400 },
+  ];
+  const arcs = [[0, 1], [1, 2], [0, 3], [3, 4], [2, 4], [5, 0], [5, 3]].map(([a, b]) => {
+    const A = nodes[a], B = nodes[b];
+    const mx = (A.x + B.x) / 2;
+    const my = Math.min(A.y, B.y) - Math.hypot(B.x - A.x, B.y - A.y) * 0.35;
+    return `M${A.x} ${A.y} Q${mx} ${my} ${B.x} ${B.y}`;
+  });
+
+  return (
+    <div aria-hidden className={`pointer-events-none absolute inset-x-0 top-0 h-[800px] ${className}`}>
+      <style>{`
+        @keyframes globe-travel { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
+        .globe-travel { stroke-dasharray: 0.18 0.82; animation: globe-travel 5s linear infinite; }
+      `}</style>
+      <svg viewBox="0 0 1200 800" className="h-full w-full" preserveAspectRatio="xMaxYMin meet" fill="none">
+        <defs>
+          <radialGradient id="globeFade" cx="75%" cy="47%" r="55%">
+            <stop offset="0" stopColor="#fff" stopOpacity="1" />
+            <stop offset="0.6" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          </radialGradient>
+          <mask id="globeMask">
+            <rect width="1200" height="800" fill="url(#globeFade)" />
+          </mask>
+          <radialGradient id="globeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stopColor="#0a7c83" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#0a7c83" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        <circle cx={cx} cy={cy} r={R * 1.35} fill="url(#globeGlow)" />
+
+        <g mask="url(#globeMask)" stroke="#A0E8AF">
+          <circle cx={cx} cy={cy} r={R} strokeOpacity="0.22" strokeWidth="1" />
+          <circle cx={cx} cy={cy} r={R * 1.18} strokeOpacity="0.08" strokeWidth="1" />
+          <circle cx={cx} cy={cy} r={R * 1.42} strokeOpacity="0.05" strokeWidth="1" />
+
+          {/* latitudes */}
+          {lats.map((l) => {
+            const rx = R * Math.sqrt(1 - l * l);
+            return <ellipse key={l} cx={cx} cy={cy + R * l} rx={rx} ry={rx * 0.16} strokeOpacity="0.14" strokeWidth="1" />;
+          })}
+
+          {/* meridians */}
+          {meridians.map((m) => (
+            <ellipse key={m} cx={cx} cy={cy} rx={R * m} ry={R} strokeOpacity="0.14" strokeWidth="1" />
+          ))}
+          <line x1={cx} y1={cy - R} x2={cx} y2={cy + R} strokeOpacity="0.14" strokeWidth="1" />
+
+          {/* arcs: faint base + travelling pulse */}
+          {arcs.map((d, i) => (
+            <g key={i}>
+              <path d={d} strokeOpacity="0.25" strokeWidth="1" />
+              <path
+                d={d}
+                pathLength={1}
+                stroke="#A0E8AF"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                className="globe-travel"
+                style={{ animationDelay: `${i * 0.7}s` }}
+              />
+            </g>
+          ))}
+
+          {/* nodes */}
+          {nodes.map((n, i) => (
+            <g key={i}>
+              <circle cx={n.x} cy={n.y} r="4" fill="#A0E8AF" stroke="none">
+                <animate attributeName="r" values="4;16;4" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.35;0;0.35" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+              </circle>
+              <circle cx={n.x} cy={n.y} r="3" fill="#A0E8AF" stroke="#031a20" strokeWidth="1.5" />
+            </g>
+          ))}
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+
 function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
   return (
-    <section id="impact" className="relative bg-white pt-28 pb-32 md:pt-36 md:pb-40">
-      
-      {/* Elegant Separator Line */}
-      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      
-      {/* Top Half: Grey Background */}
-      <div className="absolute top-0 left-0 right-0 h-[55%] bg-[#f7f9f2] -z-10" />
-      
-      <div className="mx-auto max-w-[1600px] px-6">
-        {/* Heading */}
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
-            <div className="mb-6 flex items-center justify-center gap-4">
-              <span className="h-px w-12 bg-slate-300" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A]">
-                Proven Impact
-              </span>
-              <span className="h-px w-12 bg-slate-300" />
-            </div>
-            
-            <h2 className="text-5xl font-semibold leading-[1.08] tracking-tight text-[#0A1128] md:text-7xl">
-              Real teams. <span className="text-slate-400">Real savings.</span>
+
+    <section id="impact" className="relative isolate overflow-hidden bg-[#031a20]">
+      {/* Background: grid + glows + globe lines */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse 70% 50% at 75% 20%, #000 25%, transparent 75%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 75% 20%, #000 25%, transparent 75%)',
+          }}
+        />
+        <div className="absolute bottom-[-10%] left-[-10%] h-[420px] w-[420px] rounded-full bg-[#A0E8AF]/[0.05] blur-[120px]" />
+        <GlobeLines className="!h-[520px]" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
+        {/* Editorial header + stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)] lg:items-start lg:gap-16"
+        >
+          <div className="lg:-mt-12">
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
+              Proven Impact
+            </span>
+            <h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[52px]">
+              Real teams. <span className="text-white/45">Real savings.</span>
             </h2>
-            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-500 md:text-xl">
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/55">
               Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
             </p>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Stats Grid */}
-        <div className="mt-20 grid gap-6 md:grid-cols-3">
-          <Stat i={0} to={200} suffix="k" label="saved and redirected to new benefits" />
-          <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries" />
-          <Stat i={2} to={1} suffix="M" label="of undisclosed commission found in one local contract" />
-        </div>
+          <div className="grid items-start gap-10 sm:grid-cols-3">
+            <Stat i={0} to={200} suffix="k" label="saved and redirected to new benefits" />
+            <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries" />
+            <Stat i={2} to={1} suffix="M" label="of undisclosed commission found in one local contract" />
+          </div>
+        </motion.div>
 
         {/* Testimonials */}
         <TestimonialRow />
 
-        {/* Premium Calculator CTA Card */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+        {/* ROI Estimator — quiet inline CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: EASE }}
-    className="mt-16 relative overflow-hidden rounded-xl bg-[#0a7c83]"
+          transition={{ duration: 0.7, ease: EASE }}
+          className="mt-24 grid gap-8 border-t border-white/15 pt-12 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center md:gap-16"
         >
-
-
-
-          {/* Subtle inner glow for depth */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
-          
-          {/* Abstract Background Watermark */}
-          <div className="pointer-events-none absolute -right-10 -bottom-10 opacity-[0.03] text-white">
-            <BarChart3 size={400} strokeWidth={0.5} />
+          <div>
+            <div className="flex items-center gap-2.5">
+              <BarChart3 size={13} className="text-[#A0E8AF]" />
+              <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
+                ROI Estimator
+              </span>
+            </div>
+            <h3 className="mt-4 text-[28px] font-medium leading-[1.15] tracking-[-0.02em] text-white md:text-[34px]">
+              How much could you be saving?
+            </h3>
+            <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-white/55">
+              Model your enterprise optimization potential. Our calculator uses real-world benchmarks from global benefits data to estimate your hidden leakage.
+            </p>
           </div>
 
-          <div className="relative z-10 flex flex-col items-center justify-between gap-10 p-10 md:flex-row md:p-16 lg:p-20">
-            <div className="max-w-2xl text-center md:text-left">
-              
-              {/* Refined Editorial Label instead of ugly pill */}
-              <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
-                <BarChart3 size={14} className="text-[#FAFAFA]" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#fafafa]">
-                  ROI Estimator
-                </span>
-              </div>
-              
-             <h3 className="max-w-md text-4xl font-semibold tracking-tight text-white md:text-5xl">
-  How much could you be saving?
-</h3>
-              <p className="mt-5 text-lg leading-relaxed text-white/70 max-w-2xl">
-                Model your enterprise optimization potential. Our calculator uses real-world benchmarks from global benefits data to estimate your hidden leakage.
-              </p>
-            </div>
-            
-            {/* Refined Premium Button */}
+          <div className="flex md:justify-end">
             <button
               onClick={onOpenCalculator}
-              className="group relative inline-flex h-14 shrink-0 items-center gap-3 rounded-md border border-white/20 bg-white/5 px-8 text-[15px] font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-[#A0E8AF] hover:bg-[#A0E8AF] hover:text-[#0A1128]"
+              className="group inline-flex h-12 items-center gap-2.5 border border-white/20 bg-transparent px-7 text-[14px] font-medium text-white transition-colors duration-300 hover:border-[#A0E8AF] hover:text-[#A0E8AF] shadow-none"
             >
-              <span className="relative z-10">Calculate your savings</span>
-              <ArrowRight size={18} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+              Calculate your savings
+              <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </motion.div>
@@ -2155,193 +2240,159 @@ const SECURITY_ITEMS = [
 // COMMUNITY & TEAM SECTION
 // ==========================================
 
-const TEAM_MEMBERS = [
-  { name: 'Chris Bruce', role: 'CEO, Founding Team', image: 'https://i.pravatar.cc/150?u=1' },
-  { name: 'Pete Craghill', role: 'CSO, Founding Team', image: 'https://i.pravatar.cc/150?u=2' },
-  { name: 'James Akers', role: 'SVP Product, Founding Team', image: 'https://i.pravatar.cc/150?u=3' },
-  { name: 'Dan Watmore', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=4' },
-  { name: 'Cristi Miron', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=5' },
-  { name: 'Helena Sundhagen', role: 'Head of Client Experience', image: 'https://i.pravatar.cc/150?u=6' },
-  { name: 'Yanick Chavancy', role: 'SVP of Insights', image: 'https://i.pravatar.cc/150?u=7' },
-  { name: 'Jamie Fitt', role: 'SVP Strategic Growth', image: 'https://i.pravatar.cc/150?u=8' },
-  { name: 'Dave Healy', role: 'Global Head of Sales', image: 'https://i.pravatar.cc/150?u=9' },
-  { name: 'Charlotte Irving', role: 'Head of Marketing', image: 'https://i.pravatar.cc/150?u=10' },
+const COMMUNITY_PILLARS = [
+  'Client experience',
+  'Exclusive events',
+  'Real conversations',
+  'Shared progress',
 ];
 
 function CommunitySection() {
-  const scroller = useRef<HTMLDivElement>(null);
-  const scrollBy = (dir: number) =>
-    scroller.current?.scrollBy({ left: dir * 300, behavior: 'smooth' });
-
   return (
-    <section id="community" className="relative bg-white py-28 md:py-36 overflow-hidden">
-      {/* Elegant Separator Line */}
-      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      
-      <div className="mx-auto max-w-[1600px] px-6">
-        
-        {/* Heading */}
+    <section id="community" className="relative overflow-hidden bg-white pt-28 pb-16 md:pt-40 md:pb-24">
+      {/* Subtle top gradient separator to blend with the previous dark section */}
+      <div className="absolute left-1/2 top-0 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
+      <div className="mx-auto max-w-7xl px-6">
+        {/* Editorial Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="mb-14 max-w-3xl"
+          transition={{ duration: 0.8, ease: EASE }}
+          className="max-w-4xl"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="mb-8 flex items-center gap-3 -mt-16">
             <span className="h-px w-8 bg-slate-300" />
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
-              Our People
+              The Community
             </span>
           </div>
-          <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
-            Meet a few of our <span className="text-slate-400">Originals.</span>
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">
-            Origin is built by people who want to make a difference, and who want to do things differently. Real people who care about doing the right thing, on a journey to help benefits professionals truly understand every aspect of their benefits offering.
+          <h3 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-5xl lg:text-[56px]">
+            When you join us,
+            <br />
+            <span className="text-slate-400">you join a community.</span>
+          </h3>
+          <p className="mt-8 max-w-2xl text-[18px] leading-relaxed text-slate-500">
+            When you join Origin, you're not just buying software. You're joining a community of like-minded
+            innovators. We bring together benefits leaders who are rewriting the rules, with an innovative client
+            experience, exclusive events, real conversations, and a space to share ideas, challenges, and progress.
           </p>
         </motion.div>
 
-        {/* Team Carousel */}
-        <div className="relative">
-          <div
-            ref={scroller}
-            className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {TEAM_MEMBERS.map((member, i) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
-                className="group relative flex w-[200px] shrink-0 snap-start flex-col gap-4"
-              >
-                <div className="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-[15px] font-semibold text-[#0A1128]">{member.name}</h3>
-                  <p className="text-[13px] leading-snug text-slate-500">{member.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Carousel Nav */}
-          <div className="absolute -top-16 right-0 hidden gap-3 sm:flex">
-            <button
-              type="button"
-              onClick={() => scrollBy(-1)}
-              aria-label="Previous"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollBy(1)}
-              aria-label="Next"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Community & Summit Split */}
-        <div className="mt-24 grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        {/* The Manifesto Layout: Clean, Transparent, Editorial */}
+        <div className="mt-20 grid gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-24">
           
-          {/* Left: Testimonial / Quote */}
+          {/* Left Column: The Pillars as a refined list */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8, ease: EASE }}
-            className="flex flex-col justify-center"
-          >
-            <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
-              When you join us, you join a community.
-            </h3>
-            <p className="mt-6 text-lg leading-relaxed text-slate-500">
-              When you join Origin, you're not just buying software. You're joining a community of like-minded innovators. We bring together benefits leaders who are rewriting the rules, with an innovative client experience, exclusive events, real conversations, and a space to share ideas, challenges, and progress.
-            </p>
-            
-            <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50/50 p-8 relative overflow-hidden">
-              <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-[#0a7c83]/10 select-none">
-                &ldquo;
-              </div>
-              <blockquote className="relative z-10">
-                <p className="text-[18px] font-medium leading-snug tracking-tight text-[#0A1128]">
-                  “I'm really excited to work with the Origin team and be at the forefront of challenging the employee benefits world, disrupting the age-old industry and working with an organization that can make decisions and changes quickly.”
-                </p>
-                <footer className="mt-6 flex items-center gap-4 border-t border-slate-200 pt-6">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0A1128] text-[12px] font-bold text-white">
-                    RH
-                  </div>
-                  <div>
-                    <div className="text-[14px] font-semibold text-[#0A1128]">Rob Hamer</div>
-                    <div className="text-[13px] text-slate-500">Global Benefits Lead</div>
-                  </div>
-                </footer>
-              </blockquote>
-            </div>
-          </motion.div>
-
-          {/* Right: Summit Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="relative aspect-square overflow-hidden rounded-3xl bg-[#0a7c83] shadow-2xl flex flex-col items-center justify-center text-center p-12"
+            className="flex flex-col justify-center"
           >
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
-            
-            <div className="relative z-10">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A0E8AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              </div>
-              <h4 className="text-4xl font-bold tracking-tight text-white mb-2">ORIGIN</h4>
-              <h5 className="text-2xl font-light tracking-[0.2em] text-[#A0E8AF] mb-6">SUMMIT</h5>
-              <p className="text-white/80 font-medium tracking-wider uppercase text-sm">Nashville 2026</p>
+            <div className="space-y-0">
+              {COMMUNITY_PILLARS.map((pillar, i) => (
+                <div
+                  key={pillar}
+                  className="group flex items-center gap-6 border-b border-slate-100 py-6 transition-colors duration-500 hover:border-[#0a7c83] last:border-b-0"
+                >
+                  <span className="text-[12px] font-bold tabular-nums tracking-[0.1em] text-slate-300 transition-colors duration-500 group-hover:text-[#0a7c83]">
+                    0{i + 1}
+                  </span>
+                  <span className="text-[18px] font-medium tracking-tight text-[#0A1128] transition-colors duration-500 group-hover:text-[#0a7c83]">
+                    {pillar}
+                  </span>
+                  <ArrowRight
+                    size={16}
+                    className="ml-auto opacity-0 transition-all duration-500 group-hover:translate-x-1 group-hover:opacity-100 text-[#0a7c83]"
+                  />
+                </div>
+              ))}
             </div>
           </motion.div>
 
-        </div>
+          {/* Right Column: The Transparent, Editorial Testimonial */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+            className="relative flex flex-col justify-center"
+          >
+            {/* The vertical line anchoring the quote */}
+            <div className="absolute -left-6 top-0 bottom-0 w-px bg-slate-100 hidden lg:block" />
 
+            <div className="relative pl-6 lg:pl-10">
+              <span
+                aria-hidden
+                className="absolute -top-8 -left-2 select-none font-serif text-[100px] leading-none text-[#0a7c83]/10"
+              >
+                &ldquo;
+              </span>
+              
+              <blockquote className="relative text-[24px] font-medium leading-[1.4] tracking-[-0.02em] text-[#0A1128] md:text-[30px]">
+                It's been so wonderful to find a family of like-minded benefit professionals.{' '}
+                <span className="text-slate-400">
+                  The brainstorming, the challenging each other, is what I'll take away from this. It's helping me
+                  already to think broadly.
+                </span>
+              </blockquote>
+
+              {/* Author Footer with subtle underline */}
+              <div className="mt-10 flex items-center gap-5 border-t border-slate-200 pt-8">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-50 text-[13px] font-semibold text-[#0A1128] ring-1 ring-slate-200">
+                  KA
+                </span>
+                <div>
+                  <div className="text-[16px] font-semibold text-[#0A1128]">Katie Archer</div>
+                  <div className="mt-1 text-[14px] font-medium text-slate-500">Global Benefits Lead</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-
 function SecuritySection() {
   return (
-    <section id="security" className="relative overflow-hidden bg-black py-28 md:py-40">
+    <section id="security" className="relative overflow-hidden bg-[#031a20] py-28 md:py-40">
+      {/* Background: fading grid + soft glow (same as hero) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse 70% 60% at 80% 30%, #000 20%, transparent 75%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 80% 30%, #000 20%, transparent 75%)',
+          }}
+        />
+        <div className="absolute right-[-10%] top-[-10%] h-[520px] w-[520px] rounded-full bg-[#0a7c83]/25 blur-[140px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[360px] w-[360px] rounded-full bg-[#A0E8AF]/[0.04] blur-[120px]" />
+  
+      </div>
       {/* Simple top hairline separator */}
        
 
-      <div className="relative mx-auto max-w-[1600px] px-6">
+      <div className="relative mx-auto max-w-7xl px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="grid gap-10 lg:grid-cols-2 lg:items-end"
+          className="grid gap-10 lg:grid-cols-2 lg:items-end -mt-16 "
         >
           <div>
-            <div className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-white/45">
-              <span className="h-px w-8 bg-white/25" />
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
               Security and data
-            </div>
-            <h2 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-white md:text-6xl">
+            </span>
+            <h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[52px]">
               Your data.
               <br />
               <span className="text-white/45">Protected by design.</span>
@@ -2375,7 +2426,7 @@ function SecuritySection() {
         </div>
 
         {/* Footer line */}
-        <div className="mt-24 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center">
+        <div className="mt-24 -mb-16 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center">
           <p className="max-w-xl text-[15px] leading-relaxed text-white/50">
             Need details for a security review? The team can walk your IT and procurement teams through how Origin
             handles your data.
@@ -2399,63 +2450,53 @@ function SecuritySection() {
 // FAQ SECTION
 // ==========================================
 
-type Faq = { tag: string; q: string; a: string; cta?: string };
+
+type Faq = { q: string; a: string; cta?: string };
 
 const FAQS: Faq[] = [
   {
-    tag: 'Implementation',
     q: 'How long does implementation take?',
     a: 'You start with the documents you already have: policies, contracts, commission schedules and vendor information. Cuido ingests, translates and organizes them into one source of truth. Timelines depend on the number of countries and the volume of documents, so the team scopes a plan with you before you commit.',
     cta: 'Get a scoped timeline',
   },
   {
-    tag: 'Languages',
     q: 'Which languages does Origin support?',
     a: 'Cuido ingests, translates and organizes data in any language. Local policies and contracts can stay in their original language while your global team reads and queries them in English.',
   },
   {
-    tag: 'Data residency',
     q: 'Where is our data stored?',
     a: 'Client data is stored on secure servers managed by cloud providers, in line with international data protection laws. If you have specific residency requirements, raise them early so they can be covered in your security review.',
     cta: 'Discuss your requirements',
   },
   {
-    tag: 'Security',
     q: 'Which security standards does Origin follow?',
     a: 'Origin’s security practices are aligned to ISO 27001, the international standard for information security management. For certification documents and your security questionnaire, the team can work directly with your IT and procurement teams.',
     cta: 'Request security details',
   },
   {
-    tag: 'Integration',
     q: 'How does Origin fit with our existing systems?',
     a: 'Origin is designed as your source of truth for benefits data, passing verified information to the systems in your landscape that need it. It is built to work alongside your existing platforms rather than replace them. Specific connections are confirmed during scoping.',
   },
   {
-    tag: 'Stakeholders',
     q: 'Who in our organisation will use it?',
     a: 'Origin is built around the whole benefits ecosystem: global and local benefits teams, HR leaders and shared services, and functions such as procurement, finance, risk and legal. It also supports partners such as benefit administrators, local brokers, global consultants and vendors.',
   },
   {
-    tag: 'Vendors',
     q: 'Does Origin replace our brokers or consultants?',
     a: 'No. Origin gives you visibility into every vendor, cost, fee and commission, so you manage those relationships with evidence rather than assumption. Your advisers keep their role, and you gain the data to hold them to it.',
   },
   {
-    tag: 'Data control',
     q: 'Can we have our data deleted?',
     a: 'Yes. Data can be deleted on verified request from your authorised representatives, sent to privacy@originbenefits.com. Retention terms are set out in Origin’s privacy policy.',
   },
 ];
 
-
 function FaqRow({
   faq,
-  index,
   open,
   onToggle,
 }: {
   faq: Faq;
-  index: number;
   open: boolean;
   onToggle: () => void;
 }) {
@@ -2465,46 +2506,26 @@ function FaqRow({
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="flex w-full items-start gap-6 py-8 text-left md:gap-10"
+        className="flex w-full items-center justify-between py-7 text-left transition-colors duration-300"
       >
-        {/* Index Number */}
-        <span className="mt-1 w-4 shrink-0 text-[13px] font-medium tabular-nums text-slate-300 transition-colors duration-300 group-hover:text-slate-500">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-
-        {/* Question Content */}
-        <span className="min-w-0 flex-1">
-          {/* Tag */}
-          <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-[#0a7c83]">
-            {faq.tag}
-            {open && <span className="h-1.5 w-1.5 rounded-full bg-[#0a7c83] transition-opacity duration-300" />}
-          </span>
-          {/* Question */}
-          <span
-            className={`mt-3 block text-xl font-medium leading-snug tracking-tight transition-colors duration-300 md:text-2xl ${
-              open ? 'text-[#0A1128]' : 'text-slate-700 group-hover:text-[#0A1128]'
-            }`}
-          >
-            {faq.q}
-          </span>
-        </span>
-
-        {/* Toggle Icon */}
         <span
-          className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-            open
-              ? 'border-[#0a7c83] bg-[#0a7c83]/5 text-[#0a7c83]'
-              : 'border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600'
+          className={`text-[18px] font-medium tracking-tight transition-colors duration-300 md:text-[20px] ${
+            open ? 'text-[#0A1128]' : 'text-slate-700 group-hover:text-[#0A1128]'
           }`}
         >
-          <span className="relative block h-3 w-3">
-            <span className="absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 bg-current" />
-            <span
-              className={`absolute inset-y-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-500 ${
-                open ? 'scale-y-0' : ''
-              }`}
-            />
-          </span>
+          {faq.q}
+        </span>
+
+        {/* Minimalist Toggle Icon */}
+        <span
+          className={`ml-6 flex h-6 w-6 shrink-0 items-center justify-center transition-transform duration-500 ${
+            open ? 'rotate-45 text-[#0a7c83]' : 'text-slate-400 group-hover:text-[#0A1128]'
+          }`}
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <line x1="7" y1="1" x2="7" y2="13" />
+            <line x1="1" y1="7" x2="13" y2="7" />
+          </svg>
         </span>
       </button>
 
@@ -2518,12 +2539,12 @@ function FaqRow({
             transition={{ duration: 0.4, ease: EASE }}
             className="overflow-hidden"
           >
-            <div className="pb-10 pl-10 pr-4 md:pl-16 md:pr-20">
-              <p className="max-w-2xl text-[15.5px] leading-relaxed text-slate-500">{faq.a}</p>
+            <div className="pb-10 pr-4 md:pr-12">
+              <p className="max-w-2xl text-[16px] leading-relaxed text-slate-500">{faq.a}</p>
               {faq.cta && (
                 <a
                   href="#contact"
-                  className="group/cta mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#0a7c83] transition-colors hover:text-[#0A1128]"
+                  className="group/cta mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#0a7c83] transition-colors hover:text-[#0A1128]"
                 >
                   {faq.cta}
                   <ArrowRight size={14} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
@@ -2545,7 +2566,7 @@ function FaqSection() {
       {/* Elegant Separator Line */}
       <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-      <div className="mx-auto max-w-[1600px] px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-24">
           
           {/* Left Column: Editorial Pitch */}
@@ -2556,7 +2577,7 @@ function FaqSection() {
             transition={{ duration: 0.7, ease: EASE }}
             className="lg:sticky lg:top-32 lg:self-start"
           >
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-8 -mt-16">
               <span className="h-px w-8 bg-slate-300" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
                 FAQ
@@ -2604,8 +2625,6 @@ function FaqSection() {
     </section>
   );
 }
-
-
 
 // ==========================================
 // CONTACT SECTION
@@ -2807,7 +2826,14 @@ function ContactSection() {
 
   return (
     <section id="contact" className="scroll-mt-24 bg-white py-20 md:py-28">
-      <div className="mx-auto max-w-[1600px] px-6">
+
+
+            {/* Clean top separator */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
+
+      
+      <div className="mx-auto max-w-7xl px-6">
         <div className="rounded-[2rem] bg-[#0a7c83] p-6 sm:p-10 lg:p-14">
           <div className="grid items-stretch gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,700px)] lg:gap-16">
             {/* Left: pitch */}
@@ -3072,7 +3098,7 @@ export default function App() {
   className="relative min-h-screen bg-[#050505] selection:bg-[#A0E8AF] selection:text-[#050505]"
   style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
 >
-      <NoiseOverlay/>
+
       
       <main>
         <Hero/>
