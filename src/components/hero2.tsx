@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import HeroDashboard from "./HeroDashboard";
 import { motion, useScroll, useTransform, AnimatePresence, useSpring, useInView, useReducedMotion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { 
-  ArrowRight, ArrowLeft, ShieldCheck, Globe, Zap, LineChart, 
-  MessageSquare, FileText, Lock, ChevronRight, BarChart3, 
-  Building2, Users, Briefcase, Search, Sparkles, Check, Languages
+  ArrowRight, ArrowLeft, Globe, Zap, LineChart, 
+  MessageSquare, Lock, ChevronRight, BarChart3, 
+  Building2, Users, Briefcase, Search, FileText,
+  Sparkles, Check 
 } from 'lucide-react';
+
+// Add this new import
+import { 
+  FilePdf, FileDoc, FileTxt, CheckCircle, 
+  CircleNotch, Sparkle, Translate, 
+  ShieldCheck, Lightning, Clock 
+} from '@phosphor-icons/react';
 
 // ==========================================
 // TYPES & CONFIG
@@ -92,81 +101,79 @@ const NoiseOverlay = () => (
   </div>
 );
 
+
+
+// ==========================================
+// HERO DASHBOARD COMPONENT (Replaces static image)
+// ==========================================
+
+
+
+
+
 // ==========================================
 // LAYOUT & NAVIGATION
 // ==========================================
 
-// ==========================================
-// HERO SECTION
-// ==========================================
-
 function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050505] pt-32 text-center">
-      {/* Ambient Glow Effects */}
-      <div className="absolute left-1/2 top-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#2E8A8A]/20 to-[#1C3F60]/20 blur-[120px]" />
-      <div className="absolute left-[20%] top-[20%] -z-10 h-[400px] w-[400px] rounded-full bg-[#A0E8AF]/10 blur-[100px]" />
+    <section className="relative overflow-hidden bg-[#02151d] pt-32 pb-20 lg:pt-40 lg:pb-32">
+      {/* Subtle background glow to blend the dashboard */}
+      <div className="absolute right-[10%] top-[20%] -z-10 h-[600px] w-[600px] rounded-full bg-[#2E8A8A]/10 blur-[150px]" />
+      <div className="absolute left-[20%] bottom-[10%] -z-10 h-[400px] w-[400px] rounded-full bg-[#A0E8AF]/5 blur-[120px]" />
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="z-10 flex flex-col items-center px-6"
-      >
-        <div className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#A0E8AF] backdrop-blur-sm">
-          <Sparkles size="{14}"/>
-          Enterprise Benefits Intelligence
-        </div>
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-16 px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         
-        <h1 className="max-w-5xl text-6xl font-bold leading-[1.1] tracking-tighter text-white md:text-8xl">
-          Bring your global benefits <span className="bg-gradient-to-r from-[#A0E8AF] to-[#D2F898] bg-clip-text text-transparent">out of the dark.</span>
-        </h1>
-        
-        <p className="mt-8 max-w-2xl text-lg text-white/60 md:text-xl">
-          Benefits are your second-biggest people cost. Stop managing them in spreadsheets. 
-          Origin unifies data across 100+ countries into a single, AI-powered command center.
-        </p>
-
-        <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row">
-          <button className="group flex h-14 items-center gap-2 rounded-full bg-[#A0E8AF] px-8 font-bold text-[#050505] transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_#A0E8AF]">
-            Explore the Platform
-            <ArrowRight className="transition-transform group-hover:translate-x-1" size="{18}"/>
-          </button>
-          <button className="flex h-14 items-center rounded-full border border-white/20 bg-white/5 px-8 font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
-            Read the Whitepaper
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Abstract Dashboard Preview */}
-      <motion.div 
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.2, type: 'spring' }}
-        className="relative mt-24 h-[40vh] w-full max-w-6xl px-6"
-      >
-        <div className="absolute inset-x-6 top-0 h-full rounded-t-[2.5rem] border-x border-t border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-xl shadow-2xl">
-          <div className="flex h-12 items-center border-b border-white/10 px-6">
-            <div className="flex gap-2">
-              <div className="h-3 w-3 rounded-full bg-white/20" />
-              <div className="h-3 w-3 rounded-full bg-white/20" />
-              <div className="h-3 w-3 rounded-full bg-white/20" />
-            </div>
+        {/* Left Column: Text */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex max-w-2xl flex-col items-center lg:items-start"
+        >
+          {/* Refined Pill */}
+          <div className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 backdrop-blur-sm">
+            <Sparkles size={14} className="text-[#A0E8AF]" />
+            Enterprise Benefits Intelligence
           </div>
-          <div className="grid grid-cols-1 gap-6 p-8 md:grid-cols-3">
-             <div className="h-32 rounded-2xl bg-white/5 border border-white/5" />
-             <div className="h-32 rounded-2xl bg-[#A0E8AF]/10 border border-[#A0E8AF]/20" />
-             <div className="h-32 rounded-2xl bg-white/5 border border-white/5" />
+          
+          {/* Refined Headline */}
+          <h1 className="text-5xl font-bold leading-[1.05] tracking-tighter text-white md:text-6xl lg:text-[76px]">
+            Our global benefits<br/> out of the dark.
+          </h1>
+          
+          {/* Refined Subhead */}
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/60">
+            Benefits are your second-biggest people cost. Stop managing them in spreadsheets. 
+            Origin unifies data across 100+ countries into a single, AI-powered command center.
+          </p>
+
+          {/* Refined Buttons */}
+          <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
+            <button className="group flex h-14 items-center gap-2 rounded-full bg-[#A0E8AF] px-8 text-[15px] font-semibold text-[#050505] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_#A0E8AF]">
+              Explore the Platform
+              <ArrowRight className="shrink-0 transition-transform group-hover:translate-x-1" size={18} />
+            </button>
+            <button className="flex h-14 items-center rounded-full border border-white/20 bg-white/5 px-8 text-[15px] font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/40">
+              Read the Whitepaper
+            </button>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+
+        {/* Right Column: Replaced with Code Dashboard */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="relative w-full max-w-[700px] lg:w-1/2"
+        >
+          <HeroDashboard />
+        </motion.div>
+
+      </div>
     </section>
   );
 }
-
-
-
-
 
 
 
@@ -255,7 +262,7 @@ function AppCard({ children }: { children: ReactNode }) {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-      className="relative w-full overflow-hidden rounded-2xl bg-white text-[#0A1128] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)] ring-1 ring-black/5"
+      className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-200"
     >
       {children}
     </motion.div>
@@ -264,14 +271,14 @@ function AppCard({ children }: { children: ReactNode }) {
 
 function CardHeader({ title, sub, right }: { title: string; sub: string; right?: ReactNode }) {
   return (
-    <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+    <div className="flex items-center justify-between border-b border-slate-100  px-5 py-4">
       <div className="flex min-w-0 items-center gap-3">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A1128] text-[#A0E8AF]">
-          <Sparkles size={15} />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none border border-slate-200 text-slate-800">
+          <Sparkles size={15} strokeWidth={1.75} />
         </div>
         <div className="min-w-0">
-          <div className="truncate text-[13px] font-semibold leading-tight">{title}</div>
-          <div className="truncate text-[11px] leading-tight text-slate-400">{sub}</div>
+          <div className="truncate text-[14px] font-semibold leading-tight text-slate-800">{title}</div>
+          <div className="truncate text-[12px] leading-tight text-slate-500">{sub}</div>
         </div>
       </div>
       {right}
@@ -282,67 +289,86 @@ function CardHeader({ title, sub, right }: { title: string; sub: string; right?:
 // ---------- CARD 1: INGEST ----------
 
 const INGEST_FILES = [
-  { name: 'Handbook_Poland_2025.pdf', lang: 'PL' },
-  { name: 'Contrato_Seguro_Vida_MX.pdf', lang: 'ES' },
-  { name: 'Betriebsrente_Richtlinie_DE.docx', lang: 'DE' },
-  { name: 'Plano_de_Saude_BR.pdf', lang: 'PT' },
-  { name: 'Group_Life_Contract_SG.pdf', lang: 'EN' },
+  { name: 'Handbook_Poland_2025.pdf', lang: 'PL', icon: FilePdf },
+  { name: 'Contrato_Seguro_Vida_MX.pdf', lang: 'ES', icon: FilePdf },
+  { name: 'Betriebsrente_Richtlinie_DE.docx', lang: 'DE', icon: FileDoc },
+  { name: 'Plano_de_Saude_BR.pdf', lang: 'PT', icon: FilePdf },
 ];
+
 
 function IngestCard() {
   const step = useSequence([1100, 1800, 2500, 3200, 3900]);
   const count = useCountUp(312, 4200, 300);
+
   return (
-    <AppCard>
+    <AppCard className="w-[125%] max-w-[720px] self-center lg:self-start">
       <CardHeader
-        title="Cuido is reading"
+        title="Document Ingestion"
         sub="43 countries · 9 languages"
-        right={<span className="rounded-full bg-[#A0E8AF]/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1C3F60]">Live</span>}
+        right={
+          <span className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Live
+          </span>
+        }
       />
-      <div className="space-y-1 px-3 py-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 px-3 py-4">
         {INGEST_FILES.map((f, i) => {
           const done = step > i;
+          const Icon = f.icon;
           return (
             <motion.div
               key={f.name}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.45 + i * 0.12, duration: 0.5, ease: EASE }}
-              className="flex items-center gap-3 rounded-xl px-2.5 py-2"
+              className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:bg-slate-50/80"
             >
-              <FileText size={16} className="shrink-0 text-slate-400" />
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-slate-500 border border-slate-200 shadow-sm">
+                <Icon size={18} weight="duotone" />
+              </div>
               <div className="min-w-0 flex-1">
-                <div className="truncate text-[12px] font-medium">{f.name}</div>
-                <div className="text-[10px] text-slate-400">
-                  {done ? (f.lang === 'EN' ? 'Structured' : `Translated ${f.lang} → EN · structured`) : 'Reading…'}
+                <div className="truncate text-[13px] font-medium text-slate-700">{f.name}</div>
+                <div className="text-[11px] text-slate-400">
+                  {done ? (
+                    <span className="flex items-center gap-1 text-[#2E8A8A]">
+                      <CheckCircle size={12} weight="fill" /> Structured successfully
+                    </span>
+                  ) : (
+                    'Reading document...'
+                  )}
                 </div>
               </div>
-              <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">{f.lang}</span>
+              <span className="rounded-md bg-slate-50 px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-slate-400 border border-slate-100">
+                {f.lang}
+              </span>
               <span className="flex h-5 w-5 shrink-0 items-center justify-center">
                 {done ? (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2E8A8A] text-white"
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0A1128] text-white"
                   >
-                    <Check size={12} strokeWidth={3} />
+                    <CheckCircle size={14} weight="fill" />
                   </motion.span>
                 ) : (
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-[#2E8A8A]" />
+                  <CircleNotch size={16} className="animate-spin text-slate-300" />
                 )}
               </span>
             </motion.div>
           );
         })}
       </div>
-      <div className="border-t border-slate-100 px-5 py-4">
+      <div className="border-t border-slate-100 bg-white px-5 py-4 rounded-b-[1.5rem]">
         <div className="flex items-end justify-between">
-          <div className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Documents structured</div>
-          <div className="text-2xl font-semibold tabular-nums">{Math.round(count)}</div>
+          <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
+            Total documents structured
+          </div>
+          <div className="text-2xl font-semibold tabular-nums text-slate-800">{Math.round(count)}</div>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#2E8A8A] to-[#A0E8AF]"
+            className="h-full rounded-full bg-slate-800 transition-all duration-300"
             style={{ width: `${(count / 312) * 100}%` }}
           />
         </div>
@@ -359,24 +385,28 @@ const ASK_TYPE_END = 500 + ASK_QUERY.length * 24;
 function AskCard() {
   const typed = useTypewriter(ASK_QUERY, 500, 24);
   const step = useSequence([ASK_TYPE_END + 300, ASK_TYPE_END + 1600]);
+  
   const rows = [
-    { label: 'Your policy', val: '26 weeks · 100% pay', w: 100, color: 'bg-[#2E8A8A]' },
-    { label: 'Statutory minimum', val: '20 weeks · 100% pay', w: 77, color: 'bg-slate-300' },
+    { label: 'Your policy', val: '26 weeks · 100% pay', w: 100, color: 'bg-[#0A1128]' },
+    { label: 'Statutory minimum', val: '20 weeks · 100% pay', w: 77, color: 'bg-slate-200' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Ask Cuido"
         sub="All countries · any language"
-        right={<Languages size={16} className="text-slate-300" />}
       />
-      <div className="min-h-[290px] space-y-3 px-4 py-4 text-[12.5px]">
+      <div className="min-h-[290px] space-y-3 px-5 py-5 text-[12.5px]">
         {typed && (
-          <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-[#0A1128] px-3.5 py-2.5 leading-snug text-white">
+          <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-slate-100 border border-slate-200 px-4 py-3 leading-snug text-slate-700">
             {typed}
-            {step < 1 && <span className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-pulse bg-[#A0E8AF]" />}
+            {step < 1 && (
+              <span className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-pulse bg-[#2E8A8A]" />
+            )}
           </div>
         )}
+        
         <AnimatePresence>
           {step === 1 && (
             <motion.div
@@ -384,29 +414,31 @@ function AskCard() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex w-fit gap-1.5 rounded-2xl rounded-tl-md bg-slate-100 px-4 py-3"
+              className="flex w-fit gap-1.5 rounded-2xl rounded-tl-md bg-slate-50 border border-slate-100 px-4 py-3"
             >
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A] [animation-delay:0.15s]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A] [animation-delay:0.3s]" />
+              <CircleNotch size={14} className="animate-spin text-[#2E8A8A]" />
             </motion.div>
           )}
+        
           {step >= 2 && (
             <motion.div
               key="answer"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-3 rounded-2xl rounded-tl-md bg-slate-50 p-3.5 ring-1 ring-slate-100"
+              className="space-y-4 rounded-2xl rounded-tl-md bg-white p-5 border border-slate-200 shadow-sm"
             >
-              <p className="font-semibold leading-snug">Your policy exceeds the statutory minimum.</p>
-              <div className="space-y-2.5">
+              <p className="font-semibold leading-snug text-slate-800">
+                Your policy exceeds the statutory minimum.
+              </p>
+              
+              <div className="space-y-4">
                 {rows.map((r, i) => (
                   <div key={r.label}>
-                    <div className="mb-1 flex justify-between text-[11px]">
-                      <span className="font-medium text-slate-500">{r.label}</span>
-                      <span className="font-semibold">{r.val}</span>
+                    <div className="mb-2 flex justify-between text-[11px] font-medium">
+                      <span className="text-slate-500">{r.label}</span>
+                      <span className="text-slate-700">{r.val}</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-slate-200/70">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
                       <motion.div
                         initial={{ width: '0%' }}
                         animate={{ width: `${r.w}%` }}
@@ -417,12 +449,13 @@ function AskCard() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[10.5px] font-medium text-[#1C3F60] ring-1 ring-slate-200">
-                  <FileText size={11} /> Polish handbook v2025 · p.14
+
+              <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100">
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-50 border border-slate-200 px-2.5 py-1.5 text-[10.5px] font-medium text-slate-600">
+                  <FileTxt size={12} weight="duotone" /> Polish handbook v2025 · p.14
                 </span>
-                <span className="inline-flex items-center gap-1 text-[10.5px] font-medium text-[#2E8A8A]">
-                  <ShieldCheck size={12} /> Compliant · verified 2 days ago
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-50 border border-slate-200 px-2.5 py-1.5 text-[10.5px] font-medium text-slate-600">
+                  <ShieldCheck size={12} weight="fill" /> Compliant
                 </span>
               </div>
             </motion.div>
@@ -432,6 +465,8 @@ function AskCard() {
     </AppCard>
   );
 }
+
+
 
 // ---------- CARD 3: INVENTORY ----------
 
@@ -446,6 +481,7 @@ const INV_GRID: Cell[][] = [
   ['ok', 'ok', 'gap', 'ok'],
 ];
 
+
 function InventoryCard() {
   const step = useSequence([2200]);
   return (
@@ -453,142 +489,155 @@ function InventoryCard() {
       <CardHeader
         title="Benefits inventory"
         sub="Live · 5 of 43 markets shown"
-        right={<span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Synced</span>}
+        right={
+          <span className="rounded-full border border-slate-200/80 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 shadow-sm">
+            Synced
+          </span>
+        }
       />
-      <div className="px-4 pb-1 pt-4">
-        <div className="grid grid-cols-[92px_repeat(4,1fr)] gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+      <div className="px-5 pb-2 pt-5">
+        <div className="grid grid-cols-[100px_repeat(4,1fr)] gap-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
           <span />
           {INV_COLS.map((col) => (
             <span key={col} className="text-center">{col}</span>
           ))}
         </div>
-        <div className="mt-2 space-y-1.5">
+        
+        <div className="mt-3 space-y-2">
           {INV_ROWS.map((row, r) => (
-            <div key={row} className="grid grid-cols-[92px_repeat(4,1fr)] items-center gap-1.5">
-              <span className="truncate text-[11.5px] font-medium">{row}</span>
+            <div key={row} className="grid grid-cols-[100px_repeat(4,1fr)] items-center gap-2">
+              <span className="truncate text-[11.5px] font-medium text-slate-600">{row}</span>
               {INV_GRID[r].map((cell, c) => (
                 <motion.div
                   key={c}
-                  initial={{ opacity: 0, scale: 0.6 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.35 + (r * 4 + c) * 0.035, duration: 0.4, ease: EASE }}
-                  className={`relative flex h-9 items-center justify-center rounded-lg text-[10px] font-bold ${
+                  transition={{ delay: 0.35 + (r * 4 + c) * 0.03, duration: 0.4, ease: EASE }}
+                  className={`relative flex h-10 items-center justify-center rounded-lg text-[11px] font-semibold transition-colors border ${
                     cell === 'ok'
-                      ? 'bg-[#A0E8AF]/40 text-[#2E8A8A]'
+                      ? 'bg-white border-slate-200 text-slate-400'
                       : cell === 'overlap'
-                      ? 'bg-[#FFC857]/40 text-[#8A5A00]'
-                      : 'bg-rose-100 text-rose-600'
+                      ? 'bg-white border-slate-300 text-slate-800'
+                      : 'bg-white border-slate-300 text-slate-800'
                   }`}
                 >
-                  {cell === 'ok' ? <Check size={13} strokeWidth={3} /> : cell === 'overlap' ? '×2' : '—'}
-                  {cell !== 'ok' && step >= 1 && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 1.8, repeat: Infinity }}
-                      className={`absolute inset-0 rounded-lg ring-2 ${cell === 'overlap' ? 'ring-[#FFC857]' : 'ring-rose-400'}`}
-                    />
-                  )}
+                  {cell === 'ok' && <CheckCircle size={16} weight="duotone" className="text-slate-300" />}
+                  {cell === 'overlap' && <span className="flex items-center gap-1"><Lightning size={12} weight="fill" /> 2x</span>}
+                  {cell === 'gap' && <span className="flex items-center gap-1"><Clock size={12} weight="bold" /> Gap</span>}
                 </motion.div>
               ))}
             </div>
           ))}
         </div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 8 }}
-        className="mx-4 mb-4 mt-3 flex items-start gap-2.5 rounded-xl bg-[#0A1128] p-3 text-[11.5px] leading-snug text-white/70"
+        className="mx-5 mb-5 mt-4 flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 text-[11.5px] leading-snug text-slate-700 shadow-sm"
       >
-        <Sparkles size={14} className="mt-0.5 shrink-0 text-[#A0E8AF]" />
+        <Sparkle size={16} weight="fill" className="mt-0.5 shrink-0 text-amber-500" />
         <span>
-          <b className="text-white">3 overlaps and 2 gaps flagged.</b> Singapore has two vendors covering medical — a consolidation opportunity.
+          <b className="text-amber-900">3 overlaps and 2 gaps flagged.</b> Singapore has two vendors covering medical — a consolidation opportunity.
         </span>
       </motion.div>
     </AppCard>
   );
 }
 
-// ---------- CARD 4: TRUE COST ----------
 
+
+// ---------- CARD 4: TRUE COST ----------
 function CostCard() {
   const step = useSequence([1500, 2800]);
   const amount = useCountUp(1, 1400, 2800);
+
   const parts = [
-    { label: 'Premium', w: 79, color: 'bg-[#1C3F60]' },
-    { label: 'Admin', w: 7, color: 'bg-[#2E8A8A]' },
-    { label: 'Hidden commission', w: 14, color: 'bg-[#FFC857]' },
+    { label: 'Premium', w: 79, color: 'bg-slate-800' },
+    { label: 'Admin', w: 7, color: 'bg-slate-200' },
+    { label: 'Hidden commission', w: 14, color: 'bg-slate-400' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Broker_Agreement_Local.pdf"
         sub="Contract analysis · auto-translated"
         right={
-          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${step >= 1 ? 'bg-[#FFC857]/40 text-[#8A5A00]' : 'bg-slate-100 text-slate-400'}`}>
+          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider transition-colors border ${
+            step >= 1 
+              ? 'border-amber-200 bg-amber-50 text-amber-700' 
+              : 'border-slate-200 bg-slate-50 text-slate-400'
+          }`}>
             {step >= 1 ? '1 flag' : 'Reading'}
           </span>
         }
       />
-      <div className="space-y-2 px-5 py-4">
+      <div className="space-y-2.5 px-6 py-5">
         {[92, 78].map((w, i) => (
           <motion.div
             key={i}
             initial={{ width: '0%' }}
             animate={{ width: `${w}%` }}
             transition={{ delay: 0.4 + i * 0.1, duration: 0.7, ease: EASE }}
-            className="h-2 rounded-full bg-slate-100"
+            className="h-1.5 rounded-full bg-slate-100"
           />
         ))}
-        <div className="relative rounded-lg px-2.5 py-2 text-[12px] leading-snug">
+        
+        <div className="relative rounded-lg px-3 py-2.5 text-[12px] leading-relaxed text-slate-600">
           <motion.span
             aria-hidden
             initial={{ width: '0%' }}
             animate={{ width: step >= 1 ? '100%' : '0%' }}
             transition={{ duration: 0.8, ease: EASE }}
-            className="absolute inset-y-0 left-0 rounded-lg bg-[#FFC857]/40"
+            className="absolute inset-y-0 left-0 rounded-lg bg-slate-100 border border-slate-300"
           />
           <span className="relative">
-            <b>7.3</b> The Insurer shall remit 14% of gross premium to the Broker as a service fee, not itemised on client invoices.
+            <b className="text-slate-800">7.3</b> The Insurer shall remit <b className="text-slate-900 underline decoration-slate-400">14%</b> of gross premium to the Broker as a service fee, not itemised on client invoices.
           </span>
         </div>
+        
         {[84, 60].map((w, i) => (
           <motion.div
             key={i}
             initial={{ width: '0%' }}
             animate={{ width: `${w}%` }}
             transition={{ delay: 0.6 + i * 0.1, duration: 0.7, ease: EASE }}
-            className="h-2 rounded-full bg-slate-100"
+            className="h-1.5 rounded-full bg-slate-100"
           />
         ))}
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: step >= 2 ? 1 : 0, y: step >= 2 ? 0 : 8 }}
-        className="mx-5 flex items-center justify-between rounded-xl bg-[#0A1128] px-4 py-3 text-white"
+        className="mx-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm"
       >
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#FFC857]">Undisclosed commission</div>
-          <div className="text-[11px] text-white/50">Clause 7.3 · local broker contract</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Undisclosed commission</div>
+          <div className="text-[11px] text-slate-400 mt-0.5">Clause 7.3 · local broker contract</div>
         </div>
-        <div className="text-xl font-semibold tabular-nums">
-          ${amount.toFixed(1)}M<span className="text-xs font-normal text-white/50"> / yr</span>
+        <div className="text-2xl font-semibold tabular-nums text-slate-900">
+          ${amount.toFixed(1)}M<span className="text-xs font-normal text-slate-400"> / yr</span>
         </div>
       </motion.div>
-      <div className="px-5 pb-5 pt-4">
-        <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">True cost of the programme</div>
-        <div className="flex h-2.5 gap-0.5 overflow-hidden rounded-full">
+
+      <div className="px-6 pb-6 pt-5">
+        <div className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          True cost of the programme
+        </div>
+        <div className="flex h-2 gap-1 overflow-hidden rounded-full">
           {parts.map((p, i) => (
             <motion.div
               key={p.label}
               initial={{ width: '0%' }}
               animate={{ width: `${p.w}%` }}
               transition={{ delay: 0.8 + i * 0.15, duration: 0.9, ease: EASE }}
-              className={p.color}
+              className={`${p.color} rounded-full`}
             />
           ))}
         </div>
-        <div className="mt-2 flex justify-between text-[10.5px] text-slate-500">
+        <div className="mt-3 flex justify-between text-[10.5px] font-medium text-slate-500">
           {parts.map((p) => (
             <span key={p.label} className="flex items-center gap-1.5">
               <span className={`h-2 w-2 rounded-full ${p.color}`} />
@@ -601,43 +650,51 @@ function CostCard() {
   );
 }
 
-// ---------- CARD 5: VENDORS / RENEWAL ----------
 
+
+// ---------- CARD 5: VENDORS / RENEWAL ----------
 function RenewalCard() {
   const step = useSequence([1600]);
   const quotes = [
-    { label: 'Incumbent broker', val: 'Baseline', w: 100, color: 'bg-slate-300' },
-    { label: 'Cuido benchmark', val: '−26% cost', w: 74, color: 'bg-[#2E8A8A]' },
+    { label: 'Incumbent broker', val: 'Baseline', w: 100, color: 'bg-slate-200' },
+    { label: 'Cuido benchmark', val: '−26% cost', w: 74, color: 'bg-[#0A1128]' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Renewal · Group Life"
         sub="Singapore · renews in 90 days"
-        right={<span className="shrink-0 rounded-full bg-[#A0E8AF]/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1C3F60]">Auto-started</span>}
+        right={
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Auto-started
+          </span>
+        }
       />
-      <div className="px-5 pt-5">
+      <div className="px-6 pt-6">
         <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
           <motion.div
             initial={{ width: '0%' }}
             animate={{ width: '55%' }}
             transition={{ delay: 0.5, duration: 1.4, ease: EASE }}
-            className="h-full rounded-full bg-gradient-to-r from-[#2E8A8A] to-[#A0E8AF]"
+            className="h-full rounded-full bg-[#0A1128]"
           />
         </div>
-        <div className="mt-2 flex justify-between text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+        <div className="mt-3 flex justify-between text-[10px] font-semibold uppercase tracking-wider text-slate-400">
           <span className="text-[#2E8A8A]">Day 90 · Benchmark</span>
           <span>Day 45 · Negotiate</span>
           <span>Day 0 · Renew</span>
         </div>
-        <div className="mt-5 space-y-3">
+        
+        <div className="mt-6 space-y-4">
           {quotes.map((q, i) => (
             <div key={q.label}>
-              <div className="mb-1 flex justify-between text-[11px]">
-                <span className="font-medium text-slate-500">{q.label}</span>
-                <span className="font-semibold">{q.val}</span>
+              <div className="mb-2 flex justify-between text-[11px] font-medium">
+                <span className="text-slate-500">{q.label}</span>
+                <span className="text-slate-800">{q.val}</span>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
                 <motion.div
                   initial={{ width: '0%' }}
                   animate={{ width: `${q.w}%` }}
@@ -649,22 +706,30 @@ function RenewalCard() {
           ))}
         </div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
-        className="mx-5 my-5 flex items-center gap-3 rounded-xl bg-[#0A1128] p-3.5 text-white"
+        className="mx-6 my-6 flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
       >
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#A0E8AF] text-[#0A1128]">
-          <Zap size={16} />
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-800 shadow-sm border border-slate-200">
+          <Lightning size={18} weight="fill" />
         </div>
         <div>
-          <div className="text-[13px] font-semibold leading-tight">$200k/yr redirected to new benefits</div>
-          <div className="mt-0.5 text-[11px] text-white/50">Approved · Friday 16:15</div>
+          <div className="text-[13px] font-semibold leading-tight text-slate-800">
+            $200k/yr redirected to new benefits
+          </div>
+          <div className="mt-1 text-[11px] font-medium text-slate-500">
+            Approved · Friday 16:15
+          </div>
         </div>
       </motion.div>
     </AppCard>
   );
 }
+
+
+
 
 // ---------- CHAPTERS ----------
 
@@ -689,10 +754,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Proya inherits 43 countries of paperwork.',
     body: 'Policies in PDFs. Contracts in six languages. Commission schedules buried in inboxes. Cuido reads, translates and organizes all of it into one authoritative source, before her coffee gets cold.',
     stat: { value: '312', label: 'documents structured in minutes' },
-    accent: '#A0E8AF',
-    scene:
-      'radial-gradient(120% 90% at 85% 10%, rgba(46,138,138,0.55), transparent 55%), radial-gradient(90% 80% at 0% 100%, rgba(28,63,96,0.9), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: IngestCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: IngestCard,
   },
   {
     id: 'ask',
@@ -701,10 +765,9 @@ const CHAPTERS: Chapter[] = [
     title: 'A last-minute question. Answered in seconds.',
     body: 'Warsaw needs the maternity policy before a noon call. Proya asks Cuido in plain English and gets the answer translated, compared to local law, with the source document attached.',
     stat: { value: '6 sec', label: 'from question to cited answer' },
-    accent: '#7FD8CF',
-    scene:
-      'radial-gradient(100% 90% at 80% 20%, rgba(127,216,207,0.28), transparent 55%), radial-gradient(90% 90% at 10% 90%, rgba(46,138,138,0.5), transparent 60%), linear-gradient(160deg,#0B1B2B 0%,#050505 100%)',
-    Card: AskCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: AskCard,
   },
   {
     id: 'inventory',
@@ -713,10 +776,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Every benefit. Every country. One clear picture.',
     body: "For the first time Proya can see what's actually offered, where programs overlap, and where employees aren't covered at all. No more spreadsheets stitched together by hand.",
     stat: { value: '100%', label: 'of benefits inventoried, country by country' },
-    accent: '#D2F898',
-    scene:
-      'radial-gradient(100% 90% at 85% 15%, rgba(210,248,152,0.20), transparent 55%), radial-gradient(90% 90% at 0% 100%, rgba(28,63,96,0.85), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: InventoryCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: InventoryCard,
   },
   {
     id: 'cost',
@@ -725,10 +787,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Hidden commissions have nowhere to hide.',
     body: 'Cuido reads a local broker contract and surfaces a commission that never appeared on the invoice, with the exact clause that proves it. Proya finally sees the true cost of a benefit.',
     stat: { value: '$1M/yr', label: 'undisclosed commission found in one local contract' },
-    accent: '#FFC857',
-    scene:
-      'radial-gradient(90% 90% at 80% 15%, rgba(255,200,87,0.28), transparent 55%), radial-gradient(90% 90% at 5% 100%, rgba(28,63,96,0.85), transparent 60%), linear-gradient(160deg,#120F0A 0%,#050505 100%)',
-    Card: CostCard,
+ accent: '#0A1128',
+  scene: 'transparent',
+      Card: CostCard,
   },
   {
     id: 'vendors',
@@ -737,10 +798,9 @@ const CHAPTERS: Chapter[] = [
     title: 'She walks into the room leading, not chasing.',
     body: 'Ninety days before every renewal, Cuido benchmarks the market. Proya negotiates from evidence, brings brokerage costs down, and redirects the savings to benefits her people actually want.',
     stat: { value: '$1.1M/yr', label: 'brokerage cost reduced across 20 countries' },
-    accent: '#A0E8AF',
-    scene:
-      'radial-gradient(100% 100% at 85% 0%, rgba(160,232,175,0.32), transparent 55%), radial-gradient(100% 90% at 0% 100%, rgba(46,138,138,0.55), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: RenewalCard,
+ accent: '#0A1128',
+  scene: 'transparent', 
+  Card: RenewalCard,
   },
 ];
 
@@ -749,6 +809,7 @@ const slideVariants: Variants = {
   center: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
   exit: (d: number) => ({ opacity: 0, x: d * -80, transition: { duration: 0.28 } }),
 };
+
 
 // ---------- SECTION ----------
 
@@ -782,22 +843,26 @@ function StorySection() {
   };
 
   return (
-    <section id="story" className="relative bg-[#050505] py-28 md:py-36">
+    <section id="story" className="relative bg-white py-28 md:py-36">
       <style>{`@keyframes proya-progress { from { width: 0% } to { width: 100% } }`}</style>
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-[1600px] px-6">
         {/* Heading */}
         <div className="mb-14 max-w-4xl md:mb-20">
-          <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">
-            <span className="h-px w-8 bg-[#A0E8AF]/60" />
-            How Origin works
-          </div>
-          <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-white md:text-7xl">
-            Meet Proya.
-            <br />
-            <span className="text-white/40">Here's her week with Origin.</span>
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg text-white/50 md:text-xl">
+        
+        
+        
+       <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+  <span className="h-px w-8 bg-slate-300" />
+  How Origin works
+</div>
+  <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-[#0A1128] md:text-7xl">
+  Meet Proya.
+  <br />
+  <span className="font-normal text-[#0A1128]/60">Here's her week with Origin.</span>
+</h2>
+<p className="mt-6 max-w-2xl text-lg text-slate-500 md:text-xl">
+
             Proya runs global benefits across 43 countries. From Monday's scramble to Friday's strategy,
             Cuido, Origin's Artificial Benefits Intelligence, is working behind the scenes.
           </p>
@@ -814,7 +879,7 @@ function StorySection() {
           onMouseMove={onMove}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="group relative h-[960px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#050505] shadow-[0_40px_120px_-40px_rgba(46,138,138,0.35)] outline-none focus-visible:ring-2 focus-visible:ring-[#A0E8AF]/60 sm:h-[900px] lg:h-[540px]"
+          className="group relative h-[960px] overflow-hidden rounded-xl border border-[#0a7c83] bg-[#0a7c83] outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:h-[900px] lg:h-[540px]"
         >
           {/* Scene (crossfades) */}
           <AnimatePresence>
@@ -831,34 +896,14 @@ function StorySection() {
               {chapter.image && (
                 <img src={chapter.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
               )}
-              <motion.div
-                className="absolute -right-20 -top-24 h-[420px] w-[420px] rounded-full blur-[110px]"
-                style={{ background: chapter.accent, opacity: 0.2 }}
-                animate={{ x: [0, -50, 0], y: [0, 40, 0] }}
-                transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-              />
+               
             </motion.div>
           </AnimatePresence>
 
-          {/* Dot grid */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.14]"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
-              maskImage: 'linear-gradient(to right, transparent 10%, black 80%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 10%, black 80%)',
-            }}
-          />
+            
 
           {/* Mouse spotlight */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                'radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.07), transparent 45%)',
-            }}
-          />
+            
 
           {/* Slide */}
           {started && (
@@ -877,9 +922,9 @@ function StorySection() {
                   if (info.offset.x < -80) next();
                   else if (info.offset.x > 80) prev();
                 }}
-                className="absolute inset-0 flex flex-col justify-center gap-8 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12 xl:px-16"
+                className="absolute inset-0 flex flex-col justify-center gap-8 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-12 xl:gap-24 xl:px-20"
               >
-                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-white/[0.03]">
+                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-white/[0.05]">
                   0{index + 1}
                 </span>
 
@@ -887,12 +932,10 @@ function StorySection() {
                 <div className="relative z-10 max-w-[480px] lg:max-w-[420px] xl:max-w-[480px]">
                   <Rise>
                     <div
-                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em]"
-                      style={{ color: chapter.accent }}
+                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/70"
                     >
                       <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ background: chapter.accent, boxShadow: `0 0 12px ${chapter.accent}` }}
+                        className="h-1.5 w-1.5 rounded-full bg-white/70"
                       />
                       {chapter.eyebrow}
                     </div>
@@ -903,15 +946,15 @@ function StorySection() {
                     </h3>
                   </Rise>
                   <Rise d={0.16}>
-                    <p className="mt-5 text-[15px] leading-relaxed text-white/65 lg:text-[16px] xl:text-[17px]">
+                    <p className="mt-5 text-[15px] leading-relaxed text-white/70 lg:text-[16px] xl:text-[17px]">
                       {chapter.body}
                     </p>
                   </Rise>
-                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-white/10 pt-6">
-                    <span className="text-3xl font-semibold tracking-tight sm:text-4xl" style={{ color: chapter.accent }}>
+                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-white/20 pt-6">
+                    <span className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                       {chapter.stat.value}
                     </span>
-                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-white/40">
+                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-white/50">
                       {chapter.stat.label}
                     </span>
                   </Rise>
@@ -921,7 +964,7 @@ function StorySection() {
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-10 w-full max-w-[400px] lg:max-w-[380px] lg:shrink-0 xl:max-w-[400px]"
+                  className="relative z-10 w-full max-w-[560px] lg:max-w-[520px] lg:shrink-0 xl:max-w-[580px]"
                 >
                   <Card />
                 </motion.div>
@@ -937,7 +980,7 @@ function StorySection() {
               type="button"
               onClick={prev}
               aria-label="Previous chapter"
-              className="hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/60 transition-colors hover:bg-white/10 hover:text-white sm:flex"
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#0A1128] sm:flex"
             >
               <ArrowLeft size={16} />
             </button>
@@ -955,18 +998,21 @@ function StorySection() {
                     onClick={() => go(i)}
                     style={{ borderRadius: 999 }}
                     transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                    className={`relative flex h-11 items-center overflow-hidden border text-sm font-medium ${
-                      active
-                        ? 'border-white/20 bg-white/10 pl-1.5 pr-5 text-white'
-                        : 'border-white/10 bg-white/[0.03] p-1.5 text-white/50 hover:bg-white/10 hover:text-white'
-                    }`}
+                  
+                 className={`relative flex h-11 items-center overflow-hidden border text-sm font-medium ${
+  active
+    ? 'border-[#0a7c83] bg-white pl-1.5 pr-5 text-[#0a7c83]'
+    : 'border-slate-200 bg-white p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#0a7c83]'
+}`}
+
                   >
                     <motion.span
                       layout="position"
-                      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                        active ? 'bg-[#A0E8AF] text-[#050505]' : ''
-                      }`}
-                    >
+                   className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
+  active ? 'bg-[#0a7c83] text-white' : ''
+}`}
+                  
+                  >
                       {i + 1}
                     </motion.span>
                     {active && (
@@ -983,7 +1029,7 @@ function StorySection() {
                       <span
                         key={index}
                         onAnimationEnd={next}
-                        className="absolute bottom-0 left-0 h-[2px] bg-[#A0E8AF]"
+                        className="absolute bottom-0 left-0 h-[2px] bg-[#0a7c83]"
                         style={{
                           animation: `proya-progress ${CHAPTER_MS}ms linear forwards`,
                           animationPlayState: paused ? 'paused' : 'running',
@@ -999,12 +1045,12 @@ function StorySection() {
               type="button"
               onClick={next}
               aria-label="Next chapter"
-              className="hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/60 transition-colors hover:bg-white/10 hover:text-white sm:flex"
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#0A1128] sm:flex"
             >
               <ArrowRight size={16} />
             </button>
           </div>
-          <p className="text-sm text-white/30">Cuido is Spanish for “I take care.”</p>
+<p className="text-sm text-slate-400">Cuido is Spanish for "I take care."</p>
         </div>
       </div>
     </section>
@@ -1037,7 +1083,7 @@ function CuidoTerminal() {
           
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#2E8A8A] bg-[#2E8A8A]/10 px-4 py-2 text-sm font-bold text-[#A0E8AF]">
-              <MessageSquare size="{16}"/> Natural Language Query
+              <MessageSquare size={16} /> Natural Language Query
             </div>
             <h2 className="mt-8 text-4xl font-bold text-white md:text-5xl">Ask Cuido™.<br/>Get answers instantly.</h2>
             <p className="mt-6 text-xl text-white/60">
@@ -1055,17 +1101,17 @@ function CuidoTerminal() {
             </ul>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#050505] p-2 shadow-2xl">
-            <div className="flex flex-col gap-6 rounded-[1.8rem] border border-white/5 bg-[#111] p-6 lg:p-8">
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-2 shadow-2xl">
+            <div className="flex flex-col gap-6 rounded-[1.8rem] border border-slate-100 bg-slate-50 p-6 lg:p-8">
               
               {/* Header */}
-              <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#A0E8AF] text-[#050505]">
-                  <Sparkles size="{20}"/>
+              <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0A1128] text-white">
+                  <Sparkles size={20}/>
                 </div>
                 <div>
-                  <div className="font-bold text-white">Cuido™ Assistant</div>
-                  <div className="text-xs text-[#A0E8AF]">Online • Context: Global Benefits</div>
+                  <div className="font-bold text-slate-800">Cuido™ Assistant</div>
+                  <div className="text-xs text-emerald-600 font-medium">Online • Context: Global Benefits</div>
                 </div>
               </div>
 
@@ -1077,7 +1123,7 @@ function CuidoTerminal() {
                     <motion.div 
                     key="user-msg" initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-[#1C3F60] p-4 text-white"
+                      className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-[#0A1128] p-4 text-white"
                     >
                       "What is our exact parental leave policy in Poland, and how does it compare to the local statutory requirement?"
                     </motion.div>
@@ -1087,7 +1133,7 @@ function CuidoTerminal() {
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }} 
                       animate={{ opacity: 1, y: 0 }}
-                      key="ai-msg" className="max-w-[90%] rounded-2xl rounded-tl-sm border border-white/10 bg-white/5 p-4 text-white"
+                      key="ai-msg" className="max-w-[90%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-4 text-slate-700 shadow-sm"
                     >
                       {step === 2 ? (
                         <div className="flex gap-2">
@@ -1102,8 +1148,8 @@ function CuidoTerminal() {
                             <li><strong className="text-white">Origin Policy:</strong> 26 weeks paid at 100%.</li>
                             <li><strong className="text-white">Statutory:</strong> 20 weeks at 100% (or 32 weeks at 81.5%).</li>
                           </ul>
-                          <div className="rounded-lg bg-[#2E8A8A]/20 p-3 text-xs text-[#A0E8AF]">
-                            <ShieldCheck className="inline mr-1" size="{14}"/> Fully compliant. Last verified: 2 days ago.
+                          <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-700">
+                            <ShieldCheck className="inline mr-1" size={14}/> Fully compliant. Last verified: 2 days ago.
                           </div>
                         </div>
                       )}
@@ -1125,13 +1171,18 @@ function CuidoTerminal() {
 // ==========================================
 // IMPACT — STATS + TESTIMONIALS (WHITE SECTION)
 // ==========================================
+
+
+// ==========================================
+// IMPACT — STATS + TESTIMONIALS (WHITE SECTION)
+// ==========================================
+
 type Testimonial = {
   name: string;
   role: string;
   initials: string;
   quote: string;
   context: string;
-  company: string; // Added for enterprise logo feel
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -1141,7 +1192,6 @@ const TESTIMONIALS: Testimonial[] = [
     initials: 'RH',
     quote: '…already identified around £150-200,000 worth of savings.',
     context: 'On what Origin uncovered across a large Singapore operation.',
-    company: 'SIGMA CONNECTED'
   },
   {
     name: 'Amy Manning',
@@ -1149,7 +1199,6 @@ const TESTIMONIALS: Testimonial[] = [
     initials: 'AM',
     quote: 'Time is money and Origin helps with speed.',
     context: 'On pairing strong technology with real benefits expertise.',
-    company: 'BRITISH AIRWAYS'
   },
   {
     name: 'Angela Sim',
@@ -1157,7 +1206,6 @@ const TESTIMONIALS: Testimonial[] = [
     initials: 'AS',
     quote: 'We have over 520 policies around the world…',
     context: 'On keeping leave policies current as local laws change, and reading them all in English.',
-    company: 'HALFORDS'
   },
   {
     name: 'Carolina Vertel',
@@ -1165,7 +1213,6 @@ const TESTIMONIALS: Testimonial[] = [
     initials: 'CV',
     quote: '…urgent questions about how we operate in different countries.',
     context: 'On why one global view of benefits matters.',
-    company: 'PLEO'
   },
   {
     name: 'Katie Archer',
@@ -1173,330 +1220,409 @@ const TESTIMONIALS: Testimonial[] = [
     initials: 'KA',
     quote: '…empowered to shift from being reactive … to being proactive and more strategic.',
     context: 'On moving from gathering information to shaping what employees are offered.',
-    company: 'WPP'
   },
 ];
 
-
-type StatTone = 'light' | 'teal' | 'amber';
-
-const STAT_STYLES: Record<StatTone, { card: string; num: string; label: string }> = {
-  light: {
-    card: 'bg-white border border-slate-200 shadow-sm',
-    num: 'text-[#0A1128]',
-    label: 'text-slate-500',
-  },
-  teal: {
-    card: 'bg-[#F8FCFB] border border-[#D6EBDD] shadow-sm',
-    num: 'text-[#2E8A8A]',
-    label: 'text-slate-500',
-  },
-  amber: {
-    card: 'bg-[#FFFDF8] border border-[#F6E3B0] shadow-sm',
-    num: 'text-[#0A1128]',
-    label: 'text-slate-500',
-  },
-};
-
-function StatCard({
+function Stat({
   i,
-  tone,
   to,
   decimals = 0,
   suffix,
   label,
-  children,
 }: {
   i: number;
-  tone: StatTone;
   to: number;
   decimals?: number;
   suffix: string;
   label: string;
-  children: ReactNode;
 }) {
-  const s = STAT_STYLES[tone];
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-      className={`relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-2xl p-8 ${s.card}`}
+      transition={{ duration: 0.8, delay: i * 0.15, ease: EASE }}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50 p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-1 hover:border-[#2E8A8A]/30 hover:shadow-[0_20px_40px_-12px_rgba(46,138,138,0.12)]"
     >
-      <div className="h-24">{children}</div>
-      <div>
-        <div className={`text-5xl font-semibold tracking-tight xl:text-6xl ${s.num}`}>
-          <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.5} />
-          <span className="ml-1 text-xl font-medium text-slate-400">/yr</span>
+      {/* Subtle top accent line on hover */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2E8A8A] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      
+      <div className="flex flex-col gap-2">
+        <div className="flex items-baseline gap-2">
+          <span className="text-5xl font-bold tracking-tighter text-[#0A1128] xl:text-6xl">
+            <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.8} />
+          </span>
+          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 group-hover:bg-[#A0E8AF]/20 group-hover:text-[#2E8A8A] transition-colors duration-300">
+            / yr
+          </span>
         </div>
-        <p className={`mt-4 max-w-[270px] text-[15px] leading-relaxed ${s.label}`}>{label}</p>
+        <p className="mt-4 max-w-[260px] text-[15px] font-medium leading-relaxed text-slate-500 group-hover:text-slate-700 transition-colors">
+          {label}
+        </p>
       </div>
     </motion.div>
   );
 }
 
-
-const BAR_H = [28, 40, 34, 56, 72, 92];
-
-
-function Avatar({ initials, active = true, big = false }: { initials: string; active?: boolean; big?: boolean }) {
-  return (
-    <div
-      className={`flex shrink-0 items-center justify-center rounded-full font-semibold ${
-        big ? 'h-14 w-14 text-lg' : 'h-12 w-12 text-sm'
-      } ${active ? 'bg-[#0A1128] text-[#A0E8AF]' : 'bg-slate-100 text-slate-400'}`}
-    >
-      {initials}
-    </div>
-  );
-}
-
-function TestimonialShowcase() {
-  const [active, setActive] = useState(0);
-  const t = TESTIMONIALS[active];
+function TestimonialRow() {
+  const scroller = useRef<HTMLDivElement>(null);
+  const scrollBy = (dir: number) =>
+    scroller.current?.scrollBy({ left: dir * 380, behavior: 'smooth' });
 
   return (
-    <div className="mt-20 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
-      {/* Featured Quote - Left Side */}
-      <div className="relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm md:p-12">
+    <div className="mt-32">
+      <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-6">
         <div>
-          <div className="mb-8 text-sm font-bold tracking-widest text-slate-400 uppercase">
-            {t.company}
-          </div>
-          <p className="text-2xl font-medium leading-snug tracking-tight text-[#0A1128] md:text-3xl lg:text-[32px]">
-            “{t.quote}”
-          </p>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-slate-500">{t.context}</p>
+          <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A] mb-3">Testimonials</div>
+          <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+            What benefits leaders say
+          </h3>
         </div>
-        
-        <div className="mt-12 flex items-center gap-4 border-t border-slate-100 pt-8">
-          <Avatar initials={t.initials} big />
-          <div>
-            <div className="font-semibold text-[#0A1128]">{t.name}</div>
-            <div className="text-sm text-slate-500">{t.role}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* People Picker - Right Side */}
-      <div className="flex flex-col gap-2">
-        {TESTIMONIALS.map((p, i) => {
-          const on = i === active;
-          return (
-            <button
-              key={p.name}
-              type="button"
-              onClick={() => setActive(i)}
-              className={`flex items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-200 ${
-                on
-                  ? 'border-[#0A1128] bg-[#0A1128] shadow-md'
-                  : 'border-transparent bg-slate-50 hover:bg-slate-100'
-              }`}
-            >
-              <Avatar initials={p.initials} active={on} />
-              <div className="min-w-0">
-                <div className={`text-[15px] font-semibold ${on ? 'text-white' : 'text-[#0A1128]'}`}>
-                  {p.name}
-                </div>
-                <div className={`truncate text-[13px] ${on ? 'text-white/60' : 'text-slate-500'}`}>
-                  {p.role}
-                </div>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function ImpactSection() {
-  return (
-    <section id="impact" className="relative bg-white py-28 md:py-36">
-      <div className="relative mx-auto max-w-7xl px-6">
-        {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#2E8A8A]">
-            <span className="h-px w-8 bg-[#2E8A8A]/30" />
-            Origin's impact
-            <span className="h-px w-8 bg-[#2E8A8A]/30" />
-          </div>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-[#0A1128] md:text-5xl lg:text-6xl">
-            Real teams. <span className="text-[#2E8A8A]">Real savings.</span>
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-slate-500 md:text-xl">
-            Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="mt-16 grid gap-6 lg:grid-cols-3">
-          <StatCard i={0} tone="teal" to={200} suffix="k" label="saved and redirected to new benefits">
-            <div className="flex h-24 items-end gap-2">
-              {BAR_H.map((h, k) => (
-                <motion.div
-                  key={k}
-                  initial={{ height: 0 }}
-                  whileInView={{ height: h }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + k * 0.08, duration: 0.7, ease: EASE }}
-                  className={`w-7 rounded-t-md ${
-                    k === BAR_H.length - 1 ? 'bg-[#2E8A8A]' : 'bg-[#2E8A8A]/20'
-                  }`}
-                />
-              ))}
-            </div>
-          </StatCard>
-
-          <StatCard i={1} tone="light" to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries">
-            <div className="grid h-24 grid-cols-[repeat(10,14px)] content-end gap-2">
-              {Array.from({ length: 20 }).map((_, k) => (
-                <motion.span
-                  key={k}
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + k * 0.04, duration: 0.35 }}
-                  className={`h-3.5 w-3.5 rounded-full ${k % 3 === 0 ? 'bg-[#2E8A8A]' : 'bg-slate-200'}`}
-                />
-              ))}
-            </div>
-          </StatCard>
-
-          <StatCard i={2} tone="amber" to={1} suffix="M" label="of undisclosed commission found in one local contract">
-            <div className="flex h-24 flex-col justify-end gap-2.5">
-              <div className="h-2 w-[85%] rounded-full bg-slate-100" />
-              <div className="relative h-6 w-full">
-                <motion.div
-                  initial={{ width: '0%' }}
-                  whileInView={{ width: '100%' }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.9, ease: EASE }}
-                  className="absolute inset-y-0 left-0 rounded-md bg-[#FFC857]/40"
-                />
-                <div className="absolute inset-x-2 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[#0A1128]/30" />
-              </div>
-              <div className="h-2 w-[65%] rounded-full bg-slate-100" />
-            </div>
-          </StatCard>
-        </div>
-
-        {/* Testimonials */}
-        <TestimonialShowcase />
-
-        {/* CTA */}
-        <div className="mt-20 flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200 bg-slate-50 px-8 py-10 md:flex-row md:items-center md:px-12">
-          <div>
-            <div className="text-2xl font-semibold tracking-tight text-[#0A1128]">See what Origin could find in your benefits.</div>
-            <div className="mt-2 text-slate-500">Talk to the team about your own numbers.</div>
-          </div>
+        <div className="hidden gap-3 sm:flex">
           <button
             type="button"
-            className="group inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-[#0A1128] px-7 font-semibold text-white transition-all hover:bg-[#1C3F60]"
+            onClick={() => scrollBy(-1)}
+            aria-label="Previous"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
           >
-            Let's have a chat
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            <ArrowLeft size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollBy(1)}
+            aria-label="Next"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
+          >
+            <ArrowRight size={18} />
           </button>
         </div>
       </div>
-    </section>
+
+      <div
+        ref={scroller}
+        className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {TESTIMONIALS.map((t, i) => (
+          <motion.figure
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+            key={t.name}
+            className="group relative flex h-[400px] w-[calc((100%-4.5rem)/4)] min-w-[320px] shrink-0 snap-start flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#2E8A8A]/30 hover:shadow-[0_24px_50px_-12px_rgba(46,138,138,0.15)]"
+          >
+            {/* Decorative Quote Mark */}
+            <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-slate-100/80 select-none group-hover:text-[#A0E8AF]/40 transition-colors duration-500">
+              &ldquo;
+            </div>
+
+            <blockquote className="relative z-10">
+              <p className="text-[20px] font-medium leading-snug tracking-tight text-[#0A1128]">
+                “{t.quote}”
+              </p>
+              <p className="mt-5 text-[14px] leading-relaxed text-slate-500">{t.context}</p>
+            </blockquote>
+            
+            <figcaption className="relative z-10 mt-8 flex items-center gap-4 border-t border-slate-100 pt-6 group-hover:border-slate-200 transition-colors">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#0A1128] to-[#1C3F60] text-[13px] font-bold text-white shadow-inner ring-2 ring-white">
+                {t.initials}
+              </div>
+              <div className="min-w-0">
+                <div className="text-[15px] font-semibold text-[#0A1128]">{t.name}</div>
+                <div className="line-clamp-2 text-[13px] leading-snug text-slate-500">{t.role}</div>
+              </div>
+            </figcaption>
+          </motion.figure>
+        ))}
+      </div>
+    </div>
   );
 }
 
-
-
-
-
-// ==========================================
-// PLATFORM BENTO GRID
-// ==========================================
-
-function BentoGrid() {
+function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
   return (
-    <section id="platform" className="bg-[#050505] py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">Infrastructure for modern leaders.</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-xl text-white/50">Everything required to govern, analyze, and optimize your global benefits footprint.</p>
+    <section id="impact" className="relative bg-white pt-28 pb-32 md:pt-36 md:pb-40">
+      
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      
+      {/* Top Half: Grey Background */}
+      <div className="absolute top-0 left-0 right-0 h-[55%] bg-[#f7f9f2] -z-10" />
+      
+      <div className="mx-auto max-w-[1600px] px-6">
+        {/* Heading */}
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <div className="mb-6 flex items-center justify-center gap-4">
+              <span className="h-px w-12 bg-slate-300" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A]">
+                Proven Impact
+              </span>
+              <span className="h-px w-12 bg-slate-300" />
+            </div>
+            
+            <h2 className="text-5xl font-semibold leading-[1.08] tracking-tight text-[#0A1128] md:text-7xl">
+              Real teams. <span className="text-slate-400">Real savings.</span>
+            </h2>
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-500 md:text-xl">
+              Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-6 md:grid-cols-3 md:grid-rows-2">
-          {FEATURES.map((feature, i) => (
-            <motion.div 
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`group relative overflow-hidden rounded-[2rem] border border-white/10 ${feature.bg} ${feature.colSpan} p-8 transition-colors hover:border-white/20`}
-            >
-              <feature.icon className="h-8 w-8 text-[#A0E8AF]" />
-              <h3 className="mt-16 text-2xl font-bold text-white">{feature.title}</h3>
-              <p className="mt-4 text-white/60">{feature.desc}</p>
-              
-              {/* Decorative Background Elements based on item */}
-              {i === 0 && (
-                <div className="absolute -bottom-10 -right-10 opacity-20 transition-transform duration-700 group-hover:scale-110">
-                  <Globe size="{240}" strokeWidth="{0.5}"/>
-                </div>
-              )}
-            </motion.div>
-          ))}
+        {/* Stats Grid */}
+        <div className="mt-20 grid gap-6 md:grid-cols-3">
+          <Stat i={0} to={200} suffix="k" label="saved and redirected to new benefits" />
+          <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries" />
+          <Stat i={2} to={1} suffix="M" label="of undisclosed commission found in one local contract" />
         </div>
+
+        {/* Testimonials */}
+        <TestimonialRow />
+
+        {/* Premium Calculator CTA Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: EASE }}
+    className="mt-16 relative overflow-hidden rounded-xl bg-[#0a7c83]"
+        >
+
+
+
+          {/* Subtle inner glow for depth */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
+          
+          {/* Abstract Background Watermark */}
+          <div className="pointer-events-none absolute -right-10 -bottom-10 opacity-[0.03] text-white">
+            <BarChart3 size={400} strokeWidth={0.5} />
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center justify-between gap-10 p-10 md:flex-row md:p-16 lg:p-20">
+            <div className="max-w-2xl text-center md:text-left">
+              
+              {/* Refined Editorial Label instead of ugly pill */}
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
+                <BarChart3 size={14} className="text-[#FAFAFA]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#fafafa]">
+                  ROI Estimator
+                </span>
+              </div>
+              
+             <h3 className="max-w-md text-4xl font-semibold tracking-tight text-white md:text-5xl">
+  How much could you be saving?
+</h3>
+              <p className="mt-5 text-lg leading-relaxed text-white/70 max-w-2xl">
+                Model your enterprise optimization potential. Our calculator uses real-world benchmarks from global benefits data to estimate your hidden leakage.
+              </p>
+            </div>
+            
+            {/* Refined Premium Button */}
+            <button
+              onClick={onOpenCalculator}
+              className="group relative inline-flex h-14 shrink-0 items-center gap-3 rounded-md border border-white/20 bg-white/5 px-8 text-[15px] font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-[#A0E8AF] hover:bg-[#A0E8AF] hover:text-[#0A1128]"
+            >
+              <span className="relative z-10">Calculate your savings</span>
+              <ArrowRight size={18} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
 // ==========================================
-// C-SUITE ROI CALCULATOR
+// PREMIUM SAVINGS CALCULATOR MODAL
 // ==========================================
 
-function ROICalculator() {
+function SavingsCalculator({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [employees, setEmployees] = useState(5000);
-  const averageBenefitCost = 15000; // Arbitrary enterprise avg
-  const optimizationRate = 0.08; // 8% avg savings found by Origin
+  const [avgCost, setAvgCost] = useState(15000);
+  const [countries, setCountries] = useState(15);
   
-  const estimatedSavings = employees * averageBenefitCost * optimizationRate;
+  // Enhanced logic for a more realistic enterprise model
+  const baseOptimizationRate = 0.08; 
+  const complexityFactor = 1 + (countries * 0.005); // More countries = more fragmentation = more savings
+  const optimizationRate = Math.min(baseOptimizationRate * complexityFactor, 0.15); // Cap at 15%
+  
+  const estimatedSavings = employees * avgCost * optimizationRate;
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#050505] to-[#0A1128] py-32">
-      <div className="mx-auto max-w-4xl px-6">
-        <div className="rounded-[3rem] border border-[#2E8A8A]/30 bg-gradient-to-br from-[#1C3F60]/40 to-transparent p-10 text-center shadow-[0_0_80px_-20px_#1C3F60] backdrop-blur-xl md:p-20">
-          <Lock className="mx-auto h-12 w-12 text-[#A0E8AF]"/>
-          <h2 className="mt-6 text-3xl font-bold text-white md:text-5xl">Calculate your hidden leakage.</h2>
-          <p className="mt-4 text-white/60">On average, global enterprises overpay by 8% due to fragmented data, hidden commissions, and overlapping coverage.</p>
-          
-          <div className="mt-16 space-y-8">
-            <div className="flex items-center justify-between text-sm font-bold uppercase tracking-wider text-[#A0E8AF]">
-              <span>Global Headcount</span>
-              <span>{employees.toLocaleString()} Employees</span>
+    <AnimatePresence>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0A1128]/60 p-4 backdrop-blur-md"
+        onClick={onClose}
+      >
+        <motion.div 
+          initial={{ scale: 0.95, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.95, opacity: 0, y: 20 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative flex w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl"
+        >
+          {/* Close Button */}
+          <button 
+            onClick={onClose}
+            className="absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 hover:text-[#0A1128]"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+
+          {/* Left Column: Inputs */}
+          <div className="flex w-full flex-col p-10 md:w-1/2 md:p-14">
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#fafafa]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#fafafa]">
+                <BarChart3 size={14} /> ROI Estimator
+              </div>
+              <h3 className="mt-6 text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+                Model your savings.
+              </h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
+                Adjust the variables below to see how Origin can impact your bottom line.
+              </p>
             </div>
-            
-            <input 
-              type="range" 
-              min="1000" 
-              max="50000" 
-              step="500"
-              value={employees}
-              onChange={(e) => setEmployees(Number(e.target.value))}
-              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#A0E8AF]"
-            />
-            
-            <div className="rounded-2xl bg-[#050505]/50 p-8 border border-white/5">
-              <div className="text-sm font-medium text-white/50">Estimated Annual Optimization Potential</div>
-              <div className="mt-2 text-5xl font-bold text-white md:text-7xl">
-                $<AnimatedCounter to={estimatedSavings / 1000000} decimals={1} duration={1} from={0} suffix="M" />
+
+            <div className="flex-1 space-y-10">
+              {/* Slider 1 */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+                    Global Headcount
+                  </label>
+                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
+                    {employees.toLocaleString()}
+                  </span>
+                </div>
+                <input 
+                  type="range" min="1000" max="50000" step="500"
+                  value={employees}
+                  onChange={(e) => setEmployees(Number(e.target.value))}
+                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+                />
+                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
+                  <span>1,000</span>
+                  <span>50,000+</span>
+                </div>
+              </div>
+
+              {/* Slider 2 */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+                    Avg. Cost per Employee
+                  </label>
+                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
+                    ${avgCost.toLocaleString()}
+                  </span>
+                </div>
+                <input 
+                  type="range" min="5000" max="30000" step="1000"
+                  value={avgCost}
+                  onChange={(e) => setAvgCost(Number(e.target.value))}
+                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+                />
+                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
+                  <span>$5,000</span>
+                  <span>$30,000+</span>
+                </div>
+              </div>
+
+              {/* Slider 3 */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
+                    Countries with Employees
+                  </label>
+                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
+                    {countries}
+                  </span>
+                </div>
+                <input 
+                  type="range" min="1" max="100" step="1"
+                  value={countries}
+                  onChange={(e) => setCountries(Number(e.target.value))}
+                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+                />
+                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
+                  <span>1</span>
+                  <span>100+</span>
+                </div>
               </div>
             </div>
           </div>
-          
-        </div>
-      </div>
-    </section>
+
+          {/* Right Column: Results & CTA */}
+          <div className="relative flex w-full flex-col justify-between bg-[#0A1128] p-10 text-white md:w-1/2 md:p-14">
+            {/* Decorative background element */}
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#2E8A8A]/20 blur-[100px]" />
+            
+            <div className="relative z-10">
+              <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50">
+                Estimated Annual Optimization
+              </h4>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="text-6xl font-bold tracking-tight text-[#A0E8AF] md:text-7xl">
+                  $<AnimatedCounter to={estimatedSavings / 1000000} decimals={1} duration={1.2} from={0} suffix="M" />
+                </span>
+                <span className="text-lg font-medium text-white/40">/yr</span>
+              </div>
+              <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-white/60">
+                Based on an estimated {((optimizationRate)*100).toFixed(1)}% optimization rate. This accounts for fragmented data, hidden commissions, and overlapping coverage across {countries} {countries === 1 ? 'country' : 'countries'}.
+              </p>
+
+              <div className="mt-10 space-y-4 border-t border-white/10 pt-8">
+                <div className="flex items-center justify-between text-[14px]">
+                  <span className="text-white/50">Total Benefit Spend</span>
+                  <span className="font-medium text-white">${((employees * avgCost) / 1000000).toFixed(1)}M</span>
+                </div>
+                <div className="flex items-center justify-between text-[14px]">
+                  <span className="text-white/50">Optimization Rate</span>
+                  <span className="font-medium text-[#A0E8AF]">{((optimizationRate)*100).toFixed(1)}%</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-12">
+              <button 
+                onClick={onClose}
+                className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#A0E8AF] px-8 py-4 text-[16px] font-semibold text-[#0A1128] transition-all hover:bg-[#8ED9A0] hover:shadow-lg"
+              >
+                Discuss your results with our team
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+              </button>
+              <p className="mt-4 text-center text-xs text-white/40">
+                This is an estimate. Actual savings depend on your specific vendor contracts.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
+
 
 // ==========================================
 // ENTERPRISE TRUST & FOOTER
@@ -1531,7 +1657,7 @@ function Footer() {
         <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">
             <div className="flex items-center gap-2 text-white">
-              <Globe className="text-[#A0E8AF]" size="{24}"/>
+              <Globe className="text-[#A0E8AF]" size={24} />
               <span className="text-2xl font-bold tracking-tight">origin</span>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/50">
@@ -1582,25 +1708,976 @@ function CheckIcon(props: any) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12" /></svg>;
 }
 
+ 
+
+
+
+
+// ==========================================
+// SECURITY SECTION
+// ==========================================
+
+const SECURITY_ITEMS = [
+  {
+    icon: ShieldCheck,
+    title: 'Aligned to ISO 27001',
+    desc: 'Security practices follow ISO 27001, the international standard for information security management.',
+  },
+  {
+    icon: Lock,
+    title: 'Secure cloud hosting',
+    desc: 'Client data is stored on secure servers managed by cloud providers, in line with international data protection laws.',
+  },
+  {
+    icon: Users,
+    title: 'You stay in control',
+    desc: 'Data can be deleted on verified request from your authorised representatives.',
+  },
+  {
+    icon: Globe,
+    title: 'Your platform, your infrastructure',
+    desc: 'Origin is the source of truth for benefits data, passing verified information to the systems in your landscape that need it.',
+  },
+];
+
+
+// ==========================================
+// COMMUNITY & TEAM SECTION
+// ==========================================
+
+const TEAM_MEMBERS = [
+  { name: 'Chris Bruce', role: 'CEO, Founding Team', image: 'https://i.pravatar.cc/150?u=1' },
+  { name: 'Pete Craghill', role: 'CSO, Founding Team', image: 'https://i.pravatar.cc/150?u=2' },
+  { name: 'James Akers', role: 'SVP Product, Founding Team', image: 'https://i.pravatar.cc/150?u=3' },
+  { name: 'Dan Watmore', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=4' },
+  { name: 'Cristi Miron', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=5' },
+  { name: 'Helena Sundhagen', role: 'Head of Client Experience', image: 'https://i.pravatar.cc/150?u=6' },
+  { name: 'Yanick Chavancy', role: 'SVP of Insights', image: 'https://i.pravatar.cc/150?u=7' },
+  { name: 'Jamie Fitt', role: 'SVP Strategic Growth', image: 'https://i.pravatar.cc/150?u=8' },
+  { name: 'Dave Healy', role: 'Global Head of Sales', image: 'https://i.pravatar.cc/150?u=9' },
+  { name: 'Charlotte Irving', role: 'Head of Marketing', image: 'https://i.pravatar.cc/150?u=10' },
+];
+
+function CommunitySection() {
+  const scroller = useRef<HTMLDivElement>(null);
+  const scrollBy = (dir: number) =>
+    scroller.current?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+
+  return (
+    <section id="community" className="relative bg-white py-28 md:py-36 overflow-hidden">
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      
+      <div className="mx-auto max-w-[1600px] px-6">
+        
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="mb-14 max-w-3xl"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-8 bg-slate-300" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
+              Our People
+            </span>
+          </div>
+          <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
+            Meet a few of our <span className="text-slate-400">Originals.</span>
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">
+            Origin is built by people who want to make a difference, and who want to do things differently. Real people who care about doing the right thing, on a journey to help benefits professionals truly understand every aspect of their benefits offering.
+          </p>
+        </motion.div>
+
+        {/* Team Carousel */}
+        <div className="relative">
+          <div
+            ref={scroller}
+            className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {TEAM_MEMBERS.map((member, i) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
+                className="group relative flex w-[200px] shrink-0 snap-start flex-col gap-4"
+              >
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-[15px] font-semibold text-[#0A1128]">{member.name}</h3>
+                  <p className="text-[13px] leading-snug text-slate-500">{member.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Carousel Nav */}
+          <div className="absolute -top-16 right-0 hidden gap-3 sm:flex">
+            <button
+              type="button"
+              onClick={() => scrollBy(-1)}
+              aria-label="Previous"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy(1)}
+              aria-label="Next"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Community & Summit Split */}
+        <div className="mt-24 grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+          
+          {/* Left: Testimonial / Quote */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="flex flex-col justify-center"
+          >
+            <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+              When you join us, you join a community.
+            </h3>
+            <p className="mt-6 text-lg leading-relaxed text-slate-500">
+              When you join Origin, you're not just buying software. You're joining a community of like-minded innovators. We bring together benefits leaders who are rewriting the rules, with an innovative client experience, exclusive events, real conversations, and a space to share ideas, challenges, and progress.
+            </p>
+            
+            <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50/50 p-8 relative overflow-hidden">
+              <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-[#0a7c83]/10 select-none">
+                &ldquo;
+              </div>
+              <blockquote className="relative z-10">
+                <p className="text-[18px] font-medium leading-snug tracking-tight text-[#0A1128]">
+                  “I'm really excited to work with the Origin team and be at the forefront of challenging the employee benefits world, disrupting the age-old industry and working with an organization that can make decisions and changes quickly.”
+                </p>
+                <footer className="mt-6 flex items-center gap-4 border-t border-slate-200 pt-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0A1128] text-[12px] font-bold text-white">
+                    RH
+                  </div>
+                  <div>
+                    <div className="text-[14px] font-semibold text-[#0A1128]">Rob Hamer</div>
+                    <div className="text-[13px] text-slate-500">Global Benefits Lead</div>
+                  </div>
+                </footer>
+              </blockquote>
+            </div>
+          </motion.div>
+
+          {/* Right: Summit Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+            className="relative aspect-square overflow-hidden rounded-3xl bg-[#0a7c83] shadow-2xl flex flex-col items-center justify-center text-center p-12"
+          >
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+            
+            <div className="relative z-10">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A0E8AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <h4 className="text-4xl font-bold tracking-tight text-white mb-2">ORIGIN</h4>
+              <h5 className="text-2xl font-light tracking-[0.2em] text-[#A0E8AF] mb-6">SUMMIT</h5>
+              <p className="text-white/80 font-medium tracking-wider uppercase text-sm">Nashville 2026</p>
+            </div>
+          </motion.div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+
+function SecuritySection() {
+  return (
+    <section id="security" className="relative overflow-hidden bg-black py-28 md:py-40">
+      {/* Simple top hairline separator */}
+       
+
+      <div className="relative mx-auto max-w-[1600px] px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="grid gap-10 lg:grid-cols-2 lg:items-end"
+        >
+          <div>
+            <div className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] text-white/45">
+              <span className="h-px w-8 bg-white/25" />
+              Security and data
+            </div>
+            <h2 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-white md:text-6xl">
+              Your data.
+              <br />
+              <span className="text-white/45">Protected by design.</span>
+            </h2>
+          </div>
+          <p className="max-w-lg text-lg leading-relaxed text-white/55 lg:justify-self-end">
+            Benefits data spans contracts, costs and people. Origin is built to keep it secure, and to make security
+            reviews straightforward for your IT and procurement teams.
+          </p>
+        </motion.div>
+
+        {/* Points */}
+        <div className="mt-20 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          {SECURITY_ITEMS.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: EASE }}
+                className="border-t border-white/10 pt-8 transition-colors duration-500 hover:border-white/40"
+              >
+                <Icon size={22} strokeWidth={1.5} className="text-white/70" />
+                <h3 className="mt-12 text-lg font-medium tracking-tight text-white">{item.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-white/50">{item.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Footer line */}
+        <div className="mt-24 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center">
+          <p className="max-w-xl text-[15px] leading-relaxed text-white/50">
+            Need details for a security review? The team can walk your IT and procurement teams through how Origin
+            handles your data.
+          </p>
+          
+          <a  href="#contact"
+            className="group inline-flex items-center gap-2 border-b border-white/30 pb-0.5 text-[15px] font-medium text-white transition-colors hover:border-white"
+          >
+            Talk to us about security
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+// ==========================================
+// FAQ SECTION
+// ==========================================
+
+type Faq = { tag: string; q: string; a: string; cta?: string };
+
+const FAQS: Faq[] = [
+  {
+    tag: 'Implementation',
+    q: 'How long does implementation take?',
+    a: 'You start with the documents you already have: policies, contracts, commission schedules and vendor information. Cuido ingests, translates and organizes them into one source of truth. Timelines depend on the number of countries and the volume of documents, so the team scopes a plan with you before you commit.',
+    cta: 'Get a scoped timeline',
+  },
+  {
+    tag: 'Languages',
+    q: 'Which languages does Origin support?',
+    a: 'Cuido ingests, translates and organizes data in any language. Local policies and contracts can stay in their original language while your global team reads and queries them in English.',
+  },
+  {
+    tag: 'Data residency',
+    q: 'Where is our data stored?',
+    a: 'Client data is stored on secure servers managed by cloud providers, in line with international data protection laws. If you have specific residency requirements, raise them early so they can be covered in your security review.',
+    cta: 'Discuss your requirements',
+  },
+  {
+    tag: 'Security',
+    q: 'Which security standards does Origin follow?',
+    a: 'Origin’s security practices are aligned to ISO 27001, the international standard for information security management. For certification documents and your security questionnaire, the team can work directly with your IT and procurement teams.',
+    cta: 'Request security details',
+  },
+  {
+    tag: 'Integration',
+    q: 'How does Origin fit with our existing systems?',
+    a: 'Origin is designed as your source of truth for benefits data, passing verified information to the systems in your landscape that need it. It is built to work alongside your existing platforms rather than replace them. Specific connections are confirmed during scoping.',
+  },
+  {
+    tag: 'Stakeholders',
+    q: 'Who in our organisation will use it?',
+    a: 'Origin is built around the whole benefits ecosystem: global and local benefits teams, HR leaders and shared services, and functions such as procurement, finance, risk and legal. It also supports partners such as benefit administrators, local brokers, global consultants and vendors.',
+  },
+  {
+    tag: 'Vendors',
+    q: 'Does Origin replace our brokers or consultants?',
+    a: 'No. Origin gives you visibility into every vendor, cost, fee and commission, so you manage those relationships with evidence rather than assumption. Your advisers keep their role, and you gain the data to hold them to it.',
+  },
+  {
+    tag: 'Data control',
+    q: 'Can we have our data deleted?',
+    a: 'Yes. Data can be deleted on verified request from your authorised representatives, sent to privacy@originbenefits.com. Retention terms are set out in Origin’s privacy policy.',
+  },
+];
+
+
+function FaqRow({
+  faq,
+  index,
+  open,
+  onToggle,
+}: {
+  faq: Faq;
+  index: number;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="group border-b border-slate-100 last:border-b-0">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-start gap-6 py-8 text-left md:gap-10"
+      >
+        {/* Index Number */}
+        <span className="mt-1 w-4 shrink-0 text-[13px] font-medium tabular-nums text-slate-300 transition-colors duration-300 group-hover:text-slate-500">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        {/* Question Content */}
+        <span className="min-w-0 flex-1">
+          {/* Tag */}
+          <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-[#0a7c83]">
+            {faq.tag}
+            {open && <span className="h-1.5 w-1.5 rounded-full bg-[#0a7c83] transition-opacity duration-300" />}
+          </span>
+          {/* Question */}
+          <span
+            className={`mt-3 block text-xl font-medium leading-snug tracking-tight transition-colors duration-300 md:text-2xl ${
+              open ? 'text-[#0A1128]' : 'text-slate-700 group-hover:text-[#0A1128]'
+            }`}
+          >
+            {faq.q}
+          </span>
+        </span>
+
+        {/* Toggle Icon */}
+        <span
+          className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+            open
+              ? 'border-[#0a7c83] bg-[#0a7c83]/5 text-[#0a7c83]'
+              : 'border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600'
+          }`}
+        >
+          <span className="relative block h-3 w-3">
+            <span className="absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 bg-current" />
+            <span
+              className={`absolute inset-y-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-500 ${
+                open ? 'scale-y-0' : ''
+              }`}
+            />
+          </span>
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="answer"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="pb-10 pl-10 pr-4 md:pl-16 md:pr-20">
+              <p className="max-w-2xl text-[15.5px] leading-relaxed text-slate-500">{faq.a}</p>
+              {faq.cta && (
+                <a
+                  href="#contact"
+                  className="group/cta mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#0a7c83] transition-colors hover:text-[#0A1128]"
+                >
+                  {faq.cta}
+                  <ArrowRight size={14} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
+                </a>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function FaqSection() {
+  const [open, setOpen] = useState<number | null>(0);
+
+  return (
+    <section id="faq" className="relative bg-white py-28 md:py-36">
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
+      <div className="mx-auto max-w-[1600px] px-6">
+        <div className="grid gap-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-24">
+          
+          {/* Left Column: Editorial Pitch */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="lg:sticky lg:top-32 lg:self-start"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <span className="h-px w-8 bg-slate-300" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
+                FAQ
+              </span>
+            </div>
+            
+            <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
+              Answers for IT, procurement and legal.
+            </h2>
+            <p className="mt-8 max-w-md text-lg leading-relaxed text-slate-500">
+              The questions enterprise teams ask before they say yes. If yours isn’t here, the team will answer it directly.
+            </p>
+
+            <div className="mt-16 max-w-md border-t border-slate-100 pt-10">
+              <h3 className="text-[16px] font-semibold text-[#0A1128]">See it on your own benefits data.</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
+                Walk through Origin with the team, using your own countries, vendors and documents.
+              </p>
+              
+              <button
+                onClick={() => { /* scroll to contact logic or leave as is */ }}
+                className="group mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#0A1128] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-[#1C3F60] hover:shadow-lg"
+              >
+                Book a demo
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Seamless Accordion */}
+          <div className="pt-2">
+            {FAQS.map((faq, i) => (
+              <FaqRow
+                key={faq.q}
+                faq={faq}
+                index={i}
+                open={open === i}
+                onToggle={() => setOpen(open === i ? null : i)}
+              />
+            ))}
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+// ==========================================
+// CONTACT SECTION
+// ==========================================
+
+const FREE_EMAIL = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com', 'live.com', 'msn.com', 'proton.me', 'protonmail.com'];
+const SIZES = ['Under 1,000', '1,000 – 4,999', '5,000 – 19,999', '20,000+'];
+const COUNTRY_RANGES = ['1 – 5', '6 – 20', '21 – 50', '50+'];
+const SOURCES = ['Search', 'LinkedIn', 'Colleague or referral', 'Event', 'Other'];
+
+type ContactData = {
+  first: string;
+  last: string;
+  email: string;
+  title: string;
+  company: string;
+  size: string;
+  countries: string;
+  goal: string;
+  source: string;
+};
+
+const EMPTY_CONTACT: ContactData = {
+  first: '',
+  last: '',
+  email: '',
+  title: '',
+  company: '',
+  size: '',
+  countries: '',
+  goal: '',
+  source: '',
+};
+
+const stepVariants: Variants = {
+  enter: (d: number) => ({ opacity: 0, x: d * 20 }),
+  center: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE } },
+  exit: (d: number) => ({ opacity: 0, x: d * -20, transition: { duration: 0.18 } }),
+};
+
+const FIELD_BASE =
+  'h-14 w-full rounded-lg border bg-white px-4 text-[16px] text-[#050505] outline-none transition placeholder:text-slate-400 focus:ring-4 focus:ring-black/5';
+const fieldCls = (err?: string) =>
+  `${FIELD_BASE} ${err ? 'border-rose-400' : 'border-slate-300 focus:border-[#050505]'}`;
+
+function validateStep(step: number, d: ContactData): Record<string, string> {
+  const e: Record<string, string> = {};
+  if (step === 0) {
+    if (!d.first.trim()) e.first = 'Required';
+    if (!d.last.trim()) e.last = 'Required';
+    const mail = d.email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) e.email = 'Enter a valid email address';
+    else if (FREE_EMAIL.includes(mail.split('@')[1])) e.email = 'Please use your work email';
+    if (!d.title.trim()) e.title = 'Required';
+  }
+  if (step === 1) {
+    if (!d.company.trim()) e.company = 'Required';
+    if (!d.size) e.size = 'Select a range';
+    if (!d.countries) e.countries = 'Select a range';
+  }
+  if (step === 2) {
+    if (!d.goal.trim()) e.goal = 'Tell us a little about what you need';
+    if (!d.source) e.source = 'Select an option';
+  }
+  return e;
+}
+
+function Field({
+  label,
+  hint,
+  error,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  error?: string;
+  children: ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-[14px] font-semibold text-[#050505]">{label}</span>
+      {hint && <span className="-mt-1 mb-2 block text-[13px] italic text-slate-500">{hint}</span>}
+      {children}
+      {error && <span className="mt-1.5 block text-[13px] text-rose-600">{error}</span>}
+    </label>
+  );
+}
+
+function Select({
+  value,
+  onChange,
+  options,
+  placeholder,
+  error,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder: string;
+  error?: string;
+}) {
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`${fieldCls(error)} appearance-none pr-11 ${value ? '' : 'text-slate-400'}`}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((o) => (
+          <option key={o} value={o} className="text-[#050505]">
+            {o}
+          </option>
+        ))}
+      </select>
+      <svg
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </div>
+  );
+}
+
+
+function Stepper({ step }: { step: number }) {
+  return (
+    <div className="flex items-center" role="img" aria-label={`Step ${step + 1} of 3`}>
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="flex flex-1 items-center last:flex-none">
+          <span
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold transition-colors duration-300 ${
+              i <= step ? 'bg-[#0a7c83] text-white' : 'bg-slate-200 text-slate-400'
+            }`}
+          >
+            {i + 1}
+          </span>
+          {i < 2 && (
+            <span 
+              className={`mx-3 h-px flex-1 border-t border-dotted transition-colors duration-300 ${
+                i < step ? 'border-[#0a7c83]' : 'border-slate-300'
+              }`} 
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+function ContactSection() {
+  const [step, setStep] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [data, setData] = useState<ContactData>(EMPTY_CONTACT);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const set = <K extends keyof ContactData>(k: K, v: ContactData[K]) => {
+    setData((d) => ({ ...d, [k]: v }));
+    setErrors((e) => ({ ...e, [k]: '' }));
+  };
+
+  const next = () => {
+    if (status === 'sending') return;
+    const e = validateStep(step, data);
+    setErrors(e);
+    if (Object.keys(e).length) return;
+    if (step < 2) {
+      setDir(1);
+      setStep(step + 1);
+    } else {
+      setStatus('sending');
+      timer.current = setTimeout(() => setStatus('done'), 1400);
+    }
+  };
+  const back = () => {
+    setErrors({});
+    setDir(-1);
+    setStep(step - 1);
+  };
+  const reset = () => {
+    setData(EMPTY_CONTACT);
+    setErrors({});
+    setStep(0);
+    setDir(1);
+    setStatus('idle');
+  };
+
+  return (
+    <section id="contact" className="scroll-mt-24 bg-white py-20 md:py-28">
+      <div className="mx-auto max-w-[1600px] px-6">
+        <div className="rounded-[2rem] bg-[#0a7c83] p-6 sm:p-10 lg:p-14">
+          <div className="grid items-stretch gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,700px)] lg:gap-16">
+            {/* Left: pitch */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8, ease: EASE }}
+              className="flex flex-col justify-end lg:pb-6 lg:pl-6"
+            >
+              <span className="inline-flex w-fit items-center gap-2.5 rounded-full bg-white/80 px-4 py-2 text-[14px] font-medium text-[#0A1128]">
+                <span className="h-2 w-2 rounded-full bg-[#0A1128]" />
+                Talk to the team
+              </span>
+              <h2 className="mt-8 text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-white lg:text-6xl">
+                Real data.
+                <br />
+                No spreadsheets.
+                <br />
+                Benefits you can govern.
+              </h2>
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/80">
+                Tell us where your benefits data lives today. The team will show you how Origin brings it together
+                across your countries, vendors and documents.
+              </p>
+            </motion.div>
+
+            {/* Right: form card */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+              className="relative overflow-hidden rounded-[1.75rem] bg-white p-8 pb-12 md:p-12 md:pb-14"
+            >
+              {status === 'done' ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: EASE }}
+                  className="flex min-h-[520px] flex-col justify-center"
+                >
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#050505] text-white">
+                    <Check size={24} strokeWidth={2.25} />
+                  </div>
+                  <h3 className="mt-8 text-3xl font-semibold tracking-tight text-[#050505]">Thanks, {data.first}.</h3>
+                  <p className="mt-3 max-w-sm text-[16px] leading-relaxed text-slate-600">
+                    We have your request. The team will be in touch at {data.email} to arrange your walkthrough.
+                  </p>
+
+                  <dl className="mt-8 divide-y divide-slate-200 border-y border-slate-200 text-[15px]">
+                    <div className="flex justify-between gap-6 py-3.5">
+                      <dt className="text-slate-500">Company</dt>
+                      <dd className="text-right font-medium text-[#050505]">{data.company}</dd>
+                    </div>
+                    <div className="flex justify-between gap-6 py-3.5">
+                      <dt className="text-slate-500">Employees</dt>
+                      <dd className="text-right font-medium text-[#050505]">{data.size}</dd>
+                    </div>
+                    <div className="flex justify-between gap-6 py-3.5">
+                      <dt className="text-slate-500">Countries</dt>
+                      <dd className="text-right font-medium text-[#050505]">{data.countries}</dd>
+                    </div>
+                  </dl>
+
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="mt-8 self-start text-[15px] font-medium text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-[#0a7c83]"
+                  >
+                    Send another request
+                  </button>
+                  <p className="mt-5 text-[13px] text-slate-500">Concept design: nothing is submitted.</p>
+                </motion.div>
+              ) : (
+                <>
+                  <h3 className="text-[32px] font-semibold leading-tight tracking-[-0.03em] text-[#0a7c83] md:text-4xl">
+                    Ready to see Origin on your data?
+                  </h3>
+
+                  <div className="mt-8">
+                    <Stepper step={step} />
+                  </div>
+
+                  <div
+                    className="mt-8 min-h-[330px]"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && (e.target as HTMLElement).tagName === 'INPUT') {
+                        e.preventDefault();
+                        next();
+                      }
+                    }}
+                  >
+                    <AnimatePresence mode="wait" custom={dir} initial={false}>
+                      <motion.div
+                        key={step}
+                        custom={dir}
+                        variants={stepVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        className="space-y-5"
+                      >
+                        {step === 0 && (
+                          <>
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <Field label="First name*" error={errors.first}>
+                                <input
+                                  className={fieldCls(errors.first)}
+                                  value={data.first}
+                                  onChange={(e) => set('first', e.target.value)}
+                                  autoComplete="given-name"
+                                />
+                              </Field>
+                              <Field label="Last name*" error={errors.last}>
+                                <input
+                                  className={fieldCls(errors.last)}
+                                  value={data.last}
+                                  onChange={(e) => set('last', e.target.value)}
+                                  autoComplete="family-name"
+                                />
+                              </Field>
+                            </div>
+                            <Field label="Work email*" error={errors.email}>
+                              <input
+                                type="email"
+                                className={fieldCls(errors.email)}
+                                value={data.email}
+                                onChange={(e) => set('email', e.target.value)}
+                                autoComplete="email"
+                              />
+                            </Field>
+                            <Field label="Job title*" error={errors.title}>
+                              <input
+                                className={fieldCls(errors.title)}
+                                value={data.title}
+                                onChange={(e) => set('title', e.target.value)}
+                                autoComplete="organization-title"
+                              />
+                            </Field>
+                          </>
+                        )}
+
+                        {step === 1 && (
+                          <>
+                            <Field label="Company*" error={errors.company}>
+                              <input
+                                className={fieldCls(errors.company)}
+                                value={data.company}
+                                onChange={(e) => set('company', e.target.value)}
+                                autoComplete="organization"
+                              />
+                            </Field>
+                            <Field label="Company size (total employees worldwide)*" error={errors.size}>
+                              <Select
+                                value={data.size}
+                                onChange={(v) => set('size', v)}
+                                options={SIZES}
+                                placeholder="Select a range"
+                                error={errors.size}
+                              />
+                            </Field>
+                            <Field label="Countries with employees*" error={errors.countries}>
+                              <Select
+                                value={data.countries}
+                                onChange={(v) => set('countries', v)}
+                                options={COUNTRY_RANGES}
+                                placeholder="Select a range"
+                                error={errors.countries}
+                              />
+                            </Field>
+                          </>
+                        )}
+
+                        {step === 2 && (
+                          <>
+                            <Field
+                              label="What can we help with?*"
+                              hint="Tell us what you're trying to fix."
+                              error={errors.goal}
+                            >
+                              <textarea
+                                className={`${fieldCls(errors.goal)} h-28 resize-none py-3`}
+                                value={data.goal}
+                                onChange={(e) => set('goal', e.target.value)}
+                              />
+                            </Field>
+                            <Field label="How did you hear about us?*" error={errors.source}>
+                              <Select
+                                value={data.source}
+                                onChange={(v) => set('source', v)}
+                                options={SOURCES}
+                                placeholder="Select an option"
+                                error={errors.source}
+                              />
+                            </Field>
+                          </>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="mt-6 flex gap-3">
+                    {step > 0 && (
+                      <button
+                        type="button"
+                        onClick={back}
+                        disabled={status === 'sending'}
+                        className="h-14 flex-[0.8] rounded-lg bg-slate-100 text-[16px] font-semibold text-[#050505] transition-colors hover:bg-slate-200 disabled:opacity-50"
+                      >
+                        Previous
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={next}
+                      disabled={status === 'sending'}
+                      className="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-lg bg-[#0a7c83] text-[16px] font-semibold text-[#fff] transition-colors hover:bg-[#4ab59a] disabled:opacity-80"
+                    >
+                      {status === 'sending' ? (
+                        <>
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                          Sending
+                        </>
+                      ) : step === 2 ? (
+                        'Request a demo'
+                      ) : (
+                        'Next step'
+                      )}
+                    </button>
+                  </div>
+                  <p className="mt-5 text-[13px] leading-snug text-slate-500">Concept design: nothing is submitted.</p>
+                </>
+              )}
+
+              {/* Clean white/slate accent strip */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-slate-800" />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ==========================================
 // MAIN APP EXPORT
 // ==========================================
 
 export default function App() {
+  const [calcOpen, setCalcOpen] = useState(false);
+
+  useEffect(() => {
+  const link = document.createElement('link');
+  link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+}, []);
+
   return (
-    <div className="relative min-h-screen bg-[#050505] font-sans selection:bg-[#A0E8AF] selection:text-[#050505]">
+    <div
+  className="relative min-h-screen bg-[#050505] selection:bg-[#A0E8AF] selection:text-[#050505]"
+  style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+>
       <NoiseOverlay/>
       
       <main>
         <Hero/>
         <StorySection/>
-        <ImpactSection/>
-        <BentoGrid/>
-        <ROICalculator/>
-        <TrustSection/>
+        <ImpactSection onOpenCalculator={() => setCalcOpen(true)} />
+                 <CommunitySection />  
+        <SecuritySection/>
+        <FaqSection/>
+        <ContactSection/>
       </main>
 
       <Footer/>
+      
+      {/* Premium Calculator Modal */}
+      <SavingsCalculator isOpen={calcOpen} onClose={() => setCalcOpen(false)} />
     </div>
   );
 }

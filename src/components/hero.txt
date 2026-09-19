@@ -104,78 +104,64 @@ const NoiseOverlay = () => (
 // LAYOUT & NAVIGATION
 // ==========================================
 
-// ==========================================
-// HERO SECTION
-// ==========================================
-
 function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050505] pt-32 text-center">
-      {/* Ambient Glow Effects */}
-      <div className="absolute left-1/2 top-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#2E8A8A]/20 to-[#1C3F60]/20 blur-[120px]" />
-      <div className="absolute left-[20%] top-[20%] -z-10 h-[400px] w-[400px] rounded-full bg-[#A0E8AF]/10 blur-[100px]" />
+    <section className="relative overflow-hidden bg-[#02151d] pt-32 pb-20 lg:pt-40 lg:pb-32">
+      {/* Subtle background glow to blend the image */}
+      <div className="absolute right-[10%] top-[20%] -z-10 h-[500px] w-[500px] rounded-full bg-[#2E8A8A]/10 blur-[120px]" />
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="z-10 flex flex-col items-center px-6"
-      >
-        <div className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
-          <Sparkles size={14} />
-          Enterprise Benefits Intelligence
-        </div>
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-16 px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         
-        <h1 className="max-w-[1400px] text-6xl font-bold leading-[1.1] tracking-tighter text-white md:text-8xl">
-          Bring your global benefits <span className="bg-gradient-to-r from-[#A0E8AF] to-[#D2F898] bg-clip-text text-transparent">out of the dark.</span>
-        </h1>
-        
-        <p className="mt-8 max-w-3xl text-lg text-white/60 md:text-xl">
-          Benefits are your second-biggest people cost. Stop managing them in spreadsheets. 
-          Origin unifies data across 100+ countries into a single, AI-powered command center.
-        </p>
-
-        <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row">
-          <button className="group flex h-14 items-center gap-2 rounded-full bg-[#A0E8AF] px-8 font-bold text-[#050505] transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_#A0E8AF]">
-            Explore the Platform
-            <ArrowRight className="shrink-0 transition-transform group-hover:translate-x-1" size={18} />
-          </button>
-          <button className="flex h-14 items-center rounded-full border border-white/20 bg-white/5 px-8 font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
-            Read the Whitepaper
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Hero Video */}
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
-        className="relative mt-24 w-full max-w-[1600px] px-6 pb-28"
-      >
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0A1128] shadow-[0_40px_120px_-40px_rgba(46,138,138,0.35)]">
-          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-            <iframe
-              src="https://play-eu1.hubspotvideo.com/v/144187838/id/357609122007?loop=true"
-              title="Origin product video"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              className="absolute inset-0 h-full w-full border-0"
-            />
+        {/* Left Column: Text */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex max-w-2xl flex-col items-center lg:items-start"
+        >
+          <div className="mb-6 flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
+            <Sparkles size={14} />
+            Enterprise Benefits Intelligence
           </div>
-        </div>
-      </motion.div>
+          
+          <h1 className="text-5xl font-bold leading-[1.1] tracking-tighter text-white md:text-6xl lg:text-[72px]">
+            Our global benefits<br/> out of the dark.
+          </h1>
+          
+          <p className="mt-6 max-w-xl text-lg text-white/60">
+            Benefits are your second-biggest people cost. Stop managing them in spreadsheets. 
+            Origin unifies data across 100+ countries into a single, AI-powered command center.
+          </p>
+
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
+            <button className="group flex h-14 items-center gap-2 rounded-full bg-[#A0E8AF] px-8 font-bold text-[#050505] transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_#A0E8AF]">
+              Explore the Platform
+              <ArrowRight className="shrink-0 transition-transform group-hover:translate-x-1" size={18} />
+            </button>
+            <button className="flex h-14 items-center rounded-full border border-white/20 bg-white/5 px-8 font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
+              Read the Whitepaper
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Right Column: Image (No background, border, or shadow) */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="relative w-full max-w-[700px] lg:w-1/2"
+        >
+          <img
+            src="/images/originglobe2.png"
+            alt="Origin Benefits Intelligence Platform"
+            className="w-full object-contain"
+          />
+        </motion.div>
+
+      </div>
     </section>
   );
 }
-
-
-
-
-
-
-
 // ==========================================
 // STORY SECTION — "MEET PROYA" CAROUSEL
 // ==========================================
@@ -754,7 +740,7 @@ const CHAPTERS: Chapter[] = [
     body: 'Policies in PDFs. Contracts in six languages. Commission schedules buried in inboxes. Cuido reads, translates and organizes all of it into one authoritative source, before her coffee gets cold.',
     stat: { value: '312', label: 'documents structured in minutes' },
 accent: '#0A1128',
-  scene: '#FAFAF9',
+  scene: 'transparent',
       Card: IngestCard,
   },
   {
@@ -765,7 +751,7 @@ accent: '#0A1128',
     body: 'Warsaw needs the maternity policy before a noon call. Proya asks Cuido in plain English and gets the answer translated, compared to local law, with the source document attached.',
     stat: { value: '6 sec', label: 'from question to cited answer' },
 accent: '#0A1128',
-  scene: '#FAFAF9',
+  scene: 'transparent',
       Card: AskCard,
   },
   {
@@ -776,7 +762,7 @@ accent: '#0A1128',
     body: "For the first time Proya can see what's actually offered, where programs overlap, and where employees aren't covered at all. No more spreadsheets stitched together by hand.",
     stat: { value: '100%', label: 'of benefits inventoried, country by country' },
 accent: '#0A1128',
-  scene: '#FAFAF9',
+  scene: 'transparent',
       Card: InventoryCard,
   },
   {
@@ -787,7 +773,7 @@ accent: '#0A1128',
     body: 'Cuido reads a local broker contract and surfaces a commission that never appeared on the invoice, with the exact clause that proves it. Proya finally sees the true cost of a benefit.',
     stat: { value: '$1M/yr', label: 'undisclosed commission found in one local contract' },
  accent: '#0A1128',
-  scene: '#FAFAF9',
+  scene: 'transparent',
       Card: CostCard,
   },
   {
@@ -798,7 +784,7 @@ accent: '#0A1128',
     body: 'Ninety days before every renewal, Cuido benchmarks the market. Proya negotiates from evidence, brings brokerage costs down, and redirects the savings to benefits her people actually want.',
     stat: { value: '$1.1M/yr', label: 'brokerage cost reduced across 20 countries' },
  accent: '#0A1128',
-  scene: '#FAFAF9', 
+  scene: 'transparent', 
   Card: RenewalCard,
   },
 ];
@@ -878,7 +864,7 @@ function StorySection() {
           onMouseMove={onMove}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="group relative h-[960px] overflow-hidden rounded-xl border border-slate-200 bg-white outline-none focus-visible:ring-2 focus-visible:ring-[#0a7c83]/40 sm:h-[900px] lg:h-[540px]"
+          className="group relative h-[960px] overflow-hidden rounded-xl border border-[#0a7c83] bg-[#0a7c83] outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:h-[900px] lg:h-[540px]"
         >
           {/* Scene (crossfades) */}
           <AnimatePresence>
@@ -923,7 +909,7 @@ function StorySection() {
                 }}
                 className="absolute inset-0 flex flex-col justify-center gap-8 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-12 xl:gap-24 xl:px-20"
               >
-                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-[#0A1128]/[0.04]">
+                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-white/[0.05]">
                   0{index + 1}
                 </span>
 
@@ -931,31 +917,29 @@ function StorySection() {
                 <div className="relative z-10 max-w-[480px] lg:max-w-[420px] xl:max-w-[480px]">
                   <Rise>
                     <div
-                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em]"
-                      style={{ color: chapter.accent }}
+                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/70"
                     >
                       <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ background: chapter.accent, boxShadow: `0 0 12px ${chapter.accent}` }}
+                        className="h-1.5 w-1.5 rounded-full bg-white/70"
                       />
                       {chapter.eyebrow}
                     </div>
                   </Rise>
                   <Rise d={0.08}>
-                    <h3 className="mt-5 text-3xl font-semibold leading-[1.08] tracking-tight text-[#0A1128] sm:text-4xl lg:text-[38px] xl:text-[44px]">
+                    <h3 className="mt-5 text-3xl font-semibold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[38px] xl:text-[44px]">
                       {chapter.title}
                     </h3>
                   </Rise>
                   <Rise d={0.16}>
-                    <p className="mt-5 text-[15px] leading-relaxed text-slate-500 lg:text-[16px] xl:text-[17px]">
+                    <p className="mt-5 text-[15px] leading-relaxed text-white/70 lg:text-[16px] xl:text-[17px]">
                       {chapter.body}
                     </p>
                   </Rise>
-                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-slate-200 pt-6">
-                    <span className="text-3xl font-semibold tracking-tight sm:text-4xl" style={{ color: chapter.accent }}>
+                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-white/20 pt-6">
+                    <span className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                       {chapter.stat.value}
                     </span>
-                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-slate-400">
+                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-white/50">
                       {chapter.stat.label}
                     </span>
                   </Rise>
@@ -1002,15 +986,15 @@ function StorySection() {
                   
                  className={`relative flex h-11 items-center overflow-hidden border text-sm font-medium ${
   active
-    ? 'border-[#0A1128] bg-white pl-1.5 pr-5 text-[#0A1128]'
-    : 'border-slate-200 bg-white p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#0A1128]'
+    ? 'border-[#0a7c83] bg-white pl-1.5 pr-5 text-[#0a7c83]'
+    : 'border-slate-200 bg-white p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#0a7c83]'
 }`}
 
                   >
                     <motion.span
                       layout="position"
                    className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-  active ? 'bg-[#0A1128] text-white' : ''
+  active ? 'bg-[#0a7c83] text-white' : ''
 }`}
                   
                   >
@@ -1030,7 +1014,7 @@ function StorySection() {
                       <span
                         key={index}
                         onAnimationEnd={next}
-                        className="absolute bottom-0 left-0 h-[2px] bg-[#0A1128]"
+                        className="absolute bottom-0 left-0 h-[2px] bg-[#0a7c83]"
                         style={{
                           animation: `proya-progress ${CHAPTER_MS}ms linear forwards`,
                           animationPlayState: paused ? 'paused' : 'running',
@@ -1173,6 +1157,11 @@ function CuidoTerminal() {
 // IMPACT — STATS + TESTIMONIALS (WHITE SECTION)
 // ==========================================
 
+
+// ==========================================
+// IMPACT — STATS + TESTIMONIALS (WHITE SECTION)
+// ==========================================
+
 type Testimonial = {
   name: string;
   role: string;
@@ -1219,12 +1208,6 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-
-
-
-
-const CARD_TINTS = ['bg-[#EEF6F1]', 'bg-[#F6F3EC]', 'bg-[#EEF2F7]', 'bg-[#F1F5F0]', 'bg-[#F5F1EE]'];
-
 function Stat({
   i,
   to,
@@ -1240,19 +1223,28 @@ function Stat({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
-      className="flex flex-col border-t border-slate-200 pt-8"
+      transition={{ duration: 0.8, delay: i * 0.15, ease: EASE }}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50 p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-1 hover:border-[#2E8A8A]/30 hover:shadow-[0_20px_40px_-12px_rgba(46,138,138,0.12)]"
     >
-      <div className="flex items-baseline gap-2">
-        <span className="text-5xl font-semibold tracking-tight text-[#0A1128] xl:text-6xl">
-          <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.6} />
-        </span>
-        <span className="text-lg font-medium text-slate-400">/yr</span>
+      {/* Subtle top accent line on hover */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2E8A8A] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      
+      <div className="flex flex-col gap-2">
+        <div className="flex items-baseline gap-2">
+          <span className="text-5xl font-bold tracking-tighter text-[#0A1128] xl:text-6xl">
+            <AnimatedCounter prefix="$" to={to} decimals={decimals} suffix={suffix} duration={1.8} />
+          </span>
+          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 group-hover:bg-[#A0E8AF]/20 group-hover:text-[#2E8A8A] transition-colors duration-300">
+            / yr
+          </span>
+        </div>
+        <p className="mt-4 max-w-[260px] text-[15px] font-medium leading-relaxed text-slate-500 group-hover:text-slate-700 transition-colors">
+          {label}
+        </p>
       </div>
-      <p className="mt-4 max-w-[260px] text-[15px] leading-relaxed text-slate-500">{label}</p>
     </motion.div>
   );
 }
@@ -1265,46 +1257,59 @@ function TestimonialRow() {
   return (
     <div className="mt-32">
       <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-6">
-        <h3 className="text-2xl font-semibold tracking-tight text-[#0A1128] md:text-3xl">
-          What benefits leaders say
-        </h3>
+        <div>
+          <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A] mb-3">Testimonials</div>
+          <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+            What benefits leaders say
+          </h3>
+        </div>
         <div className="hidden gap-3 sm:flex">
           <button
             type="button"
             onClick={() => scrollBy(-1)}
             aria-label="Previous"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-[#0A1128] hover:text-[#0A1128]"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={18} />
           </button>
           <button
             type="button"
             onClick={() => scrollBy(1)}
             aria-label="Next"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-[#0A1128] hover:text-[#0A1128]"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
           >
-            <ArrowRight size={16} />
+            <ArrowRight size={18} />
           </button>
         </div>
       </div>
 
       <div
         ref={scroller}
-        className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TESTIMONIALS.map((t, i) => (
-          <figure
+          <motion.figure
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
             key={t.name}
-            className="flex h-[380px] w-[calc((100%-4.5rem)/4)] min-w-[320px] shrink-0 snap-start flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md"
+            className="group relative flex h-[400px] w-[calc((100%-4.5rem)/4)] min-w-[320px] shrink-0 snap-start flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#2E8A8A]/30 hover:shadow-[0_24px_50px_-12px_rgba(46,138,138,0.15)]"
           >
-            <blockquote>
+            {/* Decorative Quote Mark */}
+            <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-slate-100/80 select-none group-hover:text-[#A0E8AF]/40 transition-colors duration-500">
+              &ldquo;
+            </div>
+
+            <blockquote className="relative z-10">
               <p className="text-[20px] font-medium leading-snug tracking-tight text-[#0A1128]">
                 “{t.quote}”
               </p>
               <p className="mt-5 text-[14px] leading-relaxed text-slate-500">{t.context}</p>
             </blockquote>
-            <figcaption className="mt-8 flex items-center gap-4 border-t border-slate-100 pt-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0A1128] text-[13px] font-semibold text-white">
+            
+            <figcaption className="relative z-10 mt-8 flex items-center gap-4 border-t border-slate-100 pt-6 group-hover:border-slate-200 transition-colors">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#0A1128] to-[#1C3F60] text-[13px] font-bold text-white shadow-inner ring-2 ring-white">
                 {t.initials}
               </div>
               <div className="min-w-0">
@@ -1312,7 +1317,7 @@ function TestimonialRow() {
                 <div className="line-clamp-2 text-[13px] leading-snug text-slate-500">{t.role}</div>
               </div>
             </figcaption>
-          </figure>
+          </motion.figure>
         ))}
       </div>
     </div>
@@ -1321,20 +1326,42 @@ function TestimonialRow() {
 
 function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
   return (
-    <section id="impact" className="bg-white py-28 md:py-36">
+    <section id="impact" className="relative bg-white pt-28 pb-32 md:pt-36 md:pb-40">
+      
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      
+      {/* Top Half: Grey Background */}
+      <div className="absolute top-0 left-0 right-0 h-[55%] bg-[#f7f9f2] -z-10" />
+      
       <div className="mx-auto max-w-[1600px] px-6">
         {/* Heading */}
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl font-semibold leading-[1.08] tracking-tight text-[#0A1128] md:text-6xl">
-            Real teams. <span className="text-slate-400">Real savings.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-500">
-            Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
-          </p>
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <div className="mb-6 flex items-center justify-center gap-4">
+              <span className="h-px w-12 bg-slate-300" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E8A8A]">
+                Proven Impact
+              </span>
+              <span className="h-px w-12 bg-slate-300" />
+            </div>
+            
+            <h2 className="text-5xl font-semibold leading-[1.08] tracking-tight text-[#0A1128] md:text-7xl">
+              Real teams. <span className="text-slate-400">Real savings.</span>
+            </h2>
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-500 md:text-xl">
+              Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
+            </p>
+          </motion.div>
         </div>
 
-        {/* Stats */}
-        <div className="mt-20 grid gap-x-12 gap-y-12 md:grid-cols-3">
+        {/* Stats Grid */}
+        <div className="mt-20 grid gap-6 md:grid-cols-3">
           <Stat i={0} to={200} suffix="k" label="saved and redirected to new benefits" />
           <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries" />
           <Stat i={2} to={1} suffix="M" label="of undisclosed commission found in one local contract" />
@@ -1343,31 +1370,58 @@ function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
         {/* Testimonials */}
         <TestimonialRow />
 
-        {/* New Calculator CTA - Clean, Transparent, Pushed Up */}
-        <div className="mt-16 border-t border-slate-200 pt-12">
-          <div className="flex flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left">
-            <div className="max-w-2xl">
-              <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
-                How much could you be saving?
-              </h3>
-              <p className="mt-3 text-lg leading-relaxed text-slate-500">
+        {/* Premium Calculator CTA Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, ease: EASE }}
+    className="mt-16 relative overflow-hidden rounded-xl bg-[#0a7c83]"
+        >
+
+
+
+          {/* Subtle inner glow for depth */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
+          
+          {/* Abstract Background Watermark */}
+          <div className="pointer-events-none absolute -right-10 -bottom-10 opacity-[0.03] text-white">
+            <BarChart3 size={400} strokeWidth={0.5} />
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center justify-between gap-10 p-10 md:flex-row md:p-16 lg:p-20">
+            <div className="max-w-2xl text-center md:text-left">
+              
+              {/* Refined Editorial Label instead of ugly pill */}
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
+                <BarChart3 size={14} className="text-[#FAFAFA]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#fafafa]">
+                  ROI Estimator
+                </span>
+              </div>
+              
+             <h3 className="max-w-md text-4xl font-semibold tracking-tight text-white md:text-5xl">
+  How much could you be saving?
+</h3>
+              <p className="mt-5 text-lg leading-relaxed text-white/70 max-w-2xl">
                 Model your enterprise optimization potential. Our calculator uses real-world benchmarks from global benefits data to estimate your hidden leakage.
               </p>
             </div>
+            
+            {/* Refined Premium Button */}
             <button
               onClick={onOpenCalculator}
-              className="group inline-flex h-16 shrink-0 items-center gap-3 rounded-full bg-[#0A1128] px-10 text-[16px] font-semibold text-white transition-all hover:bg-[#1C3F60] hover:shadow-xl hover:scale-105"
+              className="group relative inline-flex h-14 shrink-0 items-center gap-3 rounded-md border border-white/20 bg-white/5 px-8 text-[15px] font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-[#A0E8AF] hover:bg-[#A0E8AF] hover:text-[#0A1128]"
             >
-              Calculate your savings
-              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+              <span className="relative z-10">Calculate your savings</span>
+              <ArrowRight size={18} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
-        </div>
-              </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
-
 
 // ==========================================
 // PREMIUM SAVINGS CALCULATOR MODAL
@@ -1424,7 +1478,7 @@ function SavingsCalculator({ isOpen, onClose }: { isOpen: boolean; onClose: () =
           {/* Left Column: Inputs */}
           <div className="flex w-full flex-col p-10 md:w-1/2 md:p-14">
             <div className="mb-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#2E8A8A]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#2E8A8A]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#fafafa]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#fafafa]">
                 <BarChart3 size={14} /> ROI Estimator
               </div>
               <h3 className="mt-6 text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
@@ -1639,40 +1693,7 @@ function CheckIcon(props: any) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12" /></svg>;
 }
 
-// ==========================================
-// LOGO BAR
-// ==========================================
-
-const CLIENT_LOGOS = ['bp', 'EA', 'GILEAD', 'ORGANON'];
-
-function LogoBar() {
-  return (
-    <section className="border-y border-white/5 bg-[#050505] py-14">
-      <div className="mx-auto max-w-[1600px] px-6">
-        <p className="text-center text-[11px] font-medium uppercase tracking-[0.2em] text-white/40">
-          Trusted by global benefits teams
-        </p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-x-16 gap-y-8 md:gap-x-24"
-        >
-          {CLIENT_LOGOS.map((name) => (
-            <span
-              key={name}
-              className="text-2xl font-semibold tracking-tight text-white/35 transition-colors hover:text-white/70 md:text-3xl"
-            >
-              {name}
-            </span>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+ 
 
 
 
@@ -1704,23 +1725,182 @@ const SECURITY_ITEMS = [
   },
 ];
 
+
+// ==========================================
+// COMMUNITY & TEAM SECTION
+// ==========================================
+
+const TEAM_MEMBERS = [
+  { name: 'Chris Bruce', role: 'CEO, Founding Team', image: 'https://i.pravatar.cc/150?u=1' },
+  { name: 'Pete Craghill', role: 'CSO, Founding Team', image: 'https://i.pravatar.cc/150?u=2' },
+  { name: 'James Akers', role: 'SVP Product, Founding Team', image: 'https://i.pravatar.cc/150?u=3' },
+  { name: 'Dan Watmore', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=4' },
+  { name: 'Cristi Miron', role: 'Chief Software Architect', image: 'https://i.pravatar.cc/150?u=5' },
+  { name: 'Helena Sundhagen', role: 'Head of Client Experience', image: 'https://i.pravatar.cc/150?u=6' },
+  { name: 'Yanick Chavancy', role: 'SVP of Insights', image: 'https://i.pravatar.cc/150?u=7' },
+  { name: 'Jamie Fitt', role: 'SVP Strategic Growth', image: 'https://i.pravatar.cc/150?u=8' },
+  { name: 'Dave Healy', role: 'Global Head of Sales', image: 'https://i.pravatar.cc/150?u=9' },
+  { name: 'Charlotte Irving', role: 'Head of Marketing', image: 'https://i.pravatar.cc/150?u=10' },
+];
+
+function CommunitySection() {
+  const scroller = useRef<HTMLDivElement>(null);
+  const scrollBy = (dir: number) =>
+    scroller.current?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+
+  return (
+    <section id="community" className="relative bg-white py-28 md:py-36 overflow-hidden">
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      
+      <div className="mx-auto max-w-[1600px] px-6">
+        
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="mb-14 max-w-3xl"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-8 bg-slate-300" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
+              Our People
+            </span>
+          </div>
+          <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
+            Meet a few of our <span className="text-slate-400">Originals.</span>
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">
+            Origin is built by people who want to make a difference, and who want to do things differently. Real people who care about doing the right thing, on a journey to help benefits professionals truly understand every aspect of their benefits offering.
+          </p>
+        </motion.div>
+
+        {/* Team Carousel */}
+        <div className="relative">
+          <div
+            ref={scroller}
+            className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {TEAM_MEMBERS.map((member, i) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
+                className="group relative flex w-[200px] shrink-0 snap-start flex-col gap-4"
+              >
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-[15px] font-semibold text-[#0A1128]">{member.name}</h3>
+                  <p className="text-[13px] leading-snug text-slate-500">{member.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Carousel Nav */}
+          <div className="absolute -top-16 right-0 hidden gap-3 sm:flex">
+            <button
+              type="button"
+              onClick={() => scrollBy(-1)}
+              aria-label="Previous"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy(1)}
+              aria-label="Next"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Community & Summit Split */}
+        <div className="mt-24 grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+          
+          {/* Left: Testimonial / Quote */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="flex flex-col justify-center"
+          >
+            <h3 className="text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+              When you join us, you join a community.
+            </h3>
+            <p className="mt-6 text-lg leading-relaxed text-slate-500">
+              When you join Origin, you're not just buying software. You're joining a community of like-minded innovators. We bring together benefits leaders who are rewriting the rules, with an innovative client experience, exclusive events, real conversations, and a space to share ideas, challenges, and progress.
+            </p>
+            
+            <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50/50 p-8 relative overflow-hidden">
+              <div className="absolute top-6 right-8 text-7xl font-serif leading-none text-[#0a7c83]/10 select-none">
+                &ldquo;
+              </div>
+              <blockquote className="relative z-10">
+                <p className="text-[18px] font-medium leading-snug tracking-tight text-[#0A1128]">
+                  “I'm really excited to work with the Origin team and be at the forefront of challenging the employee benefits world, disrupting the age-old industry and working with an organization that can make decisions and changes quickly.”
+                </p>
+                <footer className="mt-6 flex items-center gap-4 border-t border-slate-200 pt-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0A1128] text-[12px] font-bold text-white">
+                    RH
+                  </div>
+                  <div>
+                    <div className="text-[14px] font-semibold text-[#0A1128]">Rob Hamer</div>
+                    <div className="text-[13px] text-slate-500">Global Benefits Lead</div>
+                  </div>
+                </footer>
+              </blockquote>
+            </div>
+          </motion.div>
+
+          {/* Right: Summit Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+            className="relative aspect-square overflow-hidden rounded-3xl bg-[#0a7c83] shadow-2xl flex flex-col items-center justify-center text-center p-12"
+          >
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+            
+            <div className="relative z-10">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A0E8AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <h4 className="text-4xl font-bold tracking-tight text-white mb-2">ORIGIN</h4>
+              <h5 className="text-2xl font-light tracking-[0.2em] text-[#A0E8AF] mb-6">SUMMIT</h5>
+              <p className="text-white/80 font-medium tracking-wider uppercase text-sm">Nashville 2026</p>
+            </div>
+          </motion.div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+
 function SecuritySection() {
   return (
-    <section id="security" className="relative overflow-hidden bg-[#080A12] py-28 md:py-40">
-      {/* depth: soft glows, faint grid, top hairline */}
-      <div className="pointer-events-none absolute -left-40 top-0 h-[520px] w-[520px] rounded-full bg-[#2E8A8A]/20 blur-[140px]" />
-      <div className="pointer-events-none absolute -right-32 bottom-0 h-[460px] w-[460px] rounded-full bg-[#1C3F60]/40 blur-[140px]" />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent)',
-          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent)',
-        }}
-      />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+    <section id="security" className="relative overflow-hidden bg-black py-28 md:py-40">
+      {/* Simple top hairline separator */}
+       
 
       <div className="relative mx-auto max-w-[1600px] px-6">
         {/* Header */}
@@ -1789,6 +1969,7 @@ function SecuritySection() {
 }
 
 
+
 // ==========================================
 // FAQ SECTION
 // ==========================================
@@ -1841,6 +2022,7 @@ const FAQS: Faq[] = [
   },
 ];
 
+
 function FaqRow({
   faq,
   index,
@@ -1853,39 +2035,47 @@ function FaqRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b border-slate-200">
+    <div className="group border-b border-slate-100 last:border-b-0">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="group flex w-full items-start gap-5 py-7 text-left md:gap-8 md:py-8"
+        className="flex w-full items-start gap-6 py-8 text-left md:gap-10"
       >
-        <span className="mt-1.5 w-6 shrink-0 text-[12px] font-medium tabular-nums text-slate-300">
+        {/* Index Number */}
+        <span className="mt-1 w-4 shrink-0 text-[13px] font-medium tabular-nums text-slate-300 transition-colors duration-300 group-hover:text-slate-500">
           {String(index + 1).padStart(2, '0')}
         </span>
 
+        {/* Question Content */}
         <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400">{faq.tag}</span>
+          {/* Tag */}
+          <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-[#0a7c83]">
+            {faq.tag}
+            {open && <span className="h-1.5 w-1.5 rounded-full bg-[#0a7c83] transition-opacity duration-300" />}
+          </span>
+          {/* Question */}
           <span
-            className={`mt-2 block text-xl font-medium leading-snug tracking-tight transition-colors md:text-2xl ${
-              open ? 'text-[#0A1128]' : 'text-slate-600 group-hover:text-[#0A1128]'
+            className={`mt-3 block text-xl font-medium leading-snug tracking-tight transition-colors duration-300 md:text-2xl ${
+              open ? 'text-[#0A1128]' : 'text-slate-700 group-hover:text-[#0A1128]'
             }`}
           >
             {faq.q}
           </span>
         </span>
 
+        {/* Toggle Icon */}
         <span
-          className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
+          className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
             open
-              ? 'border-[#0A1128] bg-[#0A1128] text-white'
-              : 'border-slate-200 text-slate-400 group-hover:border-slate-400 group-hover:text-[#0A1128]'
+              ? 'border-[#0a7c83] bg-[#0a7c83]/5 text-[#0a7c83]'
+              : 'border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600'
           }`}
         >
           <span className="relative block h-3 w-3">
             <span className="absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 bg-current" />
             <span
-              className={`absolute inset-y-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-300 ${
+              className={`absolute inset-y-0 left-1/2 w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-500 ${
                 open ? 'scale-y-0' : ''
               }`}
             />
@@ -1900,18 +2090,18 @@ function FaqRow({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: EASE }}
+            transition={{ duration: 0.4, ease: EASE }}
             className="overflow-hidden"
           >
-            <div className="pb-9 pl-11 pr-4 md:pl-14 md:pr-16">
-              <p className="max-w-2xl text-[16px] leading-relaxed text-slate-500">{faq.a}</p>
+            <div className="pb-10 pl-10 pr-4 md:pl-16 md:pr-20">
+              <p className="max-w-2xl text-[15.5px] leading-relaxed text-slate-500">{faq.a}</p>
               {faq.cta && (
-                
-                 <a href="#contact"
-                  className="group/cta mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#0A1128]"
+                <a
+                  href="#contact"
+                  className="group/cta mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#0a7c83] transition-colors hover:text-[#0A1128]"
                 >
                   {faq.cta}
-                  <ArrowRight size={14} className="transition-transform group-hover/cta:translate-x-1" />
+                  <ArrowRight size={14} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
                 </a>
               )}
             </div>
@@ -1926,10 +2116,14 @@ function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-white py-28 md:py-40">
+    <section id="faq" className="relative bg-white py-28 md:py-36">
+      {/* Elegant Separator Line */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
       <div className="mx-auto max-w-[1600px] px-6">
         <div className="grid gap-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-24">
-          {/* Left: heading + conversion prompt */}
+          
+          {/* Left Column: Editorial Pitch */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1937,32 +2131,38 @@ function FaqSection() {
             transition={{ duration: 0.7, ease: EASE }}
             className="lg:sticky lg:top-32 lg:self-start"
           >
-            <div className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">FAQ</div>
-            <h2 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="h-px w-8 bg-slate-300" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">
+                FAQ
+              </span>
+            </div>
+            
+            <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
               Answers for IT, procurement and legal.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-500">
-              The questions enterprise teams ask before they say yes. If yours isn’t here, the team will answer it
-              directly.
+            <p className="mt-8 max-w-md text-lg leading-relaxed text-slate-500">
+              The questions enterprise teams ask before they say yes. If yours isn’t here, the team will answer it directly.
             </p>
 
-            <div className="mt-10 max-w-md border-t border-slate-200 pt-8">
-              <div className="text-[15px] font-semibold text-[#0A1128]">See it on your own benefits data.</div>
-              <p className="mt-1.5 text-[15px] leading-relaxed text-slate-500">
+            <div className="mt-16 max-w-md border-t border-slate-100 pt-10">
+              <h3 className="text-[16px] font-semibold text-[#0A1128]">See it on your own benefits data.</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
                 Walk through Origin with the team, using your own countries, vendors and documents.
               </p>
               
-              <a  href="#contact"
-                className="group mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-[#0A1128] px-7 text-[15px] font-semibold text-white transition-colors hover:bg-[#1C3F60]"
+              <button
+                onClick={() => { /* scroll to contact logic or leave as is */ }}
+                className="group mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#0A1128] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-[#1C3F60] hover:shadow-lg"
               >
                 Book a demo
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </a>
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
             </div>
           </motion.div>
 
-          {/* Right: accordion */}
-          <div className="border-t border-slate-200">
+          {/* Right Column: Seamless Accordion */}
+          <div className="pt-2">
             {FAQS.map((faq, i) => (
               <FaqRow
                 key={faq.q}
@@ -1973,11 +2173,13 @@ function FaqSection() {
               />
             ))}
           </div>
+          
         </div>
       </div>
     </section>
   );
 }
+
 
 
 // ==========================================
@@ -2449,9 +2651,9 @@ export default function App() {
       
       <main>
         <Hero/>
-        <LogoBar/>
         <StorySection/>
         <ImpactSection onOpenCalculator={() => setCalcOpen(true)} />
+                 <CommunitySection />  
         <SecuritySection/>
         <FaqSection/>
         <ContactSection/>
