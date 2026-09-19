@@ -552,7 +552,7 @@ function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#A0E8AF] px-7 text-[15px] font-semibold text-[#03171d] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-10px_#A0E8AF]">
+            <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0a7c83] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0d8f98] hover:shadow-[0_12px_40px_-10px_#0a7c83]">
               Explore the Platform
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </button>
@@ -2145,59 +2145,80 @@ function TrustSection() {
   );
 }
 
+
 function Footer() {
   return (
-    <footer className="bg-[#050505] pb-12 pt-24">
-      <div className="mx-auto max-w-7xl px-6">
+    <footer className="relative overflow-hidden bg-[#031a20] pb-12 pt-24">
+      {/* Background: fading grid + soft teal glow (matching the Hero) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse 80% 80% at 50% 0%, #000 10%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 0%, #000 10%, transparent 80%)',
+          }}
+        />
+        <div className="absolute -top-[200px] left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-[#0a7c83]/20 blur-[120px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
+          
+          {/* Brand Column */}
           <div className="col-span-2 lg:col-span-2">
-            <div className="flex items-center gap-2 text-white">
-              <Globe className="text-[#A0E8AF]" size={24} />
-              <span className="text-2xl font-bold tracking-tight">origin</span>
-            </div>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/50">
+            <img
+              src="https://originbenefits.com/hubfs/assets-s2/logo.svg"
+              alt="Origin"
+              className="h-7 w-auto brightness-0 invert opacity-90"
+            />
+            <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-white/50">
               The authoritative system of record for global benefits. Turning fragmented vendor data into strategic enterprise intelligence.
             </p>
           </div>
           
+          {/* Links */}
           <div>
-            <h4 className="font-bold text-white">Platform</h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/50">
-              <li><a href="#" className="hover:text-[#A0E8AF]">Global Dashboard</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Cuido™ AI</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Compliance Engine</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Vendor Benchmarking</a></li>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Platform</h4>
+            <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
+              <li><a href="#" className="transition-colors hover:text-white">Global Dashboard</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Cuido™ AI</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Compliance Engine</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Vendor Benchmarking</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-bold text-white">Company</h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/50">
-              <li><a href="#" className="hover:text-[#A0E8AF]">About Us</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Careers</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Security</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Contact Sales</a></li>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Company</h4>
+            <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
+              <li><a href="#" className="transition-colors hover:text-white">About Us</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Careers</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Security</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Contact Sales</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-white">Legal</h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/50">
-              <li><a href="#" className="hover:text-[#A0E8AF]">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-[#A0E8AF]">Cookie Policy</a></li>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Legal</h4>
+            <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
+              <li><a href="#" className="transition-colors hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Terms of Service</a></li>
+              <li><a href="#" className="transition-colors hover:text-white">Cookie Policy</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="mt-24 border-t border-white/10 pt-8 text-center text-sm text-white/30">
-          © {new Date().getFullYear()} Origin Benefits Intelligence. Speculative enterprise design.
+        {/* Bottom Bar */}
+        <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-[13px] text-white/40 md:flex-row">
+          <span>© {new Date().getFullYear()} Origin Benefits Intelligence.</span>
+          <span>Speculative enterprise design.</span>
         </div>
       </div>
     </footer>
   );
 }
-
 // Helper icons
 function CheckIcon(props: any) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12" /></svg>;
@@ -2564,7 +2585,7 @@ function FaqSection() {
   return (
     <section id="faq" className="relative bg-white py-28 md:py-36">
       {/* Elegant Separator Line */}
-      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-400 to-transparent" />
 
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-24">
@@ -2825,17 +2846,14 @@ function ContactSection() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 bg-white py-20 md:py-28">
+    <section id="contact" className="relative scroll-mt-24 bg-white py-20 md:py-28">
 
+      {/* Clean top separator */}
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-400 to-transparent" />
 
-            {/* Clean top separator */}
-      <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
-
-      
       <div className="mx-auto max-w-7xl px-6">
-        <div className="rounded-[2rem] bg-[#0a7c83] p-6 sm:p-10 lg:p-14">
-          <div className="grid items-stretch gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,700px)] lg:gap-16">
+        <div className="rounded-2xl bg-[#0a7c83] p-8 sm:p-10 lg:p-12">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,540px)] lg:gap-14">
             {/* Left: pitch */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -2867,14 +2885,14 @@ function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-              className="relative overflow-hidden rounded-[1.75rem] bg-white p-8 pb-12 md:p-12 md:pb-14"
+     className="relative overflow-hidden rounded-xl bg-white p-7 pb-10 md:p-10 md:pb-12"
             >
               {status === 'done' ? (
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: EASE }}
-                  className="flex min-h-[520px] flex-col justify-center"
+                  className="flex min-h-[420px] flex-col justify-center"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#050505] text-white">
                     <Check size={24} strokeWidth={2.25} />
@@ -2910,7 +2928,7 @@ function ContactSection() {
                 </motion.div>
               ) : (
                 <>
-                  <h3 className="text-[32px] font-semibold leading-tight tracking-[-0.03em] text-[#0a7c83] md:text-4xl">
+                  <h3 className="text-[22px] font-semibold leading-tight tracking-[-0.03em] text-[#0a7c83] md:text-[26px]">
                     Ready to see Origin on your data?
                   </h3>
 
@@ -2919,7 +2937,7 @@ function ContactSection() {
                   </div>
 
                   <div
-                    className="mt-8 min-h-[330px]"
+                    className="mt-8 min-h-[280px]"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && (e.target as HTMLElement).tagName === 'INPUT') {
                         e.preventDefault();
