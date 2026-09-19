@@ -2,10 +2,18 @@ import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useSpring, useInView, useReducedMotion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { 
-  ArrowRight, ArrowLeft, ShieldCheck, Globe, Zap, LineChart, 
-  MessageSquare, FileText, Lock, ChevronRight, BarChart3, 
-  Building2, Users, Briefcase, Search, Sparkles, Check, Languages
+  ArrowRight, ArrowLeft, Globe, Zap, LineChart, 
+  MessageSquare, Lock, ChevronRight, BarChart3, 
+  Building2, Users, Briefcase, Search, FileText,
+  Sparkles, Check 
 } from 'lucide-react';
+
+// Add this new import
+import { 
+  FilePdf, FileDoc, FileTxt, CheckCircle, 
+  CircleNotch, Sparkle, Translate, 
+  ShieldCheck, Lightning, Clock 
+} from '@phosphor-icons/react';
 
 // ==========================================
 // TYPES & CONFIG
@@ -253,7 +261,7 @@ function AppCard({ children }: { children: ReactNode }) {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-      className="relative w-full overflow-hidden rounded-2xl bg-white text-[#0A1128] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)] ring-1 ring-black/5"
+      className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-200"
     >
       {children}
     </motion.div>
@@ -262,14 +270,14 @@ function AppCard({ children }: { children: ReactNode }) {
 
 function CardHeader({ title, sub, right }: { title: string; sub: string; right?: ReactNode }) {
   return (
-    <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+    <div className="flex items-center justify-between border-b border-slate-100  px-5 py-4">
       <div className="flex min-w-0 items-center gap-3">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A1128] text-[#A0E8AF]">
-          <Sparkles size={15} />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none border border-slate-200 text-slate-800">
+          <Sparkles size={15} strokeWidth={1.75} />
         </div>
         <div className="min-w-0">
-          <div className="truncate text-[13px] font-semibold leading-tight">{title}</div>
-          <div className="truncate text-[11px] leading-tight text-slate-400">{sub}</div>
+          <div className="truncate text-[14px] font-semibold leading-tight text-slate-800">{title}</div>
+          <div className="truncate text-[12px] leading-tight text-slate-500">{sub}</div>
         </div>
       </div>
       {right}
@@ -280,67 +288,86 @@ function CardHeader({ title, sub, right }: { title: string; sub: string; right?:
 // ---------- CARD 1: INGEST ----------
 
 const INGEST_FILES = [
-  { name: 'Handbook_Poland_2025.pdf', lang: 'PL' },
-  { name: 'Contrato_Seguro_Vida_MX.pdf', lang: 'ES' },
-  { name: 'Betriebsrente_Richtlinie_DE.docx', lang: 'DE' },
-  { name: 'Plano_de_Saude_BR.pdf', lang: 'PT' },
-  { name: 'Group_Life_Contract_SG.pdf', lang: 'EN' },
+  { name: 'Handbook_Poland_2025.pdf', lang: 'PL', icon: FilePdf },
+  { name: 'Contrato_Seguro_Vida_MX.pdf', lang: 'ES', icon: FilePdf },
+  { name: 'Betriebsrente_Richtlinie_DE.docx', lang: 'DE', icon: FileDoc },
+  { name: 'Plano_de_Saude_BR.pdf', lang: 'PT', icon: FilePdf },
 ];
+
 
 function IngestCard() {
   const step = useSequence([1100, 1800, 2500, 3200, 3900]);
   const count = useCountUp(312, 4200, 300);
+
   return (
-    <AppCard>
+    <AppCard className="w-[125%] max-w-[720px] self-center lg:self-start">
       <CardHeader
-        title="Cuido is reading"
+        title="Document Ingestion"
         sub="43 countries · 9 languages"
-        right={<span className="rounded-full bg-[#A0E8AF]/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1C3F60]">Live</span>}
+        right={
+          <span className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Live
+          </span>
+        }
       />
-      <div className="space-y-1 px-3 py-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1 px-3 py-4">
         {INGEST_FILES.map((f, i) => {
           const done = step > i;
+          const Icon = f.icon;
           return (
             <motion.div
               key={f.name}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.45 + i * 0.12, duration: 0.5, ease: EASE }}
-              className="flex items-center gap-3 rounded-xl px-2.5 py-2"
+              className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:bg-slate-50/80"
             >
-              <FileText size={16} className="shrink-0 text-slate-400" />
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-slate-500 border border-slate-200 shadow-sm">
+                <Icon size={18} weight="duotone" />
+              </div>
               <div className="min-w-0 flex-1">
-                <div className="truncate text-[12px] font-medium">{f.name}</div>
-                <div className="text-[10px] text-slate-400">
-                  {done ? (f.lang === 'EN' ? 'Structured' : `Translated ${f.lang} → EN · structured`) : 'Reading…'}
+                <div className="truncate text-[13px] font-medium text-slate-700">{f.name}</div>
+                <div className="text-[11px] text-slate-400">
+                  {done ? (
+                    <span className="flex items-center gap-1 text-[#2E8A8A]">
+                      <CheckCircle size={12} weight="fill" /> Structured successfully
+                    </span>
+                  ) : (
+                    'Reading document...'
+                  )}
                 </div>
               </div>
-              <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">{f.lang}</span>
+              <span className="rounded-md bg-slate-50 px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-slate-400 border border-slate-100">
+                {f.lang}
+              </span>
               <span className="flex h-5 w-5 shrink-0 items-center justify-center">
                 {done ? (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2E8A8A] text-white"
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0A1128] text-white"
                   >
-                    <Check size={12} strokeWidth={3} />
+                    <CheckCircle size={14} weight="fill" />
                   </motion.span>
                 ) : (
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-[#2E8A8A]" />
+                  <CircleNotch size={16} className="animate-spin text-slate-300" />
                 )}
               </span>
             </motion.div>
           );
         })}
       </div>
-      <div className="border-t border-slate-100 px-5 py-4">
+      <div className="border-t border-slate-100 bg-white px-5 py-4 rounded-b-[1.5rem]">
         <div className="flex items-end justify-between">
-          <div className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Documents structured</div>
-          <div className="text-2xl font-semibold tabular-nums">{Math.round(count)}</div>
+          <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
+            Total documents structured
+          </div>
+          <div className="text-2xl font-semibold tabular-nums text-slate-800">{Math.round(count)}</div>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#2E8A8A] to-[#A0E8AF]"
+            className="h-full rounded-full bg-slate-800 transition-all duration-300"
             style={{ width: `${(count / 312) * 100}%` }}
           />
         </div>
@@ -357,24 +384,28 @@ const ASK_TYPE_END = 500 + ASK_QUERY.length * 24;
 function AskCard() {
   const typed = useTypewriter(ASK_QUERY, 500, 24);
   const step = useSequence([ASK_TYPE_END + 300, ASK_TYPE_END + 1600]);
+  
   const rows = [
-    { label: 'Your policy', val: '26 weeks · 100% pay', w: 100, color: 'bg-[#2E8A8A]' },
-    { label: 'Statutory minimum', val: '20 weeks · 100% pay', w: 77, color: 'bg-slate-300' },
+    { label: 'Your policy', val: '26 weeks · 100% pay', w: 100, color: 'bg-[#0A1128]' },
+    { label: 'Statutory minimum', val: '20 weeks · 100% pay', w: 77, color: 'bg-slate-200' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Ask Cuido"
         sub="All countries · any language"
-        right={<Languages size={16} className="text-slate-300" />}
       />
-      <div className="min-h-[290px] space-y-3 px-4 py-4 text-[12.5px]">
+      <div className="min-h-[290px] space-y-3 px-5 py-5 text-[12.5px]">
         {typed && (
-          <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-[#0A1128] px-3.5 py-2.5 leading-snug text-white">
+          <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-slate-100 border border-slate-200 px-4 py-3 leading-snug text-slate-700">
             {typed}
-            {step < 1 && <span className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-pulse bg-[#A0E8AF]" />}
+            {step < 1 && (
+              <span className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-pulse bg-[#2E8A8A]" />
+            )}
           </div>
         )}
+        
         <AnimatePresence>
           {step === 1 && (
             <motion.div
@@ -382,29 +413,31 @@ function AskCard() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex w-fit gap-1.5 rounded-2xl rounded-tl-md bg-slate-100 px-4 py-3"
+              className="flex w-fit gap-1.5 rounded-2xl rounded-tl-md bg-slate-50 border border-slate-100 px-4 py-3"
             >
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A] [animation-delay:0.15s]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#2E8A8A] [animation-delay:0.3s]" />
+              <CircleNotch size={14} className="animate-spin text-[#2E8A8A]" />
             </motion.div>
           )}
+        
           {step >= 2 && (
             <motion.div
               key="answer"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-3 rounded-2xl rounded-tl-md bg-slate-50 p-3.5 ring-1 ring-slate-100"
+              className="space-y-4 rounded-2xl rounded-tl-md bg-white p-5 border border-slate-200 shadow-sm"
             >
-              <p className="font-semibold leading-snug">Your policy exceeds the statutory minimum.</p>
-              <div className="space-y-2.5">
+              <p className="font-semibold leading-snug text-slate-800">
+                Your policy exceeds the statutory minimum.
+              </p>
+              
+              <div className="space-y-4">
                 {rows.map((r, i) => (
                   <div key={r.label}>
-                    <div className="mb-1 flex justify-between text-[11px]">
-                      <span className="font-medium text-slate-500">{r.label}</span>
-                      <span className="font-semibold">{r.val}</span>
+                    <div className="mb-2 flex justify-between text-[11px] font-medium">
+                      <span className="text-slate-500">{r.label}</span>
+                      <span className="text-slate-700">{r.val}</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-slate-200/70">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
                       <motion.div
                         initial={{ width: '0%' }}
                         animate={{ width: `${r.w}%` }}
@@ -415,12 +448,13 @@ function AskCard() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[10.5px] font-medium text-[#1C3F60] ring-1 ring-slate-200">
-                  <FileText size={11} /> Polish handbook v2025 · p.14
+
+              <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100">
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-50 border border-slate-200 px-2.5 py-1.5 text-[10.5px] font-medium text-slate-600">
+                  <FileTxt size={12} weight="duotone" /> Polish handbook v2025 · p.14
                 </span>
-                <span className="inline-flex items-center gap-1 text-[10.5px] font-medium text-[#2E8A8A]">
-                  <ShieldCheck size={12} /> Compliant · verified 2 days ago
+                <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-50 border border-slate-200 px-2.5 py-1.5 text-[10.5px] font-medium text-slate-600">
+                  <ShieldCheck size={12} weight="fill" /> Compliant
                 </span>
               </div>
             </motion.div>
@@ -430,6 +464,8 @@ function AskCard() {
     </AppCard>
   );
 }
+
+
 
 // ---------- CARD 3: INVENTORY ----------
 
@@ -444,6 +480,7 @@ const INV_GRID: Cell[][] = [
   ['ok', 'ok', 'gap', 'ok'],
 ];
 
+
 function InventoryCard() {
   const step = useSequence([2200]);
   return (
@@ -451,142 +488,155 @@ function InventoryCard() {
       <CardHeader
         title="Benefits inventory"
         sub="Live · 5 of 43 markets shown"
-        right={<span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Synced</span>}
+        right={
+          <span className="rounded-full border border-slate-200/80 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 shadow-sm">
+            Synced
+          </span>
+        }
       />
-      <div className="px-4 pb-1 pt-4">
-        <div className="grid grid-cols-[92px_repeat(4,1fr)] gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+      <div className="px-5 pb-2 pt-5">
+        <div className="grid grid-cols-[100px_repeat(4,1fr)] gap-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
           <span />
           {INV_COLS.map((col) => (
             <span key={col} className="text-center">{col}</span>
           ))}
         </div>
-        <div className="mt-2 space-y-1.5">
+        
+        <div className="mt-3 space-y-2">
           {INV_ROWS.map((row, r) => (
-            <div key={row} className="grid grid-cols-[92px_repeat(4,1fr)] items-center gap-1.5">
-              <span className="truncate text-[11.5px] font-medium">{row}</span>
+            <div key={row} className="grid grid-cols-[100px_repeat(4,1fr)] items-center gap-2">
+              <span className="truncate text-[11.5px] font-medium text-slate-600">{row}</span>
               {INV_GRID[r].map((cell, c) => (
                 <motion.div
                   key={c}
-                  initial={{ opacity: 0, scale: 0.6 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.35 + (r * 4 + c) * 0.035, duration: 0.4, ease: EASE }}
-                  className={`relative flex h-9 items-center justify-center rounded-lg text-[10px] font-bold ${
+                  transition={{ delay: 0.35 + (r * 4 + c) * 0.03, duration: 0.4, ease: EASE }}
+                  className={`relative flex h-10 items-center justify-center rounded-lg text-[11px] font-semibold transition-colors border ${
                     cell === 'ok'
-                      ? 'bg-[#A0E8AF]/40 text-[#2E8A8A]'
+                      ? 'bg-white border-slate-200 text-slate-400'
                       : cell === 'overlap'
-                      ? 'bg-[#FFC857]/40 text-[#8A5A00]'
-                      : 'bg-rose-100 text-rose-600'
+                      ? 'bg-white border-slate-300 text-slate-800'
+                      : 'bg-white border-slate-300 text-slate-800'
                   }`}
                 >
-                  {cell === 'ok' ? <Check size={13} strokeWidth={3} /> : cell === 'overlap' ? '×2' : '—'}
-                  {cell !== 'ok' && step >= 1 && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 1.8, repeat: Infinity }}
-                      className={`absolute inset-0 rounded-lg ring-2 ${cell === 'overlap' ? 'ring-[#FFC857]' : 'ring-rose-400'}`}
-                    />
-                  )}
+                  {cell === 'ok' && <CheckCircle size={16} weight="duotone" className="text-slate-300" />}
+                  {cell === 'overlap' && <span className="flex items-center gap-1"><Lightning size={12} weight="fill" /> 2x</span>}
+                  {cell === 'gap' && <span className="flex items-center gap-1"><Clock size={12} weight="bold" /> Gap</span>}
                 </motion.div>
               ))}
             </div>
           ))}
         </div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 8 }}
-        className="mx-4 mb-4 mt-3 flex items-start gap-2.5 rounded-xl bg-[#0A1128] p-3 text-[11.5px] leading-snug text-white/70"
+        className="mx-5 mb-5 mt-4 flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 text-[11.5px] leading-snug text-slate-700 shadow-sm"
       >
-        <Sparkles size={14} className="mt-0.5 shrink-0 text-[#A0E8AF]" />
+        <Sparkle size={16} weight="fill" className="mt-0.5 shrink-0 text-amber-500" />
         <span>
-          <b className="text-white">3 overlaps and 2 gaps flagged.</b> Singapore has two vendors covering medical — a consolidation opportunity.
+          <b className="text-amber-900">3 overlaps and 2 gaps flagged.</b> Singapore has two vendors covering medical — a consolidation opportunity.
         </span>
       </motion.div>
     </AppCard>
   );
 }
 
-// ---------- CARD 4: TRUE COST ----------
 
+
+// ---------- CARD 4: TRUE COST ----------
 function CostCard() {
   const step = useSequence([1500, 2800]);
   const amount = useCountUp(1, 1400, 2800);
+
   const parts = [
-    { label: 'Premium', w: 79, color: 'bg-[#1C3F60]' },
-    { label: 'Admin', w: 7, color: 'bg-[#2E8A8A]' },
-    { label: 'Hidden commission', w: 14, color: 'bg-[#FFC857]' },
+    { label: 'Premium', w: 79, color: 'bg-slate-800' },
+    { label: 'Admin', w: 7, color: 'bg-slate-200' },
+    { label: 'Hidden commission', w: 14, color: 'bg-slate-400' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Broker_Agreement_Local.pdf"
         sub="Contract analysis · auto-translated"
         right={
-          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${step >= 1 ? 'bg-[#FFC857]/40 text-[#8A5A00]' : 'bg-slate-100 text-slate-400'}`}>
+          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider transition-colors border ${
+            step >= 1 
+              ? 'border-amber-200 bg-amber-50 text-amber-700' 
+              : 'border-slate-200 bg-slate-50 text-slate-400'
+          }`}>
             {step >= 1 ? '1 flag' : 'Reading'}
           </span>
         }
       />
-      <div className="space-y-2 px-5 py-4">
+      <div className="space-y-2.5 px-6 py-5">
         {[92, 78].map((w, i) => (
           <motion.div
             key={i}
             initial={{ width: '0%' }}
             animate={{ width: `${w}%` }}
             transition={{ delay: 0.4 + i * 0.1, duration: 0.7, ease: EASE }}
-            className="h-2 rounded-full bg-slate-100"
+            className="h-1.5 rounded-full bg-slate-100"
           />
         ))}
-        <div className="relative rounded-lg px-2.5 py-2 text-[12px] leading-snug">
+        
+        <div className="relative rounded-lg px-3 py-2.5 text-[12px] leading-relaxed text-slate-600">
           <motion.span
             aria-hidden
             initial={{ width: '0%' }}
             animate={{ width: step >= 1 ? '100%' : '0%' }}
             transition={{ duration: 0.8, ease: EASE }}
-            className="absolute inset-y-0 left-0 rounded-lg bg-[#FFC857]/40"
+            className="absolute inset-y-0 left-0 rounded-lg bg-slate-100 border border-slate-300"
           />
           <span className="relative">
-            <b>7.3</b> The Insurer shall remit 14% of gross premium to the Broker as a service fee, not itemised on client invoices.
+            <b className="text-slate-800">7.3</b> The Insurer shall remit <b className="text-slate-900 underline decoration-slate-400">14%</b> of gross premium to the Broker as a service fee, not itemised on client invoices.
           </span>
         </div>
+        
         {[84, 60].map((w, i) => (
           <motion.div
             key={i}
             initial={{ width: '0%' }}
             animate={{ width: `${w}%` }}
             transition={{ delay: 0.6 + i * 0.1, duration: 0.7, ease: EASE }}
-            className="h-2 rounded-full bg-slate-100"
+            className="h-1.5 rounded-full bg-slate-100"
           />
         ))}
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: step >= 2 ? 1 : 0, y: step >= 2 ? 0 : 8 }}
-        className="mx-5 flex items-center justify-between rounded-xl bg-[#0A1128] px-4 py-3 text-white"
+        className="mx-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm"
       >
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#FFC857]">Undisclosed commission</div>
-          <div className="text-[11px] text-white/50">Clause 7.3 · local broker contract</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Undisclosed commission</div>
+          <div className="text-[11px] text-slate-400 mt-0.5">Clause 7.3 · local broker contract</div>
         </div>
-        <div className="text-xl font-semibold tabular-nums">
-          ${amount.toFixed(1)}M<span className="text-xs font-normal text-white/50"> / yr</span>
+        <div className="text-2xl font-semibold tabular-nums text-slate-900">
+          ${amount.toFixed(1)}M<span className="text-xs font-normal text-slate-400"> / yr</span>
         </div>
       </motion.div>
-      <div className="px-5 pb-5 pt-4">
-        <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">True cost of the programme</div>
-        <div className="flex h-2.5 gap-0.5 overflow-hidden rounded-full">
+
+      <div className="px-6 pb-6 pt-5">
+        <div className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          True cost of the programme
+        </div>
+        <div className="flex h-2 gap-1 overflow-hidden rounded-full">
           {parts.map((p, i) => (
             <motion.div
               key={p.label}
               initial={{ width: '0%' }}
               animate={{ width: `${p.w}%` }}
               transition={{ delay: 0.8 + i * 0.15, duration: 0.9, ease: EASE }}
-              className={p.color}
+              className={`${p.color} rounded-full`}
             />
           ))}
         </div>
-        <div className="mt-2 flex justify-between text-[10.5px] text-slate-500">
+        <div className="mt-3 flex justify-between text-[10.5px] font-medium text-slate-500">
           {parts.map((p) => (
             <span key={p.label} className="flex items-center gap-1.5">
               <span className={`h-2 w-2 rounded-full ${p.color}`} />
@@ -599,43 +649,51 @@ function CostCard() {
   );
 }
 
-// ---------- CARD 5: VENDORS / RENEWAL ----------
 
+
+// ---------- CARD 5: VENDORS / RENEWAL ----------
 function RenewalCard() {
   const step = useSequence([1600]);
   const quotes = [
-    { label: 'Incumbent broker', val: 'Baseline', w: 100, color: 'bg-slate-300' },
-    { label: 'Cuido benchmark', val: '−26% cost', w: 74, color: 'bg-[#2E8A8A]' },
+    { label: 'Incumbent broker', val: 'Baseline', w: 100, color: 'bg-slate-200' },
+    { label: 'Cuido benchmark', val: '−26% cost', w: 74, color: 'bg-[#0A1128]' },
   ];
+
   return (
     <AppCard>
       <CardHeader
         title="Renewal · Group Life"
         sub="Singapore · renews in 90 days"
-        right={<span className="shrink-0 rounded-full bg-[#A0E8AF]/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#1C3F60]">Auto-started</span>}
+        right={
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Auto-started
+          </span>
+        }
       />
-      <div className="px-5 pt-5">
+      <div className="px-6 pt-6">
         <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
           <motion.div
             initial={{ width: '0%' }}
             animate={{ width: '55%' }}
             transition={{ delay: 0.5, duration: 1.4, ease: EASE }}
-            className="h-full rounded-full bg-gradient-to-r from-[#2E8A8A] to-[#A0E8AF]"
+            className="h-full rounded-full bg-[#0A1128]"
           />
         </div>
-        <div className="mt-2 flex justify-between text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+        <div className="mt-3 flex justify-between text-[10px] font-semibold uppercase tracking-wider text-slate-400">
           <span className="text-[#2E8A8A]">Day 90 · Benchmark</span>
           <span>Day 45 · Negotiate</span>
           <span>Day 0 · Renew</span>
         </div>
-        <div className="mt-5 space-y-3">
+        
+        <div className="mt-6 space-y-4">
           {quotes.map((q, i) => (
             <div key={q.label}>
-              <div className="mb-1 flex justify-between text-[11px]">
-                <span className="font-medium text-slate-500">{q.label}</span>
-                <span className="font-semibold">{q.val}</span>
+              <div className="mb-2 flex justify-between text-[11px] font-medium">
+                <span className="text-slate-500">{q.label}</span>
+                <span className="text-slate-800">{q.val}</span>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
                 <motion.div
                   initial={{ width: '0%' }}
                   animate={{ width: `${q.w}%` }}
@@ -647,22 +705,30 @@ function RenewalCard() {
           ))}
         </div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: step >= 1 ? 1 : 0, y: step >= 1 ? 0 : 10 }}
-        className="mx-5 my-5 flex items-center gap-3 rounded-xl bg-[#0A1128] p-3.5 text-white"
+        className="mx-6 my-6 flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
       >
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#A0E8AF] text-[#0A1128]">
-          <Zap size={16} />
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-800 shadow-sm border border-slate-200">
+          <Lightning size={18} weight="fill" />
         </div>
         <div>
-          <div className="text-[13px] font-semibold leading-tight">$200k/yr redirected to new benefits</div>
-          <div className="mt-0.5 text-[11px] text-white/50">Approved · Friday 16:15</div>
+          <div className="text-[13px] font-semibold leading-tight text-slate-800">
+            $200k/yr redirected to new benefits
+          </div>
+          <div className="mt-1 text-[11px] font-medium text-slate-500">
+            Approved · Friday 16:15
+          </div>
         </div>
       </motion.div>
     </AppCard>
   );
 }
+
+
+
 
 // ---------- CHAPTERS ----------
 
@@ -687,10 +753,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Proya inherits 43 countries of paperwork.',
     body: 'Policies in PDFs. Contracts in six languages. Commission schedules buried in inboxes. Cuido reads, translates and organizes all of it into one authoritative source, before her coffee gets cold.',
     stat: { value: '312', label: 'documents structured in minutes' },
-    accent: '#A0E8AF',
-    scene:
-      'radial-gradient(120% 90% at 85% 10%, rgba(46,138,138,0.55), transparent 55%), radial-gradient(90% 80% at 0% 100%, rgba(28,63,96,0.9), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: IngestCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: IngestCard,
   },
   {
     id: 'ask',
@@ -699,10 +764,9 @@ const CHAPTERS: Chapter[] = [
     title: 'A last-minute question. Answered in seconds.',
     body: 'Warsaw needs the maternity policy before a noon call. Proya asks Cuido in plain English and gets the answer translated, compared to local law, with the source document attached.',
     stat: { value: '6 sec', label: 'from question to cited answer' },
-    accent: '#7FD8CF',
-    scene:
-      'radial-gradient(100% 90% at 80% 20%, rgba(127,216,207,0.28), transparent 55%), radial-gradient(90% 90% at 10% 90%, rgba(46,138,138,0.5), transparent 60%), linear-gradient(160deg,#0B1B2B 0%,#050505 100%)',
-    Card: AskCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: AskCard,
   },
   {
     id: 'inventory',
@@ -711,10 +775,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Every benefit. Every country. One clear picture.',
     body: "For the first time Proya can see what's actually offered, where programs overlap, and where employees aren't covered at all. No more spreadsheets stitched together by hand.",
     stat: { value: '100%', label: 'of benefits inventoried, country by country' },
-    accent: '#D2F898',
-    scene:
-      'radial-gradient(100% 90% at 85% 15%, rgba(210,248,152,0.20), transparent 55%), radial-gradient(90% 90% at 0% 100%, rgba(28,63,96,0.85), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: InventoryCard,
+accent: '#0A1128',
+  scene: 'transparent',
+      Card: InventoryCard,
   },
   {
     id: 'cost',
@@ -723,10 +786,9 @@ const CHAPTERS: Chapter[] = [
     title: 'Hidden commissions have nowhere to hide.',
     body: 'Cuido reads a local broker contract and surfaces a commission that never appeared on the invoice, with the exact clause that proves it. Proya finally sees the true cost of a benefit.',
     stat: { value: '$1M/yr', label: 'undisclosed commission found in one local contract' },
-    accent: '#FFC857',
-    scene:
-      'radial-gradient(90% 90% at 80% 15%, rgba(255,200,87,0.28), transparent 55%), radial-gradient(90% 90% at 5% 100%, rgba(28,63,96,0.85), transparent 60%), linear-gradient(160deg,#120F0A 0%,#050505 100%)',
-    Card: CostCard,
+ accent: '#0A1128',
+  scene: 'transparent',
+      Card: CostCard,
   },
   {
     id: 'vendors',
@@ -735,10 +797,9 @@ const CHAPTERS: Chapter[] = [
     title: 'She walks into the room leading, not chasing.',
     body: 'Ninety days before every renewal, Cuido benchmarks the market. Proya negotiates from evidence, brings brokerage costs down, and redirects the savings to benefits her people actually want.',
     stat: { value: '$1.1M/yr', label: 'brokerage cost reduced across 20 countries' },
-    accent: '#A0E8AF',
-    scene:
-      'radial-gradient(100% 100% at 85% 0%, rgba(160,232,175,0.32), transparent 55%), radial-gradient(100% 90% at 0% 100%, rgba(46,138,138,0.55), transparent 60%), linear-gradient(160deg,#0A1128 0%,#050505 100%)',
-    Card: RenewalCard,
+ accent: '#0A1128',
+  scene: 'transparent', 
+  Card: RenewalCard,
   },
 ];
 
@@ -747,6 +808,7 @@ const slideVariants: Variants = {
   center: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
   exit: (d: number) => ({ opacity: 0, x: d * -80, transition: { duration: 0.28 } }),
 };
+
 
 // ---------- SECTION ----------
 
@@ -780,22 +842,26 @@ function StorySection() {
   };
 
   return (
-    <section id="story" className="relative bg-[#050505] py-28 md:py-36">
+    <section id="story" className="relative bg-white py-28 md:py-36">
       <style>{`@keyframes proya-progress { from { width: 0% } to { width: 100% } }`}</style>
 
       <div className="mx-auto max-w-[1600px] px-6">
         {/* Heading */}
         <div className="mb-14 max-w-4xl md:mb-20">
-          <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">
-            <span className="h-px w-8 bg-[#A0E8AF]/60" />
-            How Origin works
-          </div>
-          <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-white md:text-7xl">
-            Meet Proya.
-            <br />
-            <span className="text-white/40">Here's her week with Origin.</span>
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg text-white/50 md:text-xl">
+        
+        
+        
+       <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+  <span className="h-px w-8 bg-slate-300" />
+  How Origin works
+</div>
+  <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-[#0A1128] md:text-7xl">
+  Meet Proya.
+  <br />
+  <span className="font-normal text-[#0A1128]/60">Here's her week with Origin.</span>
+</h2>
+<p className="mt-6 max-w-2xl text-lg text-slate-500 md:text-xl">
+
             Proya runs global benefits across 43 countries. From Monday's scramble to Friday's strategy,
             Cuido, Origin's Artificial Benefits Intelligence, is working behind the scenes.
           </p>
@@ -812,7 +878,7 @@ function StorySection() {
           onMouseMove={onMove}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="group relative h-[960px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#050505] shadow-[0_40px_120px_-40px_rgba(46,138,138,0.35)] outline-none focus-visible:ring-2 focus-visible:ring-[#A0E8AF]/60 sm:h-[900px] lg:h-[540px]"
+          className="group relative h-[960px] overflow-hidden rounded-xl border border-[#0a7c83] bg-[#0a7c83] outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:h-[900px] lg:h-[540px]"
         >
           {/* Scene (crossfades) */}
           <AnimatePresence>
@@ -829,34 +895,14 @@ function StorySection() {
               {chapter.image && (
                 <img src={chapter.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
               )}
-              <motion.div
-                className="absolute -right-20 -top-24 h-[420px] w-[420px] rounded-full blur-[110px]"
-                style={{ background: chapter.accent, opacity: 0.2 }}
-                animate={{ x: [0, -50, 0], y: [0, 40, 0] }}
-                transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-              />
+               
             </motion.div>
           </AnimatePresence>
 
-          {/* Dot grid */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.14]"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
-              maskImage: 'linear-gradient(to right, transparent 10%, black 80%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 10%, black 80%)',
-            }}
-          />
+            
 
           {/* Mouse spotlight */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                'radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.07), transparent 45%)',
-            }}
-          />
+            
 
           {/* Slide */}
           {started && (
@@ -875,9 +921,9 @@ function StorySection() {
                   if (info.offset.x < -80) next();
                   else if (info.offset.x > 80) prev();
                 }}
-                className="absolute inset-0 flex flex-col justify-center gap-8 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12 xl:px-16"
+                className="absolute inset-0 flex flex-col justify-center gap-8 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-12 xl:gap-24 xl:px-20"
               >
-                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-white/[0.03]">
+                <span className="pointer-events-none absolute -bottom-12 left-6 select-none text-[240px] font-bold leading-none tracking-tighter text-white/[0.05]">
                   0{index + 1}
                 </span>
 
@@ -885,12 +931,10 @@ function StorySection() {
                 <div className="relative z-10 max-w-[480px] lg:max-w-[420px] xl:max-w-[480px]">
                   <Rise>
                     <div
-                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em]"
-                      style={{ color: chapter.accent }}
+                      className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/70"
                     >
                       <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ background: chapter.accent, boxShadow: `0 0 12px ${chapter.accent}` }}
+                        className="h-1.5 w-1.5 rounded-full bg-white/70"
                       />
                       {chapter.eyebrow}
                     </div>
@@ -901,15 +945,15 @@ function StorySection() {
                     </h3>
                   </Rise>
                   <Rise d={0.16}>
-                    <p className="mt-5 text-[15px] leading-relaxed text-white/65 lg:text-[16px] xl:text-[17px]">
+                    <p className="mt-5 text-[15px] leading-relaxed text-white/70 lg:text-[16px] xl:text-[17px]">
                       {chapter.body}
                     </p>
                   </Rise>
-                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-white/10 pt-6">
-                    <span className="text-3xl font-semibold tracking-tight sm:text-4xl" style={{ color: chapter.accent }}>
+                  <Rise d={0.24} className="mt-8 flex items-center gap-5 border-t border-white/20 pt-6">
+                    <span className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                       {chapter.stat.value}
                     </span>
-                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-white/40">
+                    <span className="max-w-[190px] text-[11px] font-medium uppercase leading-snug tracking-widest text-white/50">
                       {chapter.stat.label}
                     </span>
                   </Rise>
@@ -919,7 +963,7 @@ function StorySection() {
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-10 w-full max-w-[400px] lg:max-w-[380px] lg:shrink-0 xl:max-w-[400px]"
+                  className="relative z-10 w-full max-w-[560px] lg:max-w-[520px] lg:shrink-0 xl:max-w-[580px]"
                 >
                   <Card />
                 </motion.div>
@@ -935,7 +979,7 @@ function StorySection() {
               type="button"
               onClick={prev}
               aria-label="Previous chapter"
-              className="hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/60 transition-colors hover:bg-white/10 hover:text-white sm:flex"
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#0A1128] sm:flex"
             >
               <ArrowLeft size={16} />
             </button>
@@ -953,18 +997,21 @@ function StorySection() {
                     onClick={() => go(i)}
                     style={{ borderRadius: 999 }}
                     transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                    className={`relative flex h-11 items-center overflow-hidden border text-sm font-medium ${
-                      active
-                        ? 'border-white/20 bg-white/10 pl-1.5 pr-5 text-white'
-                        : 'border-white/10 bg-white/[0.03] p-1.5 text-white/50 hover:bg-white/10 hover:text-white'
-                    }`}
+                  
+                 className={`relative flex h-11 items-center overflow-hidden border text-sm font-medium ${
+  active
+    ? 'border-[#0a7c83] bg-white pl-1.5 pr-5 text-[#0a7c83]'
+    : 'border-slate-200 bg-white p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#0a7c83]'
+}`}
+
                   >
                     <motion.span
                       layout="position"
-                      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                        active ? 'bg-[#A0E8AF] text-[#050505]' : ''
-                      }`}
-                    >
+                   className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
+  active ? 'bg-[#0a7c83] text-white' : ''
+}`}
+                  
+                  >
                       {i + 1}
                     </motion.span>
                     {active && (
@@ -981,7 +1028,7 @@ function StorySection() {
                       <span
                         key={index}
                         onAnimationEnd={next}
-                        className="absolute bottom-0 left-0 h-[2px] bg-[#A0E8AF]"
+                        className="absolute bottom-0 left-0 h-[2px] bg-[#0a7c83]"
                         style={{
                           animation: `proya-progress ${CHAPTER_MS}ms linear forwards`,
                           animationPlayState: paused ? 'paused' : 'running',
@@ -997,12 +1044,12 @@ function StorySection() {
               type="button"
               onClick={next}
               aria-label="Next chapter"
-              className="hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/60 transition-colors hover:bg-white/10 hover:text-white sm:flex"
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-100 hover:text-[#0A1128] sm:flex"
             >
               <ArrowRight size={16} />
             </button>
           </div>
-          <p className="text-sm text-white/30">Cuido is Spanish for “I take care.”</p>
+<p className="text-sm text-slate-400">Cuido is Spanish for "I take care."</p>
         </div>
       </div>
     </section>
@@ -1053,17 +1100,17 @@ function CuidoTerminal() {
             </ul>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#050505] p-2 shadow-2xl">
-            <div className="flex flex-col gap-6 rounded-[1.8rem] border border-white/5 bg-[#111] p-6 lg:p-8">
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-2 shadow-2xl">
+            <div className="flex flex-col gap-6 rounded-[1.8rem] border border-slate-100 bg-slate-50 p-6 lg:p-8">
               
               {/* Header */}
-              <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#A0E8AF] text-[#050505]">
-                  <Sparkles size="{20}"/>
+              <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0A1128] text-white">
+                  <Sparkles size={20}/>
                 </div>
                 <div>
-                  <div className="font-bold text-white">Cuido™ Assistant</div>
-                  <div className="text-xs text-[#A0E8AF]">Online • Context: Global Benefits</div>
+                  <div className="font-bold text-slate-800">Cuido™ Assistant</div>
+                  <div className="text-xs text-emerald-600 font-medium">Online • Context: Global Benefits</div>
                 </div>
               </div>
 
@@ -1075,7 +1122,7 @@ function CuidoTerminal() {
                     <motion.div 
                     key="user-msg" initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-[#1C3F60] p-4 text-white"
+                      className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-[#0A1128] p-4 text-white"
                     >
                       "What is our exact parental leave policy in Poland, and how does it compare to the local statutory requirement?"
                     </motion.div>
@@ -1085,7 +1132,7 @@ function CuidoTerminal() {
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }} 
                       animate={{ opacity: 1, y: 0 }}
-                      key="ai-msg" className="max-w-[90%] rounded-2xl rounded-tl-sm border border-white/10 bg-white/5 p-4 text-white"
+                      key="ai-msg" className="max-w-[90%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-4 text-slate-700 shadow-sm"
                     >
                       {step === 2 ? (
                         <div className="flex gap-2">
@@ -1100,8 +1147,8 @@ function CuidoTerminal() {
                             <li><strong className="text-white">Origin Policy:</strong> 26 weeks paid at 100%.</li>
                             <li><strong className="text-white">Statutory:</strong> 20 weeks at 100% (or 32 weeks at 81.5%).</li>
                           </ul>
-                          <div className="rounded-lg bg-[#2E8A8A]/20 p-3 text-xs text-[#A0E8AF]">
-                            <ShieldCheck className="inline mr-1" size="{14}"/> Fully compliant. Last verified: 2 days ago.
+                          <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-700">
+                            <ShieldCheck className="inline mr-1" size={14}/> Fully compliant. Last verified: 2 days ago.
                           </div>
                         </div>
                       )}
@@ -2061,24 +2108,32 @@ function Select({
   );
 }
 
+
 function Stepper({ step }: { step: number }) {
   return (
     <div className="flex items-center" role="img" aria-label={`Step ${step + 1} of 3`}>
       {[0, 1, 2].map((i) => (
         <div key={i} className="flex flex-1 items-center last:flex-none">
           <span
-            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold text-white transition-colors duration-300 ${
-              i <= step ? 'bg-[#050505]' : 'bg-slate-300'
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold transition-colors duration-300 ${
+              i <= step ? 'bg-[#0a7c83] text-white' : 'bg-slate-200 text-slate-400'
             }`}
           >
             {i + 1}
           </span>
-          {i < 2 && <span className="mx-3 h-px flex-1 border-t border-dotted border-slate-300" />}
+          {i < 2 && (
+            <span 
+              className={`mx-3 h-px flex-1 border-t border-dotted transition-colors duration-300 ${
+                i < step ? 'border-[#0a7c83]' : 'border-slate-300'
+              }`} 
+            />
+          )}
         </div>
       ))}
     </div>
   );
 }
+
 
 function ContactSection() {
   const [step, setStep] = useState(0);
@@ -2124,8 +2179,8 @@ function ContactSection() {
   return (
     <section id="contact" className="scroll-mt-24 bg-white py-20 md:py-28">
       <div className="mx-auto max-w-[1600px] px-6">
-        <div className="rounded-[2rem] bg-[#050505] p-6 sm:p-10 lg:p-14">
-          <div className="grid items-stretch gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,600px)] lg:gap-16">
+        <div className="rounded-[2rem] bg-[#0a7c83] p-6 sm:p-10 lg:p-14">
+          <div className="grid items-stretch gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,700px)] lg:gap-16">
             {/* Left: pitch */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -2134,8 +2189,8 @@ function ContactSection() {
               transition={{ duration: 0.8, ease: EASE }}
               className="flex flex-col justify-end lg:pb-6 lg:pl-6"
             >
-              <span className="inline-flex w-fit items-center gap-2.5 rounded-full bg-white px-4 py-2 text-[14px] font-medium text-[#050505]">
-                <span className="h-2 w-2 rounded-full bg-[#2E8A8A]" />
+              <span className="inline-flex w-fit items-center gap-2.5 rounded-full bg-white/80 px-4 py-2 text-[14px] font-medium text-[#0A1128]">
+                <span className="h-2 w-2 rounded-full bg-[#0A1128]" />
                 Talk to the team
               </span>
               <h2 className="mt-8 text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-white lg:text-6xl">
@@ -2145,7 +2200,7 @@ function ContactSection() {
                 <br />
                 Benefits you can govern.
               </h2>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/70">
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/80">
                 Tell us where your benefits data lives today. The team will show you how Origin brings it together
                 across your countries, vendors and documents.
               </p>
@@ -2192,7 +2247,7 @@ function ContactSection() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="mt-8 self-start text-[15px] font-medium text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-[#050505]"
+                    className="mt-8 self-start text-[15px] font-medium text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-[#0a7c83]"
                   >
                     Send another request
                   </button>
@@ -2200,7 +2255,7 @@ function ContactSection() {
                 </motion.div>
               ) : (
                 <>
-                  <h3 className="text-[32px] font-semibold leading-tight tracking-[-0.03em] text-[#050505] md:text-4xl">
+                  <h3 className="text-[32px] font-semibold leading-tight tracking-[-0.03em] text-[#0a7c83] md:text-4xl">
                     Ready to see Origin on your data?
                   </h3>
 
@@ -2341,7 +2396,7 @@ function ContactSection() {
                       type="button"
                       onClick={next}
                       disabled={status === 'sending'}
-                      className="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-lg bg-[#050505] text-[16px] font-semibold text-white transition-colors hover:bg-[#1a1a1a] disabled:opacity-80"
+                      className="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-lg bg-[#0a7c83] text-[16px] font-semibold text-[#fff] transition-colors hover:bg-[#4ab59a] disabled:opacity-80"
                     >
                       {status === 'sending' ? (
                         <>
@@ -2359,8 +2414,8 @@ function ContactSection() {
                 </>
               )}
 
-              {/* gradient strip, like Ben's */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-[#A0E8AF] via-[#FFC857] to-[#FF9E9E]" />
+              {/* Clean white/slate accent strip */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-slate-800" />
             </motion.div>
           </div>
         </div>
@@ -2376,8 +2431,18 @@ function ContactSection() {
 export default function App() {
   const [calcOpen, setCalcOpen] = useState(false);
 
+  useEffect(() => {
+  const link = document.createElement('link');
+  link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+}, []);
+
   return (
-    <div className="relative min-h-screen bg-[#050505] font-sans selection:bg-[#A0E8AF] selection:text-[#050505]">
+    <div
+  className="relative min-h-screen bg-[#050505] selection:bg-[#A0E8AF] selection:text-[#050505]"
+  style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+>
       <NoiseOverlay/>
       
       <main>
