@@ -686,7 +686,7 @@ function Rise({ d = 0, className = '', children }: { d?: number; className?: str
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.02 + d * 0.4, ease: EASE }}
+      transition={{ duration: 0.6, delay: 0.02 + d * 0.4, ease: EASE }}
       className={className}
     >
       {children}
@@ -699,7 +699,7 @@ function AppCard({ children }: { children: ReactNode }) {
     <motion.div
       initial={{ opacity: 0, y: 14, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.3, delay: 0.04, ease: EASE }}
+      transition={{ duration: 0.6, delay: 0.04, ease: EASE }}
       className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] border border-slate-200"
     >
       {children}
@@ -1260,8 +1260,8 @@ const CHAPTERS: Chapter[] = [
 
 const slideVariants: Variants = {
   enter: (d: number) => ({ opacity: 0, x: d * 32 }),
-  center: { opacity: 1, x: 0, transition: { duration: 0.22, ease: EASE } },
-  exit: (d: number) => ({ opacity: 0, x: d * -32, transition: { duration: 0.12, ease: 'easeIn' } }),
+  center: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE } },
+  exit: (d: number) => ({ opacity: 0, x: d * -32, transition: { duration: 0.2, ease: 'easeIn' } }),
 };
 
 
