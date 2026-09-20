@@ -20,12 +20,22 @@ import {
 // ==========================================
 
 
+
+const smoothScrollTo = (selector: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.preventDefault();
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // keep the URL hash in sync without the instant jump
+  history.replaceState(null, '', selector);
+};
+
 const THEME = {
   ink: '#050505',
   navy: '#0A1128',
   blue: '#1C3F60',
   teal: '#2E8A8A',
-  mint: '#A0E8AF',
+  mint: '#0a7c83',
   lime: '#D2F898',
   amber: '#FFC857',
   white: '#FFFFFF',
@@ -62,7 +72,7 @@ const FEATURES = [
     desc: 'Workflow automation that initiates broker benchmarking 90 days out.',
     icon: Zap,
     colSpan: 'md:col-span-2 md:row-span-1',
-    bg: 'bg-gradient-to-r from-[#A0E8AF]/10 to-transparent',
+    bg: 'bg-gradient-to-r from-[#0a7c83]/10 to-transparent',
   }
 ];
 
@@ -265,7 +275,7 @@ function Kpi({
           <div className="text-[22px] font-semibold leading-none tracking-tight tabular-nums">
             {prefix}{shown}{suffix}
           </div>
-          <div className={`mt-1.5 flex items-center gap-1 text-[9.5px] font-semibold ${featured ? 'text-[#A0E8AF]' : 'text-emerald-600'}`}>
+          <div className={`mt-1.5 flex items-center gap-1 text-[9.5px] font-semibold ${featured ? 'text-[#0a7c83]' : 'text-emerald-600'}`}>
             {live ? <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /> : <TrendingUp size={10} />}
             {delta}
           </div>
@@ -282,7 +292,7 @@ function DashboardWindow() {
       {/* Sidebar */}
       <aside className="flex w-[142px] shrink-0 flex-col bg-gradient-to-b from-[#07262e] to-[#031a20] px-3 py-4 text-white">
         <div className="flex items-center gap-2 px-1.5">
-          <span className="h-[18px] w-[18px] rounded-[999px_999px_999px_4px] bg-gradient-to-br from-[#A0E8AF] to-[#0a7c83]" />
+          <span className="h-[18px] w-[18px] rounded-[999px_999px_999px_4px] bg-gradient-to-br from-[#0a7c83] to-[#0a7c83]" />
           <span className="text-[15px] font-semibold tracking-tight">origin</span>
         </div>
 
@@ -298,7 +308,7 @@ function DashboardWindow() {
               >
                 <Icon size={13} />
                 {item.label}
-                {item.active && <span className="ml-auto h-1 w-1 rounded-full bg-[#A0E8AF]" />}
+                {item.active && <span className="ml-auto h-1 w-1 rounded-full bg-[#0a7c83]" />}
               </div>
             );
           })}
@@ -306,7 +316,7 @@ function DashboardWindow() {
 
         <div className="mt-auto rounded-lg border border-white/10 bg-white/[0.04] p-2">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#A0E8AF] text-[9px] font-bold text-[#03171d]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0a7c83] text-[9px] font-bold text-[#03171d]">
               SM
             </span>
             <div className="min-w-0">
@@ -346,7 +356,7 @@ function DashboardWindow() {
           />
           <Kpi
             featured label="Identified savings" to={3.2} prefix="$" suffix="M" delta="+8% QoQ" delay={700}
-            right={<Sparkline id="hsp2" stroke="#A0E8AF" d="M0 22 L14 20 L28 21 L42 14 L56 12 L70 7 L90 3" />}
+            right={<Sparkline id="hsp2" stroke="#0a7c83" d="M0 22 L14 20 L28 21 L42 14 L56 12 L70 7 L90 3" />}
           />
           <Kpi
             live label="Countries" to={100} decimals={0} suffix="+" delta="Active" delay={900}
@@ -460,14 +470,14 @@ function DashboardWindow() {
             </div>
 
             <div className="relative flex min-h-0 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-[#06303a] to-[#031a20] p-3 text-white ring-1 ring-white/10">
-              <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#A0E8AF]/15 blur-2xl" />
-              <div className="relative flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#A0E8AF]">
+              <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#0a7c83]/15 blur-2xl" />
+              <div className="relative flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#0a7c83]">
                 <Sparkles size={11} /> Cuido insight
               </div>
               <p className="relative mt-1.5 text-[10.5px] leading-snug text-white/80">
                 Group Life in Singapore is priced 26% above market benchmark. Renewal opens in 90 days.
               </p>
-              <div className="relative mt-2 flex items-center gap-1 text-[10px] font-semibold text-[#A0E8AF]">
+              <div className="relative mt-2 flex items-center gap-1 text-[10px] font-semibold text-[#0a7c83]">
                 Review benchmark <ArrowRight size={11} />
               </div>
             </div>
@@ -483,9 +493,7 @@ function HeroDashboard() {
     <div className="relative mx-auto w-full max-w-[680px]">
       <style>{HERO_CSS}</style>
 
-      {/* Orbit rings behind the window */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0a7c83]/35 blur-[110px]" />
-
+ 
       <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}>
         <div className="rounded-[18px] bg-white/[0.06] p-1.5 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8)] ring-1 ring-white/10 backdrop-blur-sm">
           <ScaledStage>
@@ -520,15 +528,15 @@ function Hero() {
         />
         {/* Soft teal wash centred on the dashboard */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_70%_45%,rgba(10,124,131,0.28),transparent_70%)]" />
-        <div className="absolute right-[-8%] top-[5%] h-[620px] w-[620px] rounded-full bg-[#0a7c83]/30 blur-[140px]" />
+        <div className="absolute right-[-8%] top-[5%] h-[620px] w-[620px] rounded-full bg-[#0a7c83]/20 blur-[160px]" />
         {/* Dark vignette at the edges so the centre feels lit */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_60%_45%,transparent_55%,rgba(2,21,29,0.85)_100%)]" />
         {/* Globe lines, shifted so the globe sits behind the dashboard */}
         <GlobeLines className="translate-y-10 lg:-translate-x-[18%]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[400px] w-[400px] rounded-full bg-[#A0E8AF]/[0.04] blur-[120px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[400px] w-[400px] rounded-full bg-[#0a7c83]/[0.04] blur-[120px]" />
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-20 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-20 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
         {/* Left: copy */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -536,32 +544,39 @@ function Hero() {
           transition={{ duration: 0.8, ease: EASE }}
           className="flex flex-col items-start"
         >
-          <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#A0E8AF]" />
-            Enterprise Benefits Intelligence
+          <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white/80 sm:text-[11px] sm:tracking-[0.18em]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#0a7c83]" />
+           AI-Native Enterprise Benefits Intelligence
           </div>
-
-          <h1 className="text-[34px] font-semibold leading-[1.06] tracking-[-0.035em] text-white sm:text-5xl lg:text-[46px] xl:text-[60px]">
-            <span className="block">Our global benefits</span>
-            <span className="block text-white/45">out of the dark.</span>
+      <h1 data-reveal="fade" data-delay="1" className="text-[34px] font-semibold leading-[1.06] tracking-[-0.035em] text-white sm:text-5xl lg:text-[46px] xl:text-[60px]">
+            <span className="block">Global benefits, finally visible, comparable, and</span>
+            <span className="block text-white/65">under your control.</span>
           </h1>
 
-          <p className="mt-6 max-w-lg text-[17px] leading-relaxed text-white/60">
-            Benefits are your second-biggest people cost. Stop managing them in spreadsheets. Origin unifies data
-            across 100+ countries into a single, AI-powered command center.
+          <p data-reveal="fade" data-delay="2" className="mt-6 max-w-lg text-[17px] leading-relaxed text-white/90">
+           Benefits are your second-biggest people cost, yet most teams run them in spreadsheets. Origin gives you command of every plan, carrier, and dollar across 100+ countries.
+         
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0a7c83] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0d8f98] hover:shadow-[0_12px_40px_-10px_#0a7c83]">
+                <div data-reveal="fade" data-delay="3" className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#story"
+              onClick={smoothScrollTo('#story')}
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0a7c83] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0d8f98] hover:shadow-[0_12px_40px_-10px_#0a7c83]"
+            >
               Explore the Platform
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </button>
-            <button className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] px-7 text-[15px] font-semibold text-white transition-colors hover:bg-white/10">
-              Read the Whitepaper
-            </button>
+            </a>
+            <a
+              href="#contact"
+              onClick={smoothScrollTo('#contact')}
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] px-7 text-[15px] font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Book a demo
+            </a>
           </div>
 
-          <div className="mt-14 w-full max-w-lg border-t border-white/10 pt-6">
+          <div data-reveal="fade" data-delay="4" className="mt-14 w-full max-w-lg border-t border-white/10 pt-6">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/35">
               Trusted by global benefits teams
             </p>
@@ -588,7 +603,7 @@ function Hero() {
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
-          className="w-full"
+          className="w-full lg:-mt-10 xl:-mt-24"
         >
           <HeroDashboard />
         </motion.div>
@@ -669,9 +684,9 @@ function useCountUp(to: number, duration = 1600, delay = 0) {
 function Rise({ d = 0, className = '', children }: { d?: number; className?: string; children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.65, delay: 0.15 + d, ease: EASE }}
+      transition={{ duration: 0.3, delay: 0.02 + d * 0.4, ease: EASE }}
       className={className}
     >
       {children}
@@ -682,9 +697,9 @@ function Rise({ d = 0, className = '', children }: { d?: number; className?: str
 function AppCard({ children }: { children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      initial={{ opacity: 0, y: 14, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+      transition={{ duration: 0.3, delay: 0.04, ease: EASE }}
       className="relative w-full overflow-hidden rounded-none bg-white text-[#0A1128] border border-slate-200"
     >
       {children}
@@ -806,8 +821,19 @@ const ASK_QUERY = 'What is our maternity leave policy in Poland, and how does it
 const ASK_TYPE_END = 500 + ASK_QUERY.length * 24;
 
 function AskCard() {
-  const typed = useTypewriter(ASK_QUERY, 500, 24);
-  const step = useSequence([ASK_TYPE_END + 300, ASK_TYPE_END + 1600]);
+  const typed = useTypewriter(ASK_QUERY, 300, 12);
+  const typingDone = typed.length >= ASK_QUERY.length;
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (!typingDone) return;
+    const t1 = setTimeout(() => setStep(1), 300);   // thinking spinner
+    const t2 = setTimeout(() => setStep(2), 1100);  // answer
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [typingDone]);
   
   const rows = [
     { label: 'Your policy', val: '26 weeks · 100% pay', w: 100, color: 'bg-[#0A1128]' },
@@ -1166,71 +1192,76 @@ type Chapter = {
   accent: string;
   scene: string;
   image?: string; // optional photo, e.g. '/images/proya-1.jpg'
+  ms?: number; // optional per-chapter duration override
   Card: React.ComponentType;
 };
+
+
 
 const CHAPTERS: Chapter[] = [
   {
     id: 'ingest',
-    tab: 'Ingest',
+    tab: 'Consolidate',
     eyebrow: 'Monday · 08:52',
-    title: 'Proya inherits 43 countries of paperwork.',
-    body: 'Policies in PDFs. Contracts in six languages. Commission schedules buried in inboxes. Cuido reads, translates and organizes all of it into one authoritative source, before her coffee gets cold.',
+    title: 'Priya inherits 43 countries of paperwork.',
+    body: 'Policies in PDFs. Contracts in six languages. Commission schedules spread across inboxes and folders. Cuido reads, translates and structures everything into one authoritative source, ready for Priya to work from.',
     stat: { value: '312', label: 'documents structured in minutes' },
-accent: '#0A1128',
-  scene: 'transparent',
-      Card: IngestCard,
-  },
-  {
-    id: 'ask',
-    tab: 'Ask Cuido',
-    eyebrow: 'Tuesday · 11:20',
-    title: 'A last-minute question. Answered in seconds.',
-    body: 'Warsaw needs the maternity policy before a noon call. Proya asks Cuido in plain English and gets the answer translated, compared to local law, with the source document attached.',
-    stat: { value: '6 sec', label: 'from question to cited answer' },
-accent: '#0A1128',
-  scene: 'transparent',
-      Card: AskCard,
+    accent: '#0A1128',
+    scene: 'transparent',
+    Card: IngestCard,
   },
   {
     id: 'inventory',
-    tab: 'Inventory',
-    eyebrow: 'Wednesday · 14:40',
-    title: 'Every benefit. Every country. One clear picture.',
-    body: "For the first time Proya can see what's actually offered, where programs overlap, and where employees aren't covered at all. No more spreadsheets stitched together by hand.",
-    stat: { value: '100%', label: 'of benefits inventoried, country by country' },
-accent: '#0A1128',
-  scene: 'transparent',
-      Card: InventoryCard,
+    tab: 'See',
+    eyebrow: 'Tuesday · 09:30',
+    title: 'With everything structured, she sees every benefit at once.',
+    body: "Because every document is now data, Origin maps what is offered in each country, where programmes overlap, and where employees have no cover at all.",
+    stat: { value: '43', label: 'countries in one live benefits inventory' },
+    accent: '#0A1128',
+    scene: 'transparent',
+    Card: InventoryCard,
+  },
+  {
+    id: 'ask',
+    tab: 'Verify',
+    ms: 14000,
+    eyebrow: 'Wednesday · 11:20',
+    title: 'Then she checks it against local law.',
+    body: 'Warsaw needs to know the maternity policy holds up before a noon call. Priya asks Cuido in plain English. The answer comes back translated, compared to statute, with the source clause attached.',
+    stat: { value: '6 sec', label: 'from question to cited, compliant answer' },
+    accent: '#0A1128',
+    scene: 'transparent',
+    Card: AskCard,
   },
   {
     id: 'cost',
-    tab: 'True cost',
+    tab: 'Uncover',
     eyebrow: 'Thursday · 10:05',
-    title: 'Hidden commissions have nowhere to hide.',
-    body: 'Cuido reads a local broker contract and surfaces a commission that never appeared on the invoice, with the exact clause that proves it. Proya finally sees the true cost of a benefit.',
+    title: 'Once policies are verified, she follows the money.',
+    body: 'Cuido reads a local broker contract and surfaces a commission that never appeared on the invoice, with the exact clause that proves it. Priya finally sees the true cost of a benefit.',
     stat: { value: '$1M/yr', label: 'undisclosed commission found in one local contract' },
- accent: '#0A1128',
-  scene: 'transparent',
-      Card: CostCard,
+    accent: '#0A1128',
+    scene: 'transparent',
+    Card: CostCard,
   },
   {
     id: 'vendors',
-    tab: 'Vendors',
+    tab: 'Act',
     eyebrow: 'Friday · 16:15',
-    title: 'She walks into the room leading, not chasing.',
-    body: 'Ninety days before every renewal, Cuido benchmarks the market. Proya negotiates from evidence, brings brokerage costs down, and redirects the savings to benefits her people actually want.',
+    title: 'She heads into renewal with the numbers behind her.',
+    body: 'Ninety days out, Cuido benchmarks the market. Priya negotiates from evidence, brings brokerage costs down, and redirects the savings to benefits her people actually want.',
     stat: { value: '$1.1M/yr', label: 'brokerage cost reduced across 20 countries' },
- accent: '#0A1128',
-  scene: 'transparent', 
-  Card: RenewalCard,
+    accent: '#0A1128',
+    scene: 'transparent',
+    Card: RenewalCard,
   },
 ];
 
+
 const slideVariants: Variants = {
-  enter: (d: number) => ({ opacity: 0, x: d * 80 }),
-  center: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
-  exit: (d: number) => ({ opacity: 0, x: d * -80, transition: { duration: 0.28 } }),
+  enter: (d: number) => ({ opacity: 0, x: d * 32 }),
+  center: { opacity: 1, x: 0, transition: { duration: 0.22, ease: EASE } },
+  exit: (d: number) => ({ opacity: 0, x: d * -32, transition: { duration: 0.12, ease: 'easeIn' } }),
 };
 
 
@@ -1271,29 +1302,25 @@ function StorySection() {
 
       <div className="mx-auto max-w-7xl px-6">
         {/* Heading */}
-        <div className="mb-14 max-w-4xl md:mb-20">
-        
-        
-        
-       <div className="mb-6 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+        <div data-reveal className="mb-14 max-w-5xl md:mb-20">
+    <div className="mb-6 flex items-center gap-3 text-xs font-normal uppercase tracking-[0.2em] text-black">
   <span className="h-px w-8 bg-slate-300" />
   How Origin works
 </div>
-  <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-[#0A1128] md:text-7xl">
-  Meet Proya.
-  <br />
-  <span className="font-normal text-[#0A1128]/60">Here's her week with Origin.</span>
-</h2>
-<p className="mt-6 max-w-2xl text-lg text-slate-500 md:text-xl">
 
-            Proya runs global benefits across 43 countries. From Monday's scramble to Friday's strategy,
-            Cuido, Origin's Artificial Benefits Intelligence, is working behind the scenes.
+  <h2 className="text-5xl font-semibold leading-[1.02] tracking-tighter text-[#0A1128] md:text-7xl">
+  Meet Priya. <span className="font-normal text-[#0A1128]"> Here’s what her week looks like with Origin.</span>
+</h2>
+
+
+<p className="mt-6 -mb-6 max-w-5xl text-lg text-black md:text-xl">
+Priya runs benefits across 43 countries. This is how she uses Cuido™, Origin’s global benefits brain, to review costs, compare plans, resolve gaps, and get answers across her global benefits programme.    
           </p>
         </div>
 
         {/* Stage */}
         <div
-          ref={stageRef}
+          ref={stageRef} data-reveal data-delay="2"
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === 'ArrowRight') next();
@@ -1369,7 +1396,7 @@ function StorySection() {
                     </h3>
                   </Rise>
                   <Rise d={0.16}>
-                    <p className="mt-5 text-[15px] leading-relaxed text-white/70 lg:text-[16px] xl:text-[17px]">
+                    <p className="mt-5 text-[15px] leading-relaxed text-white lg:text-[16px] xl:text-[17px]">
                       {chapter.body}
                     </p>
                   </Rise>
@@ -1397,7 +1424,7 @@ function StorySection() {
         </div>
 
         {/* Nav */}
-        <div className="mt-10 flex flex-col items-center gap-5">
+         <div data-reveal data-delay="3" className="mt-10 flex flex-col items-center gap-5">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -1454,7 +1481,7 @@ function StorySection() {
                         onAnimationEnd={next}
                         className="absolute bottom-0 left-0 h-[2px] bg-[#0a7c83]"
                         style={{
-                          animation: `proya-progress ${CHAPTER_MS}ms linear forwards`,
+                          animation: `proya-progress ${chapter.ms ?? CHAPTER_MS}ms linear forwards`,
                           animationPlayState: paused ? 'paused' : 'running',
                         }}
                       />
@@ -1473,7 +1500,13 @@ function StorySection() {
               <ArrowRight size={16} />
             </button>
           </div>
-<p className="text-sm text-slate-400">Cuido is Spanish for "I take care."</p>
+<div className="mt-6 -mb-12 flex flex-col items-center gap-5">
+  <span className="h-px w-12 bg-[#0a7c83]/50" />
+  <p className="text-center text-[18px] leading-snug tracking-tight text-[#0A1128]/70 md:text-[20px]">
+    <span className="font-semibold text-[#0a7c83]">Cuido</span> is Spanish for{' '}
+    <span className="italic text-[#0A1128]">“I take care.”</span>
+  </p>
+</div>
         </div>
       </div>
     </section>
@@ -1505,7 +1538,7 @@ function CuidoTerminal() {
         <div className="grid items-center gap-16 lg:grid-cols-2">
           
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#2E8A8A] bg-[#2E8A8A]/10 px-4 py-2 text-sm font-bold text-[#A0E8AF]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2E8A8A] bg-[#2E8A8A]/10 px-4 py-2 text-sm font-bold text-[#0a7c83]">
               <MessageSquare size="{16}"/> Natural Language Query
             </div>
             <h2 className="mt-8 text-4xl font-bold text-white md:text-5xl">Ask Cuido™.<br/>Get answers instantly.</h2>
@@ -1515,7 +1548,7 @@ function CuidoTerminal() {
             <ul className="mt-10 space-y-4">
               {['Trained on enterprise benefits logic', 'Cites exact document sources', 'Enterprise-grade data isolation'].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-white/80">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#A0E8AF]/20 text-[#A0E8AF]">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0a7c83]/20 text-[#0a7c83]">
                     <Check size={12} />
                   </div>
                   {item}
@@ -1560,13 +1593,13 @@ function CuidoTerminal() {
                     >
                       {step === 2 ? (
                         <div className="flex gap-2">
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#A0E8AF]" />
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#A0E8AF] [animation-delay:0.2s]" />
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#A0E8AF] [animation-delay:0.4s]" />
+                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#0a7c83]" />
+                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#0a7c83] [animation-delay:0.2s]" />
+                           <span className="h-2 w-2 animate-bounce rounded-full bg-[#0a7c83] [animation-delay:0.4s]" />
                         </div>
                       ) : (
                         <div className="space-y-4">
-                          <p>Based on the <span className="cursor-pointer border-b border-dashed border-[#A0E8AF] text-[#A0E8AF]">Polish Employee Handbook (v2025)</span> translated from Polish:</p>
+                          <p>Based on the <span className="cursor-pointer border-b border-dashed border-[#0a7c83] text-[#0a7c83]">Polish Employee Handbook (v2025)</span> translated from Polish:</p>
                           <ul className="list-inside list-disc space-y-1 text-white/70">
                             <li><strong className="text-white">Origin Policy:</strong> 26 weeks paid at 100%.</li>
                             <li><strong className="text-white">Statutory:</strong> 20 weeks at 100% (or 32 weeks at 81.5%).</li>
@@ -1605,46 +1638,41 @@ type Testimonial = {
   role: string;
   initials: string;
   quote: string;
-  context: string;
+  headline: string;
 };
+
 
 const TESTIMONIALS: Testimonial[] = [
   {
     name: 'Rob Hamer',
     role: 'Global Benefits Lead',
     initials: 'RH',
-    quote: '…already identified around £150-200,000 worth of savings.',
-    context: 'On what Origin uncovered across a large Singapore operation.',
-  },
-  {
-    name: 'Amy Manning',
-    role: 'Senior Director, Retirement Programs and International Benefits',
-    initials: 'AM',
-    quote: 'Time is money and Origin helps with speed.',
-    context: 'On pairing strong technology with real benefits expertise.',
-  },
-  {
-    name: 'Angela Sim',
-    role: 'Senior Director of Global Benefits',
-    initials: 'AS',
-    quote: 'We have over 520 policies around the world…',
-    context: 'On keeping leave policies current as local laws change, and reading them all in English.',
-  },
-  {
-    name: 'Carolina Vertel',
-    role: 'Benefits Leader US and LATAM',
-    initials: 'CV',
-    quote: '…urgent questions about how we operate in different countries.',
-    context: 'On why one global view of benefits matters.',
+    headline: '£150–200k in savings, from one Singapore operation',
+    quote: "Origin has already demonstrated its value to people. We have quite a large operation in Singapore, and by using Origin we’ve already identified around £150-200,000 worth of savings.",
   },
   {
     name: 'Katie Archer',
     role: 'Global Benefits Lead',
     initials: 'KA',
-    quote: '…empowered to shift from being reactive … to being proactive and more strategic.',
-    context: 'On moving from gathering information to shaping what employees are offered.',
+    headline: 'Gaps, overlaps and overspend, identified',
+    quote: "Origin’s already helping us to pull information together so that we can understand where we have gaps, where we have overlap in programs, and where we may be spending too much.",
+  },
+  {
+    name: 'Angela Sim',
+    role: 'Senior Director of Global Benefits',
+    initials: 'AS',
+    headline: '520+ policies in one place, readable in English',
+    quote: 'Having all of these policies in one place and being able to quickly translate into English so we can all read them and understand what the change and impact is invaluable.',
+  },
+  {
+    name: 'Amy Manning',
+    role: 'Senior Director, Retirement Programs',
+    initials: 'AM',
+    headline: 'Time is money and Origin helps with speed.',
+    quote: 'Origin has that kind of unique space of a very strong technology, with an intense knowledge of how benefit structures work.',
   },
 ];
+
 
 function Stat({
   i,
@@ -1667,7 +1695,7 @@ function Stat({
       transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
       className={`flex flex-col border-t border-white/15 pt-6 ${['lg:mt-0', 'lg:mt-14', 'lg:mt-28'][i]}`}
     >
-      <span className="mb-4 text-[11px] font-medium tabular-nums tracking-[0.18em] text-[#A0E8AF]">
+      <span className="mb-4 text-[11px] font-medium tabular-nums tracking-[0.18em] text-[#0a7c83]">
         {String(i + 1).padStart(2, '0')}
       </span>
       <div className="flex items-baseline gap-1.5">
@@ -1676,7 +1704,7 @@ function Stat({
         </span>
         <span className="text-[18px] font-normal text-white/45">/yr</span>
       </div>
-      <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed text-white/55">
+      <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed text-white/85">
         {label}
       </p>
     </motion.div>
@@ -1689,8 +1717,8 @@ function TestimonialRow() {
     scroller.current?.scrollBy({ left: dir * 380, behavior: 'smooth' });
 
   return (
-    <div className="mt-32">
-      <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-5">
+    <div className="mt-16 md:mt-32">
+      <div data-reveal className="mb-10 flex items-end justify-between border-b border-slate-200 pb-5">
         <div>
           <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-slate-400 mb-3">Testimonials</div>
           <h3 className="text-[28px] font-medium tracking-[-0.02em] text-[#fafafa] md:text-[34px]">
@@ -1718,7 +1746,7 @@ function TestimonialRow() {
       </div>
 
       <div
-        ref={scroller}
+        ref={scroller} data-reveal data-delay="2"
                 className="-mx-6 flex  scroll-px-6 gap-6 overflow-x-auto overflow-y-visible px-6 pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     
     >
@@ -1726,28 +1754,25 @@ function TestimonialRow() {
               {TESTIMONIALS.map((t, i) => (
           <div
             key={t.name}
-            className="group relative flex h-[360px] w-[calc((100%-4.5rem)/4)] min-w-[300px] shrink-0 snap-start flex-col justify-between bg-[#0a7c83] p-7 shadow-none border-none transition-colors duration-300"
+            className="group relative flex min-h-[300px] w-[calc((100%-3rem)/3)] min-w-[300px] shrink-0 snap-start flex-col justify-between bg-[#0a7c83] px-8 pb-6 pt-8 shadow-none border-none transition-colors duration-300"
           >
             {/* Decorative Quote Mark */}
             <div className="absolute top-5 right-6 text-5xl font-serif leading-none text-white/10 select-none transition-colors duration-500 group-hover:text-white/20">
-              &ldquo;
+              &rdquo;
             </div>
 
             <blockquote className="relative z-10">
-              <p className="text-[15.5px] font-medium leading-snug tracking-tight text-white">
+              <h4 className="text-[24px] font-semibold leading-[1.15] tracking-tight text-white">
+                {t.headline}
+              </h4>
+              <p className="mt-5 text-[14.5px] leading-relaxed text-white/75">
                 “{t.quote}”
               </p>
-              <p className="mt-4 text-[13px] leading-relaxed text-white/70">{t.context}</p>
             </blockquote>
             
-            <figcaption className="relative z-10 mt-6 flex items-center gap-3.5 border-t border-white/20 pt-5">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-[11px] font-semibold text-white">
-                {t.initials}
-              </div>
-              <div className="min-w-0">
-                <div className="text-[13.5px] font-semibold text-white">{t.name}</div>
-                <div className="line-clamp-2 text-[12px] leading-snug text-white/60">{t.role}</div>
-              </div>
+            <figcaption className="relative z-10 mt-8 min-h-[60px] border-t border-white/20 pt-5">
+              <div className="text-[14px] font-semibold text-white">{t.name}</div>
+              <div className="mt-0.5 line-clamp-2 text-[12.5px] leading-snug text-white/65">{t.role}</div>
             </figcaption>
           </div>
         ))}
@@ -1777,7 +1802,7 @@ function GlobeLines({ className = '' }: { className?: string }) {
         @keyframes globe-travel { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
         .globe-travel { stroke-dasharray: 0.18 0.82; animation: globe-travel 5s linear infinite; }
       `}</style>
-      <svg viewBox="0 0 1200 800" className="h-full w-full" preserveAspectRatio="xMaxYMin meet" fill="none">
+      <svg viewBox="0 0 1200 800" className="h-full w-full overflow-visible" preserveAspectRatio="xMaxYMin meet" fill="none">
         <defs>
           <radialGradient id="globeFade" cx="75%" cy="47%" r="55%">
             <stop offset="0" stopColor="#fff" stopOpacity="1" />
@@ -1795,7 +1820,7 @@ function GlobeLines({ className = '' }: { className?: string }) {
 
         <circle cx={cx} cy={cy} r={R * 1.35} fill="url(#globeGlow)" />
 
-        <g mask="url(#globeMask)" stroke="#A0E8AF">
+        <g mask="url(#globeMask)" stroke="#0a7c83">
           <circle cx={cx} cy={cy} r={R} strokeOpacity="0.22" strokeWidth="1" />
           <circle cx={cx} cy={cy} r={R * 1.18} strokeOpacity="0.08" strokeWidth="1" />
           <circle cx={cx} cy={cy} r={R * 1.42} strokeOpacity="0.05" strokeWidth="1" />
@@ -1819,7 +1844,7 @@ function GlobeLines({ className = '' }: { className?: string }) {
               <path
                 d={d}
                 pathLength={1}
-                stroke="#A0E8AF"
+                stroke="#0a7c83"
                 strokeWidth="1.8"
                 strokeLinecap="round"
                 className="globe-travel"
@@ -1831,11 +1856,11 @@ function GlobeLines({ className = '' }: { className?: string }) {
           {/* nodes */}
           {nodes.map((n, i) => (
             <g key={i}>
-              <circle cx={n.x} cy={n.y} r="4" fill="#A0E8AF" stroke="none">
+              <circle cx={n.x} cy={n.y} r="4" fill="#0a7c83" stroke="none">
                 <animate attributeName="r" values="4;16;4" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.35;0;0.35" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
               </circle>
-              <circle cx={n.x} cy={n.y} r="3" fill="#A0E8AF" stroke="#031a20" strokeWidth="1.5" />
+              <circle cx={n.x} cy={n.y} r="3" fill="#0a7c83" stroke="#031a20" strokeWidth="1.5" />
             </g>
           ))}
         </g>
@@ -1861,7 +1886,7 @@ function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
             WebkitMaskImage: 'radial-gradient(ellipse 70% 50% at 75% 20%, #000 25%, transparent 75%)',
           }}
         />
-        <div className="absolute bottom-[-10%] left-[-10%] h-[420px] w-[420px] rounded-full bg-[#A0E8AF]/[0.05] blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] h-[420px] w-[420px] rounded-full bg-[#0a7c83]/[0.05] blur-[120px]" />
         <GlobeLines className="!h-[520px]" />
       </div>
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
@@ -1874,20 +1899,21 @@ function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
           className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)] lg:items-start lg:gap-16"
         >
           <div className="lg:-mt-12">
-            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#0a7c83]">
               Proven Impact
             </span>
-            <h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[52px]">
-              Real teams. <span className="text-white/45">Real savings.</span>
-            </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/55">
-              Benefits leaders use Origin to find money hiding in plain sight, then put it back into their people.
+<h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[50px]">
+  See what <span className="font-bold">better benefit intelligence</span>{' '}
+uncovers
+</h2>
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/85">
+     Origin gives global benefits teams a clearer view of costs, contracts, coverage, and savings opportunities.
             </p>
           </div>
 
           <div className="grid items-start gap-10 sm:grid-cols-3">
-            <Stat i={0} to={200} suffix="k" label="saved and redirected to new benefits" />
-            <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage cost reduced across 20 countries" />
+            <Stat i={0} to={200} suffix="k" label="saved and redirected to new employee benefits" />
+            <Stat i={1} to={1.1} decimals={1} suffix="M" label="brokerage costs reduced across 20 countries" />
             <Stat i={2} to={1} suffix="M" label="of undisclosed commission found in one local contract" />
           </div>
         </motion.div>
@@ -1905,23 +1931,23 @@ function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
         >
           <div>
             <div className="flex items-center gap-2.5">
-              <BarChart3 size={13} className="text-[#A0E8AF]" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
+              <BarChart3 size={13} className="text-[#0a7c83]" />
+              <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#0a7c83]">
                 ROI Estimator
               </span>
             </div>
             <h3 className="mt-4 text-[28px] font-medium leading-[1.15] tracking-[-0.02em] text-white md:text-[34px]">
               How much could you be saving?
             </h3>
-            <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-white/55">
-              Model your enterprise optimization potential. Our calculator uses real-world benchmarks from global benefits data to estimate your hidden leakage.
+            <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-white/95">
+           Estimate your potential savings across global benefits, using benchmarks from real enterprise benefits data.
             </p>
           </div>
 
           <div className="flex md:justify-end">
             <button
               onClick={onOpenCalculator}
-              className="group inline-flex h-12 items-center gap-2.5 border border-white/20 bg-transparent px-7 text-[14px] font-medium text-white transition-colors duration-300 hover:border-[#A0E8AF] hover:text-[#A0E8AF] shadow-none"
+              className="group inline-flex h-12 items-center gap-2.5 border border-white/20 bg-transparent px-7 text-[14px] font-medium text-white transition-colors duration-300 hover:border-[#0a7c83] hover:text-[#0a7c83] shadow-none"
             >
               Calculate your savings
               <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -1937,187 +1963,185 @@ function ImpactSection({ onOpenCalculator }: { onOpenCalculator: () => void }) {
 // PREMIUM SAVINGS CALCULATOR MODAL
 // ==========================================
 
+const ROI_CSS = `
+.roi-range { -webkit-appearance: none; appearance: none; height: 2px; outline: none; cursor: pointer; }
+.roi-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: #0a7c83; border: 3px solid #fff; box-shadow: 0 0 0 1px #0a7c83; cursor: pointer; }
+.roi-range::-moz-range-thumb { width: 10px; height: 10px; background: #0a7c83; border: 3px solid #fff; border-radius: 0; box-shadow: 0 0 0 1px #0a7c83; cursor: pointer; }
+.roi-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgba(10,124,131,.25), 0 0 0 1px #0a7c83; }
+`;
+
+function RangeField({
+  label, value, display, min, max, step, onChange, minLabel, maxLabel,
+}: {
+  label: string; value: number; display: string; min: number; max: number; step: number;
+  onChange: (v: number) => void; minLabel: string; maxLabel: string;
+}) {
+  const pct = ((value - min) / (max - min)) * 100;
+  return (
+    <div>
+      <div className="flex items-baseline justify-between">
+        <label className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</label>
+        <span className="text-[20px] font-semibold tabular-nums tracking-tight text-[#031a20]">{display}</span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="roi-range mt-4 w-full"
+        style={{ background: `linear-gradient(to right, #0a7c83 ${pct}%, #dbe3e6 ${pct}%)` }}
+      />
+      <div className="mt-2.5 flex justify-between text-[11px] font-medium text-slate-400">
+        <span>{minLabel}</span>
+        <span>{maxLabel}</span>
+      </div>
+    </div>
+  );
+}
+
 function SavingsCalculator({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [employees, setEmployees] = useState(5000);
   const [avgCost, setAvgCost] = useState(15000);
   const [countries, setCountries] = useState(15);
-  
-  // Enhanced logic for a more realistic enterprise model
-  const baseOptimizationRate = 0.08; 
-  const complexityFactor = 1 + (countries * 0.005); // More countries = more fragmentation = more savings
-  const optimizationRate = Math.min(baseOptimizationRate * complexityFactor, 0.15); // Cap at 15%
-  
-  const estimatedSavings = employees * avgCost * optimizationRate;
+
+  const baseOptimizationRate = 0.08;
+  const complexityFactor = 1 + countries * 0.005;
+  const optimizationRate = Math.min(baseOptimizationRate * complexityFactor, 0.15);
+  const totalSpend = employees * avgCost;
+  const estimatedSavings = totalSpend * optimizationRate;
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    if (!isOpen) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => {
       document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [isOpen]);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  const goToContact = () => {
+    onClose();
+    setTimeout(() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+  };
 
   return (
     <AnimatePresence>
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0A1128]/60 p-4 backdrop-blur-md"
-        onClick={onClose}
-      >
-        <motion.div 
-          initial={{ scale: 0.95, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          onClick={(e) => e.stopPropagation()}
-          className="relative flex w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl"
+      {isOpen && (
+        <motion.div
+          key="roi-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#031a20]/80 p-4 backdrop-blur-sm"
+          onClick={onClose}
         >
-          {/* Close Button */}
-          <button 
-            onClick={onClose}
-            className="absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 hover:text-[#0A1128]"
+          <style>{ROI_CSS}</style>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.25, ease: EASE }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-y-auto rounded-sm bg-white shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8)] md:flex-row md:overflow-hidden"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-sm border border-slate-200 bg-white text-slate-500 transition-colors hover:text-[#031a20]"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </button>
 
-          {/* Left Column: Inputs */}
-          <div className="flex w-full flex-col p-10 md:w-1/2 md:p-14">
-            <div className="mb-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#fafafa]/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#fafafa]">
-                <BarChart3 size={14} /> ROI Estimator
+            {/* Inputs */}
+            <div className="w-full p-8 md:w-[55%] md:p-12">
+              <div className="flex items-center gap-3">
+                <span className="h-px w-8 bg-slate-300" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#0a7c83]">ROI Estimator</span>
               </div>
-              <h3 className="mt-6 text-3xl font-semibold tracking-tight text-[#0A1128] md:text-4xl">
+              <h3 className="mt-6 text-[32px] font-semibold leading-tight tracking-tight text-[#031a20]">
                 Model your savings.
               </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
-                Adjust the variables below to see how Origin can impact your bottom line.
+              <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-slate-500">
+                Adjust the inputs to see an indicative annual saving for your benefits programme.
               </p>
-            </div>
 
-            <div className="flex-1 space-y-10">
-              {/* Slider 1 */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                    Global Headcount
-                  </label>
-                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
-                    {employees.toLocaleString()}
-                  </span>
-                </div>
-                <input 
-                  type="range" min="1000" max="50000" step="500"
-                  value={employees}
-                  onChange={(e) => setEmployees(Number(e.target.value))}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+              <div className="mt-10 space-y-9">
+                <RangeField
+                  label="Global headcount" value={employees} display={employees.toLocaleString()}
+                  min={1000} max={50000} step={500} onChange={setEmployees} minLabel="1,000" maxLabel="50,000+"
                 />
-                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
-                  <span>1,000</span>
-                  <span>50,000+</span>
-                </div>
-              </div>
-
-              {/* Slider 2 */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                    Avg. Cost per Employee
-                  </label>
-                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
-                    ${avgCost.toLocaleString()}
-                  </span>
-                </div>
-                <input 
-                  type="range" min="5000" max="30000" step="1000"
-                  value={avgCost}
-                  onChange={(e) => setAvgCost(Number(e.target.value))}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+                <RangeField
+                  label="Avg. cost per employee" value={avgCost} display={`$${avgCost.toLocaleString()}`}
+                  min={5000} max={30000} step={1000} onChange={setAvgCost} minLabel="$5,000" maxLabel="$30,000+"
                 />
-                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
-                  <span>$5,000</span>
-                  <span>$30,000+</span>
-                </div>
-              </div>
-
-              {/* Slider 3 */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                    Countries with Employees
-                  </label>
-                  <span className="text-lg font-semibold tabular-nums text-[#0A1128]">
-                    {countries}
-                  </span>
-                </div>
-                <input 
-                  type="range" min="1" max="100" step="1"
-                  value={countries}
-                  onChange={(e) => setCountries(Number(e.target.value))}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0A1128]"
+                <RangeField
+                  label="Countries with employees" value={countries} display={String(countries)}
+                  min={1} max={100} step={1} onChange={setCountries} minLabel="1" maxLabel="100+"
                 />
-                <div className="mt-2 flex justify-between text-xs text-slate-400 font-medium">
-                  <span>1</span>
-                  <span>100+</span>
-                </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Column: Results & CTA */}
-          <div className="relative flex w-full flex-col justify-between bg-[#0A1128] p-10 text-white md:w-1/2 md:p-14">
-            {/* Decorative background element */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#2E8A8A]/20 blur-[100px]" />
-            
-            <div className="relative z-10">
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50">
-                Estimated Annual Optimization
-              </h4>
-              <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-6xl font-bold tracking-tight text-[#A0E8AF] md:text-7xl">
-                  $<AnimatedCounter to={estimatedSavings / 1000000} decimals={1} duration={1.2} from={0} suffix="M" />
+            {/* Result */}
+            <div className="relative flex w-full flex-col justify-between overflow-hidden bg-[#031a20] p-8 text-white md:w-[45%] md:p-12">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.05]"
+                style={{
+                  backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+                  backgroundSize: '48px 48px',
+                  maskImage: 'radial-gradient(ellipse 80% 70% at 70% 20%, #000 20%, transparent 75%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 70% 20%, #000 20%, transparent 75%)',
+                }}
+              />
+              <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#0a7c83]/30 blur-[100px]" />
+
+              <div className="relative">
+                <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#22a9b2]">
+                  Estimated annual saving
                 </span>
-                <span className="text-lg font-medium text-white/40">/yr</span>
-              </div>
-              <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-white/60">
-                Based on an estimated {((optimizationRate)*100).toFixed(1)}% optimization rate. This accounts for fragmented data, hidden commissions, and overlapping coverage across {countries} {countries === 1 ? 'country' : 'countries'}.
-              </p>
+                <div className="mt-5 flex items-baseline gap-2">
+                  <span className="text-[60px] font-medium leading-none tracking-tight tabular-nums md:text-[68px]">
+                    ${(estimatedSavings / 1_000_000).toFixed(1)}M
+                  </span>
+                  <span className="text-[18px] text-white/45">/yr</span>
+                </div>
 
-              <div className="mt-10 space-y-4 border-t border-white/10 pt-8">
-                <div className="flex items-center justify-between text-[14px]">
-                  <span className="text-white/50">Total Benefit Spend</span>
-                  <span className="font-medium text-white">${((employees * avgCost) / 1000000).toFixed(1)}M</span>
-                </div>
-                <div className="flex items-center justify-between text-[14px]">
-                  <span className="text-white/50">Optimization Rate</span>
-                  <span className="font-medium text-[#A0E8AF]">{((optimizationRate)*100).toFixed(1)}%</span>
-                </div>
+                <dl className="mt-10 divide-y divide-white/10 border-y border-white/10 text-[14px]">
+                  <div className="flex justify-between py-3.5">
+                    <dt className="text-white/55">Total benefits spend</dt>
+                    <dd className="font-medium tabular-nums">${(totalSpend / 1_000_000).toFixed(1)}M</dd>
+                  </div>
+                  <div className="flex justify-between py-3.5">
+                    <dt className="text-white/55">Modelled optimisation rate</dt>
+                    <dd className="font-medium tabular-nums text-[#22a9b2]">{(optimizationRate * 100).toFixed(1)}%</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div className="relative mt-10">
+                <button
+                  onClick={goToContact}
+                  className="group flex h-14 w-full items-center justify-center gap-2.5 rounded-sm bg-[#0a7c83] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#0d8f98]"
+                >
+                  Let’s discuss your results
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </button>
+                <p className="mt-4 text-[12px] leading-snug text-white/40">
+                  Indicative estimate only. Actual savings depend on your vendor contracts and programme structure.
+                </p>
               </div>
             </div>
-
-            <div className="relative z-10 mt-12">
-              <button 
-                onClick={onClose}
-                className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#A0E8AF] px-8 py-4 text-[16px] font-semibold text-[#0A1128] transition-all hover:bg-[#8ED9A0] hover:shadow-lg"
-              >
-                Discuss your results with our team
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-              </button>
-              <p className="mt-4 text-center text-xs text-white/40">
-                This is an estimate. Actual savings depend on your specific vendor contracts.
-              </p>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 }
-
 
 // ==========================================
 // ENTERPRISE TRUST & FOOTER
@@ -2165,7 +2189,7 @@ function Footer() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
+        <div data-reveal className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
           
           {/* Brand Column */}
           <div className="col-span-2 lg:col-span-2">
@@ -2175,45 +2199,58 @@ function Footer() {
               className="h-7 w-auto brightness-0 invert opacity-90"
             />
             <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-white/50">
-              The authoritative system of record for global benefits. Turning fragmented vendor data into strategic enterprise intelligence.
+              Origin™, the world’s first Enterprise Benefits Intelligence platform. Your source of truth for benefits data.
             </p>
           </div>
-          
-          {/* Links */}
+                 {/* Explore */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Platform</h4>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#22a9b2]">Explore</h4>
             <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
-              <li><a href="#" className="transition-colors hover:text-white">Global Dashboard</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Cuido™ AI</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Compliance Engine</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Vendor Benchmarking</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Company</h4>
-            <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
-              <li><a href="#" className="transition-colors hover:text-white">About Us</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Careers</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Security</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Contact Sales</a></li>
+              <li><a href="https://originbenefits.com/platform" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Platform</a></li>
+              <li><a href="https://originbenefits.com/#cuido" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Cuido</a></li>
+              <li><a href="https://originbenefits.com/resources" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Original thought</a></li>
+              <li><a href="https://originbenefits.com/#community" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Our community</a></li>
+              <li><a href="https://originbenefits.com/contact-us" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Contact us</a></li>
             </ul>
           </div>
 
+          {/* Legal */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#A0E8AF]">Legal</h4>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#22a9b2]">Legal</h4>
             <ul className="mt-6 space-y-3.5 text-[14px] text-white/60">
-              <li><a href="#" className="transition-colors hover:text-white">Privacy Policy</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Terms of Service</a></li>
-              <li><a href="#" className="transition-colors hover:text-white">Cookie Policy</a></li>
+              <li><a href="https://originbenefits.com/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Terms &amp; Conditions</a></li>
+              <li><a href="https://originbenefits.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Privacy Policy</a></li>
+              <li><a href="https://originbenefits.com/anti-slavery-and-human-trafficking" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">Anti-Slavery Statement</a></li>
             </ul>
+          </div>
+
+          {/* Address */}
+          <div>
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#22a9b2]">Address</h4>
+            <address className="mt-6 space-y-1 text-[14px] not-italic leading-relaxed text-white/60">
+              <p>Origin Benefits Ltd,</p>
+              <p>80-90 Paul Street,</p>
+              <p>London,</p>
+              <p>EC2A 4NE</p>
+            </address>
           </div>
         </div>
         
         {/* Bottom Bar */}
         <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-[13px] text-white/40 md:flex-row">
-          <span>© {new Date().getFullYear()} Origin Benefits Intelligence.</span>
-          <span>Speculative enterprise design.</span>
+          <span>© {new Date().getFullYear()} Origin Benefits Ltd.</span>
+          <span>
+            Concept redesign by{' '}
+            
+             <a href="https://www.seo-growup.com/?utm_source=origin-github&utm_medium=referral&utm_campaign=origin-case-study"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 transition-colors hover:text-white"
+            >
+              GrowUp
+            </a>{' '}
+            · Not affiliated with Origin Benefits Ltd.
+          </span>
         </div>
       </div>
     </footer>
@@ -2290,14 +2327,10 @@ function CommunitySection() {
             </span>
           </div>
           <h3 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-5xl lg:text-[56px]">
-            When you join us,
-            <br />
-            <span className="text-slate-400">you join a community.</span>
+A place for benefits<br/> leaders to connect.
           </h3>
-          <p className="mt-8 max-w-2xl text-[18px] leading-relaxed text-slate-500">
-            When you join Origin, you're not just buying software. You're joining a community of like-minded
-            innovators. We bring together benefits leaders who are rewriting the rules, with an innovative client
-            experience, exclusive events, real conversations, and a space to share ideas, challenges, and progress.
+          <p className="mt-8 max-w-2xl text-[18px] leading-relaxed text-black">
+       Origin brings together benefits leaders working through the same complex global challenges. Share what’s working, compare approaches, and learn from peers through conversations, events, and an ongoing exchange of ideas.
           </p>
         </motion.div>
 
@@ -2353,22 +2386,17 @@ function CommunitySection() {
               </span>
               
               <blockquote className="relative text-[24px] font-medium leading-[1.4] tracking-[-0.02em] text-[#0A1128] md:text-[30px]">
-                It's been so wonderful to find a family of like-minded benefit professionals.{' '}
+                It’s been so wonderful to find a family of like-minded benefit professionals.{' '}
                 <span className="text-slate-400">
-                  The brainstorming, the challenging each other, is what I'll take away from this. It's helping me
+                  The brainstorming, the challenging each other, is what I’ll take away from this. It’s helping me
                   already to think broadly.
                 </span>
               </blockquote>
 
               {/* Author Footer with subtle underline */}
-              <div className="mt-10 flex items-center gap-5 border-t border-slate-200 pt-8">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-50 text-[13px] font-semibold text-[#0A1128] ring-1 ring-slate-200">
-                  KA
-                </span>
-                <div>
-                  <div className="text-[16px] font-semibold text-[#0A1128]">Katie Archer</div>
-                  <div className="mt-1 text-[14px] font-medium text-slate-500">Global Benefits Lead</div>
-                </div>
+              <div className="mt-10 border-t border-slate-200 pt-8">
+                <div className="text-[16px] font-semibold text-[#0A1128]">Katie Archer</div>
+                <div className="mt-1 text-[14px] font-medium text-slate-500">Global Benefits Lead</div>
               </div>
             </div>
           </motion.div>
@@ -2394,7 +2422,7 @@ function SecuritySection() {
           }}
         />
         <div className="absolute right-[-10%] top-[-10%] h-[520px] w-[520px] rounded-full bg-[#0a7c83]/25 blur-[140px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[360px] w-[360px] rounded-full bg-[#A0E8AF]/[0.04] blur-[120px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[360px] w-[360px] rounded-full bg-[#0a7c83]/[0.04] blur-[120px]" />
   
       </div>
       {/* Simple top hairline separator */}
@@ -2410,18 +2438,17 @@ function SecuritySection() {
           className="grid gap-10 lg:grid-cols-2 lg:items-end -mt-16 "
         >
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#A0E8AF]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#0a7c83]">
               Security and data
             </span>
-            <h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[52px]">
-              Your data.
-              <br />
-              <span className="text-white/45">Protected by design.</span>
-            </h2>
+         <h2 className="mt-5 text-[38px] font-medium leading-[1.05] tracking-[-0.02em] text-white md:text-[52px]">
+  Confidence in every
+  <br />
+  <span className="text-white/95">layer of Origin</span>
+</h2>
           </div>
-          <p className="max-w-lg text-lg leading-relaxed text-white/55 lg:justify-self-end">
-            Benefits data spans contracts, costs and people. Origin is built to keep it secure, and to make security
-            reviews straightforward for your IT and procurement teams.
+          <p className="max-w-lg text-lg leading-relaxed text-white/85 lg:justify-self-end">
+   Origin gives enterprise teams clear control over sensitive benefits data, from how information is stored and accessed to how it is deleted.
           </p>
         </motion.div>
 
@@ -2440,7 +2467,7 @@ function SecuritySection() {
               >
                 <Icon size={22} strokeWidth={1.5} className="text-white/70" />
                 <h3 className="mt-12 text-lg font-medium tracking-tight text-white">{item.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-white/50">{item.desc}</p>
+                <p className="mt-3 text-[15px] leading-relaxed text-white/80">{item.desc}</p>
               </motion.div>
             );
           })}
@@ -2448,7 +2475,7 @@ function SecuritySection() {
 
         {/* Footer line */}
         <div className="mt-24 -mb-16 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center">
-          <p className="max-w-xl text-[15px] leading-relaxed text-white/50">
+          <p className="max-w-xl text-[15px] leading-relaxed text-white">
             Need details for a security review? The team can walk your IT and procurement teams through how Origin
             handles your data.
           </p>
@@ -2477,40 +2504,41 @@ type Faq = { q: string; a: string; cta?: string };
 const FAQS: Faq[] = [
   {
     q: 'How long does implementation take?',
-    a: 'You start with the documents you already have: policies, contracts, commission schedules and vendor information. Cuido ingests, translates and organizes them into one source of truth. Timelines depend on the number of countries and the volume of documents, so the team scopes a plan with you before you commit.',
+    a: 'Implementation time depends on the number of countries and volume of documents. The team scopes the timeline with you upfront, then works through your existing policies, contracts, commission schedules and vendor information.',
     cta: 'Get a scoped timeline',
   },
   {
     q: 'Which languages does Origin support?',
-    a: 'Cuido ingests, translates and organizes data in any language. Local policies and contracts can stay in their original language while your global team reads and queries them in English.',
+    a: 'Origin supports data in any language. Cuido ingests, translates and structures local policies and contracts, so your global team can read and query them in English.',
   },
   {
     q: 'Where is our data stored?',
-    a: 'Client data is stored on secure servers managed by cloud providers, in line with international data protection laws. If you have specific residency requirements, raise them early so they can be covered in your security review.',
+    a: 'Client data is stored on secure cloud infrastructure in line with applicable data protection requirements. Specific data residency requirements can be addressed as part of your security review.',
     cta: 'Discuss your requirements',
   },
   {
     q: 'Which security standards does Origin follow?',
-    a: 'Origin’s security practices are aligned to ISO 27001, the international standard for information security management. For certification documents and your security questionnaire, the team can work directly with your IT and procurement teams.',
+    a: 'Origin’s security practices are aligned with ISO 27001, the international standard for information security management. The team can also provide the security documentation and information required for your review.',
     cta: 'Request security details',
   },
   {
     q: 'How does Origin fit with our existing systems?',
-    a: 'Origin is designed as your source of truth for benefits data, passing verified information to the systems in your landscape that need it. It is built to work alongside your existing platforms rather than replace them. Specific connections are confirmed during scoping.',
+    a: 'Origin acts as the source of truth for your benefits data and works alongside your existing systems. Available integrations and connections are confirmed during scoping.',
   },
   {
     q: 'Who in our organisation will use it?',
-    a: 'Origin is built around the whole benefits ecosystem: global and local benefits teams, HR leaders and shared services, and functions such as procurement, finance, risk and legal. It also supports partners such as benefit administrators, local brokers, global consultants and vendors.',
+    a: 'Origin is used by global and local benefits teams, HR, shared services, finance, procurement, risk and legal. It can also support brokers, consultants and other benefits partners.',
   },
   {
     q: 'Does Origin replace our brokers or consultants?',
-    a: 'No. Origin gives you visibility into every vendor, cost, fee and commission, so you manage those relationships with evidence rather than assumption. Your advisers keep their role, and you gain the data to hold them to it.',
+    a: 'No. Origin gives your team visibility into vendors, costs, fees and commissions while your existing brokers and consultants continue their role. You have the data to manage those relationships more effectively.',
   },
   {
     q: 'Can we have our data deleted?',
-    a: 'Yes. Data can be deleted on verified request from your authorised representatives, sent to privacy@originbenefits.com. Retention terms are set out in Origin’s privacy policy.',
+    a: 'Yes. An authorised representative can request data deletion through privacy@originbenefits.com. Applicable retention periods are set out in Origin’s privacy policy.',
   },
 ];
+
 
 function FaqRow({
   faq,
@@ -2522,7 +2550,7 @@ function FaqRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="group border-b border-slate-100 last:border-b-0">
+    <div data-reveal className="group border-b border-slate-100 last:border-b-0">
       <button
         type="button"
         onClick={onToggle}
@@ -2561,7 +2589,7 @@ function FaqRow({
             className="overflow-hidden"
           >
             <div className="pb-10 pr-4 md:pr-12">
-              <p className="max-w-2xl text-[16px] leading-relaxed text-slate-500">{faq.a}</p>
+              <p className="max-w-2xl text-[16px] leading-relaxed text-[#0A1128]">{faq.a}</p>
               {faq.cta && (
                 <a
                   href="#contact"
@@ -2606,25 +2634,25 @@ function FaqSection() {
             </div>
             
             <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-[#0A1128] md:text-6xl">
-              Answers for IT, procurement and legal.
+Before you get started.
             </h2>
-            <p className="mt-8 max-w-md text-lg leading-relaxed text-slate-500">
-              The questions enterprise teams ask before they say yes. If yours isn’t here, the team will answer it directly.
+            <p className="mt-8 max-w-md text-lg leading-relaxed text-[#0A1128]">
+           What to expect on implementation, data security and integration with your current systems. If you need more, ask the team directly.
             </p>
 
             <div className="mt-16 max-w-md border-t border-slate-100 pt-10">
               <h3 className="text-[16px] font-semibold text-[#0A1128]">See it on your own benefits data.</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
+              <p className="mt-3 text-[15px] leading-relaxed text-[#0A1128]">
                 Walk through Origin with the team, using your own countries, vendors and documents.
               </p>
-              
-              <button
-                onClick={() => { /* scroll to contact logic or leave as is */ }}
+                         
+             <a  href="#contact"
+                onClick={smoothScrollTo('#contact')}
                 className="group mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#0A1128] px-7 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-[#1C3F60] hover:shadow-lg"
               >
                 Book a demo
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -2687,9 +2715,9 @@ const stepVariants: Variants = {
 };
 
 const FIELD_BASE =
-  'h-14 w-full rounded-lg border bg-white px-4 text-[16px] text-[#050505] outline-none transition placeholder:text-slate-400 focus:ring-4 focus:ring-black/5';
+  'h-12 w-full rounded-sm border bg-transparent px-3.5 text-[15px] text-[#050505] outline-none transition placeholder:text-slate-400';
 const fieldCls = (err?: string) =>
-  `${FIELD_BASE} ${err ? 'border-rose-400' : 'border-slate-300 focus:border-[#050505]'}`;
+  `${FIELD_BASE} ${err ? 'border-rose-400' : 'border-slate-200 focus:border-[#0a7c83]'}`;
 
 function validateStep(step: number, d: ContactData): Record<string, string> {
   const e: Record<string, string> = {};
@@ -2726,7 +2754,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[14px] font-semibold text-[#050505]">{label}</span>
+      <span className="mb-1.5 block text-[13px] font-medium text-slate-700">{label}</span>
       {hint && <span className="-mt-1 mb-2 block text-[13px] italic text-slate-500">{hint}</span>}
       {children}
       {error && <span className="mt-1.5 block text-[13px] text-rose-600">{error}</span>}
@@ -2784,8 +2812,10 @@ function Stepper({ step }: { step: number }) {
       {[0, 1, 2].map((i) => (
         <div key={i} className="flex flex-1 items-center last:flex-none">
           <span
-            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold transition-colors duration-300 ${
-              i <= step ? 'bg-[#0a7c83] text-white' : 'bg-slate-200 text-slate-400'
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[13px] font-semibold transition-colors duration-300 ${
+              i <= step
+                ? 'border-[#0a7c83] bg-[#0a7c83] text-white'
+                : 'border-slate-300 bg-transparent text-slate-400'
             }`}
           >
             {i + 1}
@@ -2852,7 +2882,7 @@ function ContactSection() {
       <div className="absolute top-0 left-1/2 h-px w-full max-w-[1600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-slate-400 to-transparent" />
 
       <div className="mx-auto max-w-7xl px-6">
-        <div className="rounded-2xl bg-[#0a7c83] p-8 sm:p-10 lg:p-12">
+        <div className="rounded-sm bg-[#0a7c83] p-8 sm:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,540px)] lg:gap-14">
             {/* Left: pitch */}
             <motion.div
@@ -2866,16 +2896,13 @@ function ContactSection() {
                 <span className="h-2 w-2 rounded-full bg-[#0A1128]" />
                 Talk to the team
               </span>
-              <h2 className="mt-8 text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-white lg:text-6xl">
-                Real data.
-                <br />
-                No spreadsheets.
-                <br />
-                Benefits you can govern.
-              </h2>
+            <h2 className="mt-8 text-5xl font-semibold leading-[1.02] tracking-[-0.04em] text-white lg:text-6xl">
+See your global
+  <br />
+ benefits clearly.
+</h2>
               <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/80">
-                Tell us where your benefits data lives today. The team will show you how Origin brings it together
-                across your countries, vendors and documents.
+             Bring your countries, vendors and documents into one place, with the visibility to understand costs, coverage and opportunities.
               </p>
             </motion.div>
 
@@ -2885,7 +2912,7 @@ function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-     className="relative overflow-hidden rounded-xl bg-white p-7 pb-10 md:p-10 md:pb-12"
+     className="relative overflow-hidden rounded-sm bg-white p-7 md:p-10"
             >
               {status === 'done' ? (
                 <motion.div
@@ -3060,7 +3087,7 @@ function ContactSection() {
                         type="button"
                         onClick={back}
                         disabled={status === 'sending'}
-                        className="h-14 flex-[0.8] rounded-lg bg-slate-100 text-[16px] font-semibold text-[#050505] transition-colors hover:bg-slate-200 disabled:opacity-50"
+                        className="h-12 flex-[0.8] rounded-sm border border-slate-200 bg-transparent text-[15px] font-semibold text-[#050505] transition-colors hover:bg-slate-50 disabled:opacity-50"
                       >
                         Previous
                       </button>
@@ -3069,7 +3096,7 @@ function ContactSection() {
                       type="button"
                       onClick={next}
                       disabled={status === 'sending'}
-                      className="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-lg bg-[#0a7c83] text-[16px] font-semibold text-[#fff] transition-colors hover:bg-[#4ab59a] disabled:opacity-80"
+                      className="flex h-12 flex-1 items-center justify-center gap-2.5 rounded-sm bg-[#0a7c83] text-[15px] font-semibold text-white transition-colors hover:bg-[#0d8f98] disabled:opacity-80"
                     >
                       {status === 'sending' ? (
                         <>
@@ -3077,7 +3104,7 @@ function ContactSection() {
                           Sending
                         </>
                       ) : step === 2 ? (
-                        'Request a demo'
+                        'Send enquiry'
                       ) : (
                         'Next step'
                       )}
@@ -3087,8 +3114,7 @@ function ContactSection() {
                 </>
               )}
 
-              {/* Clean white/slate accent strip */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-slate-800" />
+ 
             </motion.div>
           </div>
         </div>
@@ -3101,8 +3127,50 @@ function ContactSection() {
 // MAIN APP EXPORT
 // ==========================================
 
+const REVEAL_CSS = `
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+[data-reveal="fade"] { transform: none; }
+[data-reveal].is-in { opacity: 1; transform: none; will-change: auto; }
+[data-delay="1"] { transition-delay: .1s; }
+[data-delay="2"] { transition-delay: .2s; }
+[data-delay="3"] { transition-delay: .3s; }
+[data-delay="4"] { transition-delay: .4s; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+`;
+
+if (typeof document !== 'undefined' && !document.getElementById('reveal-css')) {
+  const s = document.createElement('style');
+  s.id = 'reveal-css';
+  s.textContent = REVEAL_CSS;
+  document.head.appendChild(s);
+}
+
 export default function App() {
   const [calcOpen, setCalcOpen] = useState(false);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
   const link = document.createElement('link');
@@ -3113,7 +3181,7 @@ export default function App() {
 
   return (
     <div
-  className="relative min-h-screen bg-[#050505] selection:bg-[#A0E8AF] selection:text-[#050505]"
+  className="relative min-h-screen bg-[#050505] selection:bg-[#0a7c83] selection:text-[#050505]"
   style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
 >
 
